@@ -2,15 +2,15 @@
 
 ## Phase 1: Project Scaffold & Security Baseline
 
-- [ ] Task: Initialize Xcode project with Swift Package Manager
-    - [ ] Create macOS app target (SwiftUI App lifecycle, macOS 14.0+)
-    - [ ] Add GRDB.swift dependency via SPM
-    - [ ] Configure Info.plist: LSUIElement = YES (no dock icon)
-    - [ ] Create directory structure: Models/, Services/, Views/, Utilities/, Tests/
-    - [ ] Add .gitignore (Xcode, SwiftPM, macOS artifacts)
-    - [ ] Add .swiftlint.yml with project rules
-    - [ ] Verify: project builds with `xcodebuild -scheme ClipVault -destination 'platform=macOS' build`
-    - [ ] Commit: `chore(build): Initialize Xcode project with SPM and project structure`
+- [x] Task: Initialize Xcode project with Swift Package Manager
+    - [x] Create macOS app target (SwiftUI App lifecycle, macOS 14.0+)
+    - [x] Add GRDB.swift dependency via SPM
+    - [x] Configure Info.plist: LSUIElement = YES (no dock icon)
+    - [x] Create directory structure: Models/, Services/, Views/, Utilities/, Tests/
+    - [x] Add .gitignore (Xcode, SwiftPM, macOS artifacts)
+    - [x] Add .swiftlint.yml with project rules
+    - [x] Verify: project builds with `xcodebuild -scheme ClipVault -destination 'platform=macOS' build`
+    - [x] Commit: `chore(build): Initialize Xcode project with SPM and project structure`
 
 - [ ] Task: Configure App Sandbox and security entitlements
     - [ ] Write unit tests verifying entitlement absence (no network, no file read/write outside sandbox)
