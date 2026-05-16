@@ -12,26 +12,26 @@
     - [x] Verify: project builds with `xcodebuild -scheme ClipVault -destination 'platform=macOS' build`
     - [x] Commit: `chore(build): Initialize Xcode project with SPM and project structure`
 
-- [ ] Task: Configure App Sandbox and security entitlements
-    - [ ] Write unit tests verifying entitlement absence (no network, no file read/write outside sandbox)
-    - [ ] Enable App Sandbox capability in Xcode
-    - [ ] Configure entitlements: com.apple.security.app-sandbox = true
-    - [ ] Explicitly disable: com.apple.security.network.client, com.apple.security.network.server
-    - [ ] Add com.apple.security.files.user-selected.read-only for file reference access
-    - [ ] Verify: `codesign -d --entitlements -` shows sandbox and no network entitlements
-    - [ ] Verify: app launches sandboxed without crashes
-    - [ ] Commit: `security(build): Enable App Sandbox with minimal entitlements, zero network`
+- [x] Task: Configure App Sandbox and security entitlements
+    - [x] Write unit tests verifying entitlement absence (no network, no file read/write outside sandbox)
+    - [x] Enable App Sandbox capability in Xcode
+    - [x] Configure entitlements: com.apple.security.app-sandbox = true
+    - [x] Explicitly disable: com.apple.security.network.client, com.apple.security.network.server
+    - [x] Add com.apple.security.files.user-selected.read-only for file reference access
+    - [x] Verify: `codesign -d --entitlements -` shows sandbox and no network entitlements
+    - [x] Verify: app launches sandboxed without crashes
+    - [x] Commit: `security(build): Enable App Sandbox with minimal entitlements, zero network`
 
-- [ ] Task: Implement app entry point and menu bar lifecycle
-    - [ ] Write unit tests for app delegate lifecycle (menu bar item creation)
-    - [ ] Create AppDelegate: register NSStatusItem, configure template icon
-    - [ ] Configure SwiftUI App scene with MenuBarExtra (macOS 14+)
-    - [ ] Implement right-click context menu (Settings, Quit)
-    - [ ] Ensure no dock icon appears (LSUIElement)
-    - [ ] Run test suite, verify ≥95% coverage for new code
-    - [ ] Commit: `feat(ui): Add menu bar status item with context menu`
+- [x] Task: Implement app entry point and menu bar lifecycle
+    - [x] Write unit tests for app delegate lifecycle (menu bar item creation)
+    - [x] Create AppDelegate: register NSStatusItem, configure template icon
+    - [x] Configure SwiftUI App scene with MenuBarExtra (macOS 14+)
+    - [x] Implement right-click context menu (Settings, Quit)
+    - [x] Ensure no dock icon appears (LSUIElement)
+    - [x] Run test suite, verify ≥95% coverage for new code
+    - [x] Commit: `feat(ui): Add menu bar status item with context menu`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffold & Security Baseline' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Project Scaffold & Security Baseline' (Protocol in workflow.md)
 
 ## Phase 2: Data Layer & Encryption
 
