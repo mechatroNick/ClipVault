@@ -13,6 +13,10 @@
 		A1B2C3D4E5F6A7B8C9D0E203 /* MenuBarLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F203 /* MenuBarLifecycleTests.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E2F1 /* ClipVaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F201 /* ClipVaultTests.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E2F2 /* EntitlementVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F202 /* EntitlementVerificationTests.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E301 /* ClipboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F301 /* ClipboardEntry.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E302 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F302 /* DatabaseManager.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E204 /* DatabaseSchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F204 /* DatabaseSchemaTests.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E205 /* DatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F205 /* DatabaseManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,6 +29,10 @@
 		B1C2D3E4F5A6B7C8D9E0F202 /* EntitlementVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementVerificationTests.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F203 /* MenuBarLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLifecycleTests.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F2A0 /* ClipVaultTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B1C2D3E4F5A6B7C8D9E0F301 /* ClipboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardEntry.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A6B7C8D9E0F302 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A6B7C8D9E0F204 /* DatabaseSchemaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseSchemaTests.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A6B7C8D9E0F205 /* DatabaseManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -55,6 +63,7 @@
 		C1D2E3F4A5B6C7D8E9F0A1B3 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				B1C2D3E4F5A6B7C8D9E0F301 /* ClipboardEntry.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -62,6 +71,7 @@
 		C1D2E3F4A5B6C7D8E9F0A1B4 /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				B1C2D3E4F5A6B7C8D9E0F302 /* DatabaseManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -103,6 +113,8 @@
 				B1C2D3E4F5A6B7C8D9E0F201 /* ClipVaultTests.swift */,
 				B1C2D3E4F5A6B7C8D9E0F203 /* MenuBarLifecycleTests.swift */,
 				B1C2D3E4F5A6B7C8D9E0F202 /* EntitlementVerificationTests.swift */,
+				B1C2D3E4F5A6B7C8D9E0F204 /* DatabaseSchemaTests.swift */,
+				B1C2D3E4F5A6B7C8D9E0F205 /* DatabaseManagerTests.swift */,
 			);
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -143,6 +155,9 @@
 				B1C2D3E4F5A6B7C8D9E0FD01 /* PBXTargetDependency */,
 			);
 			name = ClipVaultTests;
+			packageProductDependencies = (
+				A3B4C5D6E7F8A9B0C1D2E3F5 /* GRDB */,
+			);
 			productName = ClipVaultTests;
 			productReference = B1C2D3E4F5A6B7C8D9E0F2A0 /* ClipVaultTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
@@ -224,6 +239,8 @@
 			files = (
 				A1B2C3D4E5F6A7B8C9D0E103 /* AppDelegate.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E1F2 /* ClipVaultApp.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E301 /* ClipboardEntry.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E302 /* DatabaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -234,6 +251,8 @@
 				A1B2C3D4E5F6A7B8C9D0E2F1 /* ClipVaultTests.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E2F2 /* EntitlementVerificationTests.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E203 /* MenuBarLifecycleTests.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E204 /* DatabaseSchemaTests.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E205 /* DatabaseManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
