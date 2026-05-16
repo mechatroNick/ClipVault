@@ -1,7 +1,7 @@
 {
   "track_id": "clipboard-mvp_20260516",
   "type": "feature",
-  "status": "new",
+  "status": "in_progress",
   "created_at": "2026-05-16T00:00:00Z",
   "updated_at": "2026-05-16T00:00:00Z",
   "description": "Build MVP: End-to-end clipboard capture, encrypted storage, and keyboard-driven history panel"
