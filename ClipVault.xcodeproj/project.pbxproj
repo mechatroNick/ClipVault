@@ -7,8 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A1B2C3D4E5F6A7B8C9D0E103 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F104 /* AppDelegate.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E1F2 /* ClipVaultApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F101 /* ClipVaultApp.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E202 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F102 /* Info.plist */; };
+		A1B2C3D4E5F6A7B8C9D0E203 /* MenuBarLifecycleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F203 /* MenuBarLifecycleTests.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E2F1 /* ClipVaultTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F201 /* ClipVaultTests.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E2F2 /* EntitlementVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F202 /* EntitlementVerificationTests.swift */; };
 /* End PBXBuildFile section */
@@ -17,9 +19,11 @@
 		B1C2D3E4F5A6B7C8D9E0F101 /* ClipVaultApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipVaultApp.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F102 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F103 /* ClipVault.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ClipVault.entitlements; sourceTree = "<group>"; };
+		B1C2D3E4F5A6B7C8D9E0F104 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F1A0 /* ClipVault.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ClipVault.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1C2D3E4F5A6B7C8D9E0F201 /* ClipVaultTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipVaultTests.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F202 /* EntitlementVerificationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntitlementVerificationTests.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A6B7C8D9E0F203 /* MenuBarLifecycleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuBarLifecycleTests.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F2A0 /* ClipVaultTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -37,6 +41,7 @@
 			isa = PBXGroup;
 			children = (
 				B1C2D3E4F5A6B7C8D9E0F101 /* ClipVaultApp.swift */,
+				B1C2D3E4F5A6B7C8D9E0F104 /* AppDelegate.swift */,
 				B1C2D3E4F5A6B7C8D9E0F102 /* Info.plist */,
 				B1C2D3E4F5A6B7C8D9E0F103 /* ClipVault.entitlements */,
 				C1D2E3F4A5B6C7D8E9F0A1B3 /* Models */,
@@ -96,6 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				B1C2D3E4F5A6B7C8D9E0F201 /* ClipVaultTests.swift */,
+				B1C2D3E4F5A6B7C8D9E0F203 /* MenuBarLifecycleTests.swift */,
 				B1C2D3E4F5A6B7C8D9E0F202 /* EntitlementVerificationTests.swift */,
 			);
 			path = ClipVaultTests;
@@ -134,6 +140,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				B1C2D3E4F5A6B7C8D9E0FD01 /* PBXTargetDependency */,
 			);
 			name = ClipVaultTests;
 			productName = ClipVaultTests;
@@ -141,6 +148,24 @@
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
+
+/* Begin PBXTargetDependency section */
+		B1C2D3E4F5A6B7C8D9E0FD01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D1E2F3A4B5C6D7E8F9A0B1C1 /* ClipVault */;
+			targetProxy = B1C2D3E4F5A6B7C8D9E0FD02 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXContainerItemProxy section */
+		B1C2D3E4F5A6B7C8D9E0FD02 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D1E2F3A4B5C6D7E8F9A0B1C2 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D1E2F3A4B5C6D7E8F9A0B1C1;
+			remoteInfo = ClipVault;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXProject section */
 		D1E2F3A4B5C6D7E8F9A0B1C2 /* Project object */ = {
@@ -197,6 +222,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1B2C3D4E5F6A7B8C9D0E103 /* AppDelegate.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E1F2 /* ClipVaultApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -207,6 +233,7 @@
 			files = (
 				A1B2C3D4E5F6A7B8C9D0E2F1 /* ClipVaultTests.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E2F2 /* EntitlementVerificationTests.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E203 /* MenuBarLifecycleTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +425,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = arm64;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -407,6 +435,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClipVault.app/Contents/MacOS/ClipVault";
 			};
 			name = Debug;
 		};
@@ -414,6 +443,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = arm64;
+				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -423,6 +453,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ClipVault.app/Contents/MacOS/ClipVault";
 			};
 			name = Release;
 		};
