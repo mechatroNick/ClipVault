@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+                P4_ENTRYROWVIEW_SWIFT_BUILD /* EntryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_ENTRYROWVIEW_SWIFT_REF /* EntryRowView.swift */; };
+                P4_SEARCHBARVIEW_SWIFT_BUILD /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_SEARCHBARVIEW_SWIFT_REF /* SearchBarView.swift */; };
+                P4_HISTORYPANELVIEW_SWIFT_BUILD /* HistoryPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_HISTORYPANELVIEW_SWIFT_REF /* HistoryPanelView.swift */; };
+                P4_CLIPBOARDVIEWMODELTESTS_SWIFT_BUILD /* ClipboardViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_CLIPBOARDVIEWMODELTESTS_SWIFT_REF /* ClipboardViewModelTests.swift */; };
+                P4_CLIPBOARDVIEWMODEL_SWIFT_BUILD /* ClipboardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_CLIPBOARDVIEWMODEL_SWIFT_REF /* ClipboardViewModel.swift */; };
                 SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_BUILD /* SensitiveContentFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */; };
                 SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_BUILD /* SensitiveContentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */; };
 		01154DFD8E4780DCA8525C8D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA4CF2B61D7268629049C3 /* KeychainManager.swift */; };
@@ -43,6 +48,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+                P4_ENTRYROWVIEW_SWIFT_REF /* EntryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EntryRowView.swift; path = ClipVault/Views/EntryRowView.swift; sourceTree = SOURCE_ROOT; };
+                P4_SEARCHBARVIEW_SWIFT_REF /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchBarView.swift; path = ClipVault/Views/SearchBarView.swift; sourceTree = SOURCE_ROOT; };
+                P4_HISTORYPANELVIEW_SWIFT_REF /* HistoryPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPanelView.swift; path = ClipVault/Views/HistoryPanelView.swift; sourceTree = SOURCE_ROOT; };
+                P4_CLIPBOARDVIEWMODELTESTS_SWIFT_REF /* ClipboardViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClipboardViewModelTests.swift; path = Tests/ClipVaultTests/ClipboardViewModelTests.swift; sourceTree = SOURCE_ROOT; };
+                P4_CLIPBOARDVIEWMODEL_SWIFT_REF /* ClipboardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClipboardViewModel.swift; path = ClipVault/Models/ClipboardViewModel.swift; sourceTree = SOURCE_ROOT; };
                 SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SensitiveContentFilterTests.swift; path = Tests/ClipVaultTests/SensitiveContentFilterTests.swift; sourceTree = SOURCE_ROOT; };
                 SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SensitiveContentFilter.swift; path = ClipVault/Services/SensitiveContentFilter.swift; sourceTree = SOURCE_ROOT; };
 		0F484042A9D8EA0790AA55A2 /* ClipboardCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClipboardCaptureService.swift; path = ClipVault/Services/ClipboardCaptureService.swift; sourceTree = SOURCE_ROOT; };
@@ -126,7 +136,8 @@
 			isa = PBXGroup;
 			children = (
 				B1C2D3E4F5A6B7C8D9E0F301 /* ClipboardEntry.swift */,
-			);
+			                                P4_CLIPBOARDVIEWMODEL_SWIFT_REF /* ClipboardViewModel.swift */,
+);
 			path = Models;
 			sourceTree = "<group>";
 		};
@@ -143,7 +154,10 @@
 		C1D2E3F4A5B6C7D8E9F0A1B5 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-			);
+			                                P4_HISTORYPANELVIEW_SWIFT_REF /* HistoryPanelView.swift */,
+                                P4_SEARCHBARVIEW_SWIFT_REF /* SearchBarView.swift */,
+                                P4_ENTRYROWVIEW_SWIFT_REF /* EntryRowView.swift */,
+);
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -181,6 +195,7 @@
 				B1C2D3E4F5A6B7C8D9E0F205 /* DatabaseManagerTests.swift */,
 				B1C2D3E4F5A6B7C8D9E0F206 /* EncryptionServiceTests.swift */,
 			                                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */,
+                                P4_CLIPBOARDVIEWMODELTESTS_SWIFT_REF /* ClipboardViewModelTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -297,6 +312,11 @@
 				01154DFD8E4780DCA8525C8D /* KeychainManager.swift in Sources */,
 			                                SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_BUILD /* SensitiveContentFilter.swift in Sources */,
                                 
+                                P4_CLIPBOARDVIEWMODEL_SWIFT_BUILD /* ClipboardViewModel.swift in Sources */,
+                                
+                                P4_HISTORYPANELVIEW_SWIFT_BUILD /* HistoryPanelView.swift in Sources */,
+                                P4_SEARCHBARVIEW_SWIFT_BUILD /* SearchBarView.swift in Sources */,
+                                P4_ENTRYROWVIEW_SWIFT_BUILD /* EntryRowView.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -315,6 +335,7 @@
 				ABC1415B97228145E2EBE5B3 /* ClipboardCaptureServiceTests.swift in Sources */,
 				44A14E5C98CD540710387D64 /* ClipboardRepositoryTests.swift in Sources */,
 			                                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_BUILD /* SensitiveContentFilterTests.swift in Sources */,
+                                P4_CLIPBOARDVIEWMODELTESTS_SWIFT_BUILD /* ClipboardViewModelTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

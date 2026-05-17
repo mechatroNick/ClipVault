@@ -22,7 +22,7 @@ enum ClipboardRepositoryError: LocalizedError {
 /// Orchestrates saving, fetching, and searching clipboard entries,
 /// automatically handling AES-GCM encryption/decryption of sensitive fields.
 final class ClipboardRepository {
-    private let dbManager: DatabaseManager
+    let dbManager: DatabaseManager
     private let encryptionService: EncryptionService
     private let keychainManager: KeychainManager
     private let contentFilter: SensitiveContentFilter
