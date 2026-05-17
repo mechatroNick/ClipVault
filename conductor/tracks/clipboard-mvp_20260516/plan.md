@@ -92,17 +92,17 @@
     - [x] Run test suite, verify ≥95% coverage
     - [x] Commit: `feat(clipboard): Add NSPasteboard change monitoring with AsyncStream`
 
-- [ ] Task: Build content type detection engine
-    - [ ] Write unit tests for each content type (text, rtf, image, file, url, markdown, code, unknown)
-    - [ ] Write unit tests for edge cases (empty clipboard, binary data, very long strings)
-    - [ ] Create ContentTypeDetector with detection heuristics
-    - [ ] Check NSPasteboard.PasteboardType availability in priority order
-    - [ ] Detect markdown: heuristics on text content (# headers, **bold**, [links](), ```fences)
-    - [ ] Detect code: indentation patterns, keywords, operator density
-    - [ ] Detect images: NSPasteboard.PasteboardType.tiff, .png
-    - [ ] Detect files: NSPasteboard.PasteboardType.fileURL
+- [x] Task: Build content type detection engine
+    - [x] Write unit tests for each content type (text, rtf, image, file, url, markdown, code, unknown)
+    - [x] Write unit tests for edge cases (empty clipboard, binary data, very long strings)
+    - [x] Create ContentTypeDetector with detection heuristics
+    - [x] Check NSPasteboard.PasteboardType availability in priority order
+    - [x] Detect markdown: heuristics on text content (# headers, **bold**, [links](), ```fences)
+    - [x] Detect code: indentation patterns, keywords, operator density
+    - [x] Detect images: NSPasteboard.PasteboardType.tiff, .png
+    - [x] Detect files: NSPasteboard.PasteboardType.fileURL
     - [x] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(clipboard): Add content type detection with markdown and code heuristics`
+    - [x] Commit: `feat(clipboard): Add content type detection with markdown and code heuristics`
 
 - [ ] Task: Implement clipboard entry creation pipeline
     - [ ] Write integration tests: copy text → pipeline creates entry → entry in repository

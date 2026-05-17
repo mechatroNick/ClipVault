@@ -101,4 +101,17 @@ final class ContentTypeDetectorTests: XCTestCase {
         mock.types = []
         XCTAssertEqual(detector.detectType(from: mock), "unknown")
     }
+    
+    func testDetect_EdgeCase_EmptyString() {
+        let mock = MockPasteboard()
+        mock.simulateCopy(string: "", type: .string)
+        XCTAssertEqual(detector.detectType(from: mock), "text")
+    }
+    
+    func testDetect_EdgeCase_VeryLongString() {
+        let mock = MockPasteboard()
+        let longString = String(repeating: "A", count: 100_000)
+        mock.simulateCopy(string: longString, type: .string)
+        XCTAssertEqual(detector.detectType(from: mock), "text")
+    }
 }
