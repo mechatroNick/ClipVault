@@ -15,8 +15,10 @@
 		A1B2C3D4E5F6A7B8C9D0E2F2 /* EntitlementVerificationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F202 /* EntitlementVerificationTests.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E301 /* ClipboardEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F301 /* ClipboardEntry.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E302 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F302 /* DatabaseManager.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E303 /* EncryptionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F303 /* EncryptionService.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E204 /* DatabaseSchemaTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F204 /* DatabaseSchemaTests.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E205 /* DatabaseManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F205 /* DatabaseManagerTests.swift */; };
+		A1B2C3D4E5F6A7B8C9D0E206 /* EncryptionServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B1C2D3E4F5A6B7C8D9E0F206 /* EncryptionServiceTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +33,10 @@
 		B1C2D3E4F5A6B7C8D9E0F2A0 /* ClipVaultTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClipVaultTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B1C2D3E4F5A6B7C8D9E0F301 /* ClipboardEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardEntry.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F302 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A6B7C8D9E0F303 /* EncryptionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionService.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F204 /* DatabaseSchemaTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseSchemaTests.swift; sourceTree = "<group>"; };
 		B1C2D3E4F5A6B7C8D9E0F205 /* DatabaseManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManagerTests.swift; sourceTree = "<group>"; };
+		B1C2D3E4F5A6B7C8D9E0F206 /* EncryptionServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncryptionServiceTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -72,6 +76,7 @@
 			isa = PBXGroup;
 			children = (
 				B1C2D3E4F5A6B7C8D9E0F302 /* DatabaseManager.swift */,
+				B1C2D3E4F5A6B7C8D9E0F303 /* EncryptionService.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -115,6 +120,7 @@
 				B1C2D3E4F5A6B7C8D9E0F202 /* EntitlementVerificationTests.swift */,
 				B1C2D3E4F5A6B7C8D9E0F204 /* DatabaseSchemaTests.swift */,
 				B1C2D3E4F5A6B7C8D9E0F205 /* DatabaseManagerTests.swift */,
+				B1C2D3E4F5A6B7C8D9E0F206 /* EncryptionServiceTests.swift */,
 			);
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -241,6 +247,7 @@
 				A1B2C3D4E5F6A7B8C9D0E1F2 /* ClipVaultApp.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E301 /* ClipboardEntry.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E302 /* DatabaseManager.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E303 /* EncryptionService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +260,7 @@
 				A1B2C3D4E5F6A7B8C9D0E203 /* MenuBarLifecycleTests.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E204 /* DatabaseSchemaTests.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E205 /* DatabaseManagerTests.swift in Sources */,
+				A1B2C3D4E5F6A7B8C9D0E206 /* EncryptionServiceTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

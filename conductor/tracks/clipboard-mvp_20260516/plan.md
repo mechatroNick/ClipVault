@@ -35,36 +35,36 @@
 
 ## Phase 2: Data Layer & Encryption
 
-- [ ] Task: Define GRDB database schema and migrations
-    - [ ] Write unit tests for schema creation (all tables, indexes, constraints)
-    - [ ] Write unit tests for migration (v1 → v2 if applicable)
-    - [ ] Create DatabaseManager with GRDB DatabaseQueue (WAL mode)
-    - [ ] Define ClipboardEntry model (Codable, FetchableRecord, PersistableRecord)
-    - [ ] Create initial migration: clipboard_entries table with all columns
-    - [ ] Add FTS5 virtual table for full-text search on plainTextPreview
-    - [ ] Implement database path resolution in app sandbox container
-    - [ ] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(storage): Add GRDB database schema with FTS5 search`
+- [x] Task: Define GRDB database schema and migrations
+    - [x] Write unit tests for schema creation (all tables, indexes, constraints)
+    - [x] Write unit tests for migration (v1 → v2 if applicable)
+    - [x] Create DatabaseManager with GRDB DatabaseQueue (WAL mode)
+    - [x] Define ClipboardEntry model (Codable, FetchableRecord, PersistableRecord)
+    - [x] Create initial migration: clipboard_entries table with all columns
+    - [x] Add FTS5 virtual table for full-text search on plainTextPreview
+    - [x] Implement database path resolution in app sandbox container
+    - [x] Run test suite, verify ≥95% coverage
+    - [x] Commit: `feat(storage): Add GRDB database schema with FTS5 search`
 
-- [ ] Task: Implement AES-GCM encryption service
-    - [ ] Write unit tests for encrypt/decrypt roundtrip with known vectors
-    - [ ] Write unit tests for tampered data detection (decryption failure)
-    - [ ] Create EncryptionService using CryptoKit AES.GCM
-    - [ ] Implement encrypt(data: Data) -> Data and decrypt(data: Data) -> Data
-    - [ ] Handle SealedBox combined format (nonce + ciphertext + tag)
-    - [ ] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(security): Add AES-GCM encryption service via CryptoKit`
+- [x] Task: Implement AES-GCM encryption service
+    - [x] Write unit tests for encrypt/decrypt roundtrip with known vectors
+    - [x] Write unit tests for tampered data detection (decryption failure)
+    - [x] Create EncryptionService using CryptoKit AES.GCM
+    - [x] Implement encrypt(data: Data) -> Data and decrypt(data: Data) -> Data
+    - [x] Handle SealedBox combined format (nonce + ciphertext + tag)
+    - [x] Run test suite, verify ≥95% coverage
+    - [x] Commit: `feat(security): Add AES-GCM encryption service via CryptoKit`
 
-- [ ] Task: Integrate Keychain for encryption key management
-    - [ ] Write unit tests for key generation, storage, retrieval, and deletion
-    - [ ] Write unit tests for key persistence across app restarts
-    - [ ] Create KeychainManager using SecItem API
-    - [ ] Generate 256-bit SymmetricKey on first launch, store in Keychain
-    - [ ] Retrieve key on subsequent launches; regenerate if missing
-    - [ ] Configure kSecAttrAccessible = .whenUnlocked
-    - [ ] Implement key deletion for app reset
-    - [ ] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(security): Add Keychain-backed encryption key management`
+- [x] Task: Integrate Keychain for encryption key management
+    - [x] Write unit tests for key generation, storage, retrieval, and deletion
+    - [x] Write unit tests for key persistence across app restarts
+    - [x] Create KeychainManager using SecItem API
+    - [x] Generate 256-bit SymmetricKey on first launch, store in Keychain
+    - [x] Retrieve key on subsequent launches; regenerate if missing
+    - [x] Configure kSecAttrAccessible = .whenUnlocked
+    - [x] Implement key deletion for app reset
+    - [x] Run test suite, verify ≥95% coverage
+    - [x] Commit: `feat(security): Add Keychain-backed encryption key management`
 
 - [ ] Task: Build encrypted clipboard entry repository
     - [ ] Write unit tests for CRUD operations with encryption layer

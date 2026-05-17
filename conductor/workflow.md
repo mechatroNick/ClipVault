@@ -2,7 +2,7 @@
 
 ## Test Coverage
 
-**Required: ≥95% code coverage.** Every feature must include unit tests achieving ≥95% line coverage. Integration tests cover cross-component workflows. UI tests cover critical user paths (panel open, search, paste).
+**Required: ≥95% code coverage.** Every feature must include unit tests achieving ≥95% line coverage for ALL CODE IN THE PROJECT. Integration tests cover cross-component workflows. UI tests cover critical user paths (panel open, search, paste).
 
 ### Coverage Enforcement
 - XCTest coverage reports generated on every build
