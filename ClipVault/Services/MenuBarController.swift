@@ -203,9 +203,7 @@ final class MenuBarController: NSObject {
         menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "Quit ClipVault", action: #selector(quitApp), keyEquivalent: "q"))
         
-        statusItem?.menu = menu
-        statusItem?.button?.performClick(nil)
-        statusItem?.menu = nil // Reset so left click still works next time
+        statusItem?.popUpMenu(menu)
     }
     
     @objc private func openSettings() {

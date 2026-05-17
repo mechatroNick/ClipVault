@@ -52,6 +52,16 @@ final class MockPasteboard: PasteboardProtocol {
         return true
     }
     
+    func readObjects(forClasses classArray: [AnyClass], options: [NSPasteboard.ReadingOptionKey: Any]?) -> [Any]? {
+        // Simple implementation for file URLs in tests
+        if classArray.contains(where: { $0 == NSURL.self }) {
+            if let path = strings[.fileURL] {
+                return [NSURL(string: path)!]
+            }
+        }
+        return nil
+    }
+    
     // Test helpers
     func simulateCopy(string: String, type: NSPasteboard.PasteboardType = .string) {
         strings[type] = string

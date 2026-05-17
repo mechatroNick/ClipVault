@@ -17,6 +17,8 @@ protocol PasteboardProtocol {
     @discardableResult func clearContents() -> Int
     @discardableResult func setString(_ string: String, forType dataType: NSPasteboard.PasteboardType) -> Bool
     @discardableResult func setData(_ data: Data?, forType dataType: NSPasteboard.PasteboardType) -> Bool
+    
+    func readObjects(forClasses classArray: [AnyClass], options: [NSPasteboard.ReadingOptionKey: Any]?) -> [Any]?
 }
 
 extension NSPasteboard: PasteboardProtocol {}
