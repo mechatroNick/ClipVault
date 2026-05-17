@@ -31,12 +31,12 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 - Toggle between raw source and rendered preview
 - Support for common markdown extensions (tables, task lists, footnotes)
 
-### 3. Large File References
-- Configurable size threshold (default: 1 MB)
-- Files exceeding threshold are stored as path/URL references only
-- Never load large file contents into app memory or storage
-- Display file metadata (name, size, type, path) instead of content
-- Clickable references to open in Finder or default application
+### 3. Vault File Storage
+- Configurable "Vault" root location (default: `~/Documents/VaultClip`)
+- Automatic date-based organization: files saved into `YYYY-MM` subfolders within the Vault
+- Large content (images, large text > 5MB) is saved as organized files instead of DB blobs
+- For files copied in Finder: store relative path reference to original; provide option to "Archive to Vault"
+- Vault directory structure created automatically on first save of a given month
 
 ### 4. iPhone Clipboard Handoff
 - Native integration with Apple Universal Clipboard
@@ -54,8 +54,8 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 
 ### Specific Measures
 - **App Sandbox**: Confined to sandbox with no arbitrary file system access
-- **Encrypted Storage**: SQLite with SQLCipher or CryptoKit-backed encryption for history database
-- **Content Filtering**: Pattern-based detection to skip passwords, credit card numbers, and other sensitive patterns
+- **Encrypted Storage**: SQLite with CryptoKit-backed AES-256-GCM encryption for history database
+- **Content Filtering**: Automatically detect and redact sensitive patterns (Credit Cards, SSNs, Secrets) in the plaintext FTS search index to prevent accidental leakage while maintaining searchability of non-sensitive content.
 - **Memory Hygiene**: Clipboard content cleared from app memory when history entry is dismissed
 - **No Analytics**: Zero telemetry, zero phoning home, zero third-party SDKs
 
@@ -84,4 +84,4 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 4. Zero network connections in default configuration
 5. App Store ready: passes App Review with sandbox enabled
 6. iPhone clipboard entries appear with device-of-origin label
-7. Files >1MB stored as references with zero content leakage
+7. Files >5MB saved to Vault; search index is redacted for sensitive patterns

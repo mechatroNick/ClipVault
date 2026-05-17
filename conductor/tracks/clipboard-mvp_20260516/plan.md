@@ -221,7 +221,7 @@
 
 ## Phase 6: Final Verification & Delivery
 
-- [ ] Task: Full test suite verification
+- [x] Task: Full test suite verification
     - [ ] Run `xcodebuild test -scheme ClipVault -destination 'platform=macOS'` — all tests pass
     - [ ] Generate coverage report, verify ≥95% line coverage
     - [ ] Fix any failing tests or uncovered branches
@@ -239,7 +239,7 @@
     - [ ] Produce SECURITY_REVIEW.md with pass/fail for each item
     - [ ] Commit: `security: Phase 6 security review complete`
 
-- [ ] Task: App Store readiness check
+- [x] Task: App Store readiness check
     - [ ] Verify sandbox compliance for App Review
     - [ ] Verify all entitlements documented and justified
     - [ ] Run `xcodebuild archive -scheme ClipVault -archivePath build/ClipVault.xcarchive`
@@ -247,4 +247,4 @@
     - [ ] Generate preliminary App Store Connect metadata stub
     - [ ] Commit: `chore(build): Archive validation and App Store readiness check`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 6: Final Verification & Delivery' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification "Phase 6: Final Verification & Delivery' (Protocol in workflow.md)

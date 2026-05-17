@@ -31,7 +31,7 @@ Thin vertical slice through all layers of the clipboard manager: pasteboard moni
 ### FR4: Vault File Storage
 - Configurable "Vault" root location (default: `~/Documents/VaultClip`).
 - Automatic date-based organization: files saved into `YYYY-MM` subfolders within the Vault.
-- Large content (images, large text > 1MB) is saved as organized files instead of DB blobs.
+- Large content (images, large text > 5MB) is saved as organized files instead of DB blobs.
 - For files copied in Finder: store relative path reference to original; provide option to "Archive to Vault" (copying file to organized folder).
 - Vault directory structure created automatically on first save of a given month.
 
@@ -110,7 +110,7 @@ Thin vertical slice through all layers of the clipboard manager: pasteboard moni
 ## Acceptance Criteria
 
 1. Copy text in any app → panel shows entry with preview within 100ms
-2. Copy image → panel shows thumbnail preview; full image saved to `VaultClip/YYYY-MM/` if >1MB
+2. Copy image → panel shows thumbnail preview; full image saved to `VaultClip/YYYY-MM/` if >5MB
 3. Copy file in Finder → panel shows file metadata; Vault organizes references or copies by date
 4. Press ⌘⇧V → panel opens in <200ms, keyboard navigation works
 5. Search filters entries in real-time with sub-50ms latency
