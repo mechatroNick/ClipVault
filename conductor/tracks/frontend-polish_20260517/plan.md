@@ -30,6 +30,12 @@
     - [ ] Update `ClipboardCaptureService` to populate new plaintext columns.
     - [ ] Commit: `refactor(storage): Implement on-demand decryption and plaintext metadata`
 
+- [ ] Task: Implement Smart Consecutive Deduplication
+    - [ ] Integrate a quick hashing utility (e.g., SHA-256 via CryptoKit).
+    - [ ] Update `ClipboardCaptureService` to hash new content and compare against the latest history entry.
+    - [ ] Skip storage if both the content hash and source application are identical.
+    - [ ] Commit: `feat(clipboard): Add consecutive deduplication with efficient hashing`
+
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Resizability, Scaling & Persistence

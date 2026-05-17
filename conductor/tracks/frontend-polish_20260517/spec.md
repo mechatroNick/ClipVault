@@ -4,7 +4,7 @@
 `frontend-polish_20260517`
 
 ## Overview
-Address UI accessibility issues, implement enhanced visualization (resize, zoom, hover), and introduce granular controls with sensitive data auto-expiration, file existence validation, and deep performance optimizations for large history sets.
+Address UI accessibility issues, implement enhanced visualization (resize, zoom, hover), and introduce granular controls with sensitive data auto-expiration, file existence validation, smart consecutive deduplication, and deep performance optimizations for large history sets.
 
 ## Functional Requirements
 
@@ -74,9 +74,29 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
 - **Visual Feedback**: Temporary success/fail badges or checkmarks when performing actions (e.g., "Copied!" checkmark).
 - **Vibrancy & Aesthetic**: Apply `NSVisualEffectView` (frosted glass) for a modern, native macOS feel.
 
+### FR13: Smart Consecutive Deduplication
+- **Consecutive Check**: Prevent duplicate entries in history if the same content is copied consecutively from the same source application.
+- **Efficient Hashing**: Use a high-performance hashing algorithm (e.g., SHA-256 or MD5) to generate a unique fingerprint of the content for rapid comparison.
+- **Source Verification**: Only deduplicate if both the content hash and the `sourceApplication` match the most recent entry.
+
 ## Acceptance Criteria
-...
+1. Right-clicking the status icon shows a functional menu with Settings and Quit.
+2. The history panel has visible and working Settings and Close buttons.
+3. Resizing and zooming persist across app restarts.
+4. Hovering over an entry shows an enlarged preview.
+5. Copying a non-existent file triggers a user warning.
+6. Sensitive items are automatically purged after the configured time.
+7. Vault storage size is monitored; background trimming successfully removes old files when the limit is reached.
+8. Settings UI allows configuring all values in the consolidated settings list.
+9. "Launch at Login" setting works and defaults to enabled.
+10. Clicking "Save" in the Settings window immediately applies and persists all changes.
+11. Every clipboard entry displays: App Name, Window/Document Title, Timestamp, and Device Origin.
+12. HTML and RTF items are rendered with preserved styling in the preview.
+13. Search results update with a 300ms debounce.
+14. Scrolling through 1,000 entries remains smooth at 60fps.
 15. History list renders instantly without Keychain access.
 16. Panel transitions are smooth (60fps) with no abrupt flickering.
 17. Buttons and entry rows provide immediate visual feedback (hover, click states).
 18. Haptic feedback occurs on key user actions.
+19. Copying the exact same text/file/image twice in a row from the same app results in only one entry in the history panel.
+20. Deduplication logic is high-performance and does not introduce latency to the capture pipeline.

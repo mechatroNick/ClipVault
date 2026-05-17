@@ -20,6 +20,7 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 
 ### 1. Clipboard History with Search
 - Capture every clipboard change (text, images, files, rich text, URLs)
+- Smart Deduplication: Prevent redundant entries by comparing content hashes and sources for consecutive copies.
 - Store entries with timestamps and source application metadata
 - Full-text search across all text-based entries
 - Browseable, scrollable history with configurable retention
