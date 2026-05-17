@@ -211,5 +211,11 @@ final class DatabaseManager {
                 t.column("plainTextSearchContent")
             }
         }
+        
+        migrator.registerMigration("v2_add_pinned") { db in
+            try db.alter(table: "clipboardEntry") { t in
+                t.add(column: "isPinned", .boolean).notNull().defaults(to: false)
+            }
+        }
     }
 }

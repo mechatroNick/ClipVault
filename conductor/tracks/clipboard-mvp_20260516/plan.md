@@ -66,16 +66,16 @@
     - [x] Run test suite, verify ≥95% coverage
     - [x] Commit: `feat(security): Add Keychain-backed encryption key management`
 
-- [ ] Task: Build encrypted clipboard entry repository
-    - [ ] Write unit tests for CRUD operations with encryption layer
-    - [ ] Write integration tests: store entry → encrypt → decrypt → retrieve → verify content
-    - [ ] Create ClipboardRepository combining DatabaseManager + EncryptionService
-    - [ ] Implement save(entry) — encrypts content before DB write
-    - [ ] Implement fetchAll(), fetch(id), search(query), delete(id), pin(id), unpin(id)
-    - [ ] Implement auto-purge of expired entries based on retention setting
-    - [ ] Run full test suite, verify ≥95% coverage
-    - [ ] Verify: database file hex dump shows no plain text
-    - [ ] Commit: `feat(storage): Add encrypted clipboard entry repository`
+- [x] Task: Build encrypted clipboard entry repository
+    - [x] Write unit tests for CRUD operations with encryption layer
+    - [x] Write integration tests: store entry → encrypt → decrypt → retrieve → verify content
+    - [x] Create ClipboardRepository combining DatabaseManager + EncryptionService
+    - [x] Implement save(entry) — encrypts content before DB write
+    - [x] Implement fetchAll(), fetch(id), search(query), delete(id), pin(id), unpin(id)
+    - [x] Implement auto-purge of expired entries based on retention setting
+    - [x] Run full test suite, verify ≥95% coverage
+    - [x] Verify: database file hex dump shows no plain text
+    - [x] Commit: `feat(storage): Add encrypted clipboard entry repository`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Data Layer & Encryption' (Protocol in workflow.md)
 
