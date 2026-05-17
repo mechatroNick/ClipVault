@@ -53,7 +53,14 @@
 
 - [ ] Task: Update Settings UI
     - [ ] Add configuration for "Sensitive Purge Time" (hours).
+    - [ ] Add configuration for "Storage Limit" (GB).
     - [ ] Ensure "Large File Threshold" is configurable in Settings.
-    - [ ] Commit: `feat(ui): Enhance settings with expiry and threshold controls`
+    - [ ] Commit: `feat(ui): Enhance settings with expiry, threshold, and storage limits`
+
+- [ ] Task: Implement storage auto-trimming
+    - [ ] Add `VaultSizeMonitor` service or background task to calculate total storage usage.
+    - [ ] Implement trimming logic: sort vaulted files by age and delete until total size is below limit.
+    - [ ] Schedule background task to run periodically or after significant captures.
+    - [ ] Commit: `feat(storage): Implement background vault size monitoring and auto-trimming`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
