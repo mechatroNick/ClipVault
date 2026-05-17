@@ -77,7 +77,7 @@
     - [x] Verify: database file hex dump shows no plain text
     - [x] Commit: `feat(storage): Add encrypted clipboard entry repository`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Data Layer & Encryption' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Data Layer & Encryption' (Protocol in workflow.md)
 
 ## Phase 3: Clipboard Monitoring & Capture
 
