@@ -105,18 +105,18 @@
     - [x] Commit: `feat(clipboard): Add content type detection with markdown and code heuristics`
 
 - [x] Task: Implement clipboard entry creation pipeline
-    - [ ] Write integration tests: copy text → pipeline creates entry → entry in repository
-    - [ ] Write unit tests for large file threshold logic
-    - [ ] Create ClipboardCaptureService: orchestrate monitor → detect → extract → store
-    - [ ] Extract plain text preview (first 200 chars) for all text types
-    - [ ] Generate thumbnail data for images (NSImage resize to 48px)
-    - [ ] Handle large files: check size, store path reference if >1MB
-    - [ ] Capture source application bundle identifier
-    - [ ] Run full test suite, verify ≥95% coverage
-    - [ ] Verify: capture latency <100ms (integration test timing assertion)
-    - [ ] Commit: `feat(clipboard): Add clipboard entry creation pipeline with large file handling`
+    - [x] Write integration tests: copy text → pipeline creates entry → entry in repository
+    - [x] Write unit tests for large file threshold logic
+    - [x] Create ClipboardCaptureService: orchestrate monitor → detect → extract → store
+    - [x] Extract plain text preview (first 200 chars) for all text types
+    - [x] Generate thumbnail data for images (NSImage resize to 48px)
+    - [x] Handle large files: check size, store path reference if >1MB
+    - [x] Capture source application bundle identifier
+    - [x] Run full test suite, verify ≥95% coverage
+    - [x] Verify: capture latency <100ms (integration test timing assertion)
+    - [x] Commit: `feat(clipboard): Add clipboard entry creation pipeline with large file handling`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 3: Clipboard Monitoring & Capture' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3: Clipboard Monitoring & Capture' (Protocol in workflow.md)
 
 ## Phase 4: Menu Bar UI & History Panel
 
