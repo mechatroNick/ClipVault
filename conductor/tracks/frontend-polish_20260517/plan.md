@@ -22,6 +22,14 @@
     - [ ] Update `ClipboardEntry` model to store `windowTitle`.
     - [ ] Commit: `feat(clipboard): Capture active window title during copy`
 
+- [ ] Task: Implement On-Demand Decryption Architecture
+    - [ ] Update `ClipboardEntry` with `windowTitle` and `deviceName` string columns.
+    - [ ] Add migration to add these columns to the database.
+    - [ ] Refactor `ClipboardRepository.observeEntries` to remove bulk decryption.
+    - [ ] Implement `ClipboardRepository.decryptContent(for:)` for lazy loading.
+    - [ ] Update `ClipboardCaptureService` to populate new plaintext columns.
+    - [ ] Commit: `refactor(storage): Implement on-demand decryption and plaintext metadata`
+
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Resizability, Scaling & Persistence

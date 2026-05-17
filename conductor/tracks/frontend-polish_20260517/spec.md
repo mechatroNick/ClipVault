@@ -55,6 +55,14 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
 - **HTML/RTF Support**: Implement a `RichTextRenderer` that converts captured RTF/HTML data into `AttributedString` for native SwiftUI display.
 - **Styling Preservation**: Preserve basic formatting (bold, italic, color) while ensuring the text scales correctly with the UI Zoom Level.
 
+### FR10: On-Demand Decryption Architecture
+- **Plaintext Metadata**: Store all UI-visible attributes in plaintext database columns (Timestamp, App Name, Window Title, Device Name, Content Type, isPinned, isRemote).
+- **Encrypted Content Blobs**: Keep only the actual "payload" (plain text, rich text, image data) encrypted with AES-256-GCM.
+- **Deferred Decryption**: Refactor the repository to avoid bulk decryption. Content should only be decrypted when:
+    1. An entry is selected for an enlarged preview.
+    2. An entry is "re-copied" or pasted.
+- **Performance**: Ensure the history list (50+ items) can be rendered without any Keychain access or cryptographic overhead.
+
 ## Acceptance Criteria
 1. Right-clicking the status icon shows a functional menu with Settings and Quit.
 2. The history panel has visible and working Settings and Close buttons.
@@ -69,3 +77,5 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
 11. Every clipboard entry displays: App Name, Window/Document Title, Timestamp, and Device Origin icon/label.
 12. HTML and RTF clipboard items are rendered with preserved styling (font weight, color) in the history list.
 13. Markdown previews correctly render block elements like headers and lists.
+14. The history list renders using plaintext data; no decryption occurs until an item is interacted with.
+15. Metadata (Window Title, Device Info) is searchable and visible without keychain access.
