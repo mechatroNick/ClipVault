@@ -83,7 +83,7 @@ final class ClipboardCaptureServiceTests: XCTestCase {
         XCTAssertEqual(String(data: plainText, encoding: .utf8), "Secret password")
         
         let metadata = try XCTUnwrap(captured.metadata)
-        XCTAssertEqual(String(data: metadata, encoding: .utf8), "{\"app\":\"com.apple.Terminal\"}")
+        XCTAssertEqual(String(data: metadata, encoding: .utf8), "{\"app\":\"com.apple.Terminal\",\"isRemote\":false}")
         
         await service.stop()
     }

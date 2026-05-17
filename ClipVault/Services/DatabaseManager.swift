@@ -223,5 +223,11 @@ final class DatabaseManager {
                 t.add(column: "isVaultStored", .boolean).notNull().defaults(to: false)
             }
         }
+        
+        migrator.registerMigration("v4_add_isRemote") { db in
+            try db.alter(table: "clipboardEntry") { t in
+                t.add(column: "isRemote", .boolean).notNull().defaults(to: false)
+            }
+        }
     }
 }

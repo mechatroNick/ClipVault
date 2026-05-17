@@ -87,30 +87,70 @@ struct GeneralSettingsView: View {
 }
 
 struct SecuritySettingsView: View {
+    @StateObject private var settings = SettingsManager.shared
+    @State private var newLabel = ""
+    @State private var newPattern = ""
+    
     var body: some View {
-        VStack(spacing: 20) {
-            Image(systemName: "lock.shield")
-                .font(.system(size: 48))
-                .foregroundColor(.accentColor)
+        Form {
+            Section(header: Text("Encryption")) {
+                HStack(spacing: 12) {
+                    Image(systemName: "lock.shield")
+                        .font(.title)
+                        .foregroundColor(.accentColor)
+                    VStack(alignment: .leading) {
+                        Text("AES-256-GCM Active")
+                            .font(.headline)
+                        Text("All clipboard content is encrypted. Your keys are in the macOS Keychain.")
+                            .font(.caption)
+                            .foregroundColor(.secondary)
+                    }
+                }
+                .padding(.vertical, 8)
+            }
             
-            Text("Encryption is Active")
-                .font(.headline)
-            
-            Text("All clipboard content is encrypted with AES-256-GCM. Your keys are securely stored in the macOS Keychain.")
-                .multilineTextAlignment(.center)
-                .font(.subheadline)
-                .foregroundColor(.secondary)
-            
-            Divider()
-            
-            Toggle("Redact sensitive content in search index", isOn: .constant(true))
-                .disabled(true)
-            
-            Text("Baseline filtering for Credit Cards, SSNs, and Secrets is always enabled for your protection.")
-                .font(.caption)
-                .foregroundColor(.secondary)
+            Section(header: Text("Redaction Rules (FTS Index)")) {
+                Text("Built-in rules for Credit Cards, SSNs, and Secrets are always active.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                
+                ForEach(Array(settings.customPatterns.keys).sorted(), id: \.self) { label in
+                    HStack {
+                        Text(label)
+                        Spacer()
+                        Text(settings.customPatterns[label] ?? "")
+                            .font(.system(.caption, design: .monospaced))
+                            .foregroundColor(.secondary)
+                        Button(action: { settings.customPatterns.removeValue(forKey: label) }) {
+                            Image(systemName: "minus.circle.fill")
+                                .foregroundColor(.red)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                
+                HStack {
+                    TextField("Label", text: $newLabel)
+                    TextField("Regex Pattern", text: $newPattern)
+                    Button(action: addPattern) {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.green)
+                    }
+                    .buttonStyle(.plain)
+                    .disabled(newLabel.isEmpty || newPattern.isEmpty)
+                }
+            }
         }
         .padding()
+    }
+    
+    private func addPattern() {
+        // Validate regex
+        if (try? NSRegularExpression(pattern: newPattern)) != nil {
+            settings.customPatterns[newLabel] = newPattern
+            newLabel = ""
+            newPattern = ""
+        }
     }
 }
 

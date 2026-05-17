@@ -24,10 +24,12 @@ struct ContentPreviewRouter: View {
             }
         case "url":
             URLPreview(urlString: entry.plainTextSearchContent ?? "No URL")
-        case "code", "markdown":
+        case "code":
             TextPreview(text: entry.plainTextSearchContent ?? "", isCode: true)
+        case "markdown":
+            TextPreview(text: entry.plainTextSearchContent ?? "", isMarkdown: true)
         default:
-            TextPreview(text: entry.plainTextSearchContent ?? "", isCode: false)
+            TextPreview(text: entry.plainTextSearchContent ?? "")
         }
     }
 }

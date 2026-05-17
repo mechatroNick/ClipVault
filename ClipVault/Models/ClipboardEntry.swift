@@ -68,6 +68,9 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
     /// Whether the full content is stored in the encrypted file vault.
     var isVaultStored: Bool = false
 
+    /// Whether the entry originated from a remote device via Universal Clipboard.
+    var isRemote: Bool = false
+
     // MARK: - CodingKeys
 
     enum CodingKeys: String, CodingKey {
@@ -83,6 +86,7 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
         case metadata
         case isPinned
         case isVaultStored
+        case isRemote
     }
 
     // MARK: - MutablePersistableRecord
@@ -112,5 +116,6 @@ extension ClipboardEntry {
         static let metadata = Column(CodingKeys.metadata)
         static let isPinned = Column(CodingKeys.isPinned)
         static let isVaultStored = Column(CodingKeys.isVaultStored)
+        static let isRemote = Column(CodingKeys.isRemote)
     }
 }

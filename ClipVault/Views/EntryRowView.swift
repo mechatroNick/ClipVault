@@ -36,6 +36,12 @@ struct EntryRowView: View {
                             .foregroundColor(isSelected ? .white.opacity(0.8) : .secondary)
                             .lineLimit(1)
                     }
+                    
+                    if entry.isRemote {
+                        Image(systemName: "iphone")
+                            .font(.system(size: 10))
+                            .foregroundColor(isSelected ? .white.opacity(0.8) : .secondary)
+                    }
                 }
             }
             

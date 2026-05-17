@@ -26,11 +26,16 @@ final class SettingsManager: ObservableObject {
         didSet { UserDefaults.standard.set(vaultRootPath, forKey: Keys.vaultRootPath) }
     }
     
+    @Published var customPatterns: [String: String] {
+        didSet { UserDefaults.standard.set(customPatterns, forKey: Keys.customPatterns) }
+    }
+    
     private enum Keys {
         static let retentionDays = "cv_retentionDays"
         static let largeFileThresholdMB = "cv_largeFileThresholdMB"
         static let maxEntries = "cv_maxEntries"
         static let vaultRootPath = "cv_vaultRootPath"
+        static let customPatterns = "cv_customPatterns"
     }
     
     private init() {
@@ -44,5 +49,7 @@ final class SettingsManager: ObservableObject {
             let docs = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
             self.vaultRootPath = docs.appendingPathComponent("VaultClip").path
         }
+        
+        self.customPatterns = UserDefaults.standard.dictionary(forKey: Keys.customPatterns) as? [String: String] ?? [:]
     }
 }
