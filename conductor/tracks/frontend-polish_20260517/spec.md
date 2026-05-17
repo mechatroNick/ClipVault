@@ -4,7 +4,7 @@
 `frontend-polish_20260517`
 
 ## Overview
-Address UI accessibility issues, implement enhanced visualization (resize, zoom, hover), and introduce granular controls with sensitive data auto-expiration and file existence validation.
+Address UI accessibility issues, implement enhanced visualization (resize, zoom, hover), and introduce granular controls with sensitive data auto-expiration, file existence validation, and deep performance optimizations for large history sets.
 
 ## Functional Requirements
 
@@ -42,13 +42,13 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
     - **Vault**: Vault Location, Large File Threshold, Storage Limit (GB), Auto-trim toggle.
     - **Security**: Sensitive Purge Time (hours), Custom Redaction Rules (Regex).
 - **Save Action**: Include a prominent "Save" button in the Settings window that forces an immediate write/application of all changed values.
-- **Launch at Startup**: Implement `ServiceManagement` or `LSSharedFileList` to handle the "Launch at Login" functionality.
+- **Launch at Startup**: Implement startup item registration to handle the "Launch at Login" functionality.
 
 ### FR8: Granular Metadata Display
 - **Enhanced Window Tracking**: Capture the specific window title of the active application at the time of copy (e.g., the browser tab name, the MS Word document name, or the VSCode filename).
 - **Explicit Device Labeling**: Clearly display the device of origin. Use labels like "This Mac", "iPhone", or "iPad" alongside an appropriate icon.
 - **Detailed Timestamps**: Display the exact time of copy in a user-friendly format (e.g., "Today at 2:45 PM" or relative "5m ago").
-- **UI Integration**: Incorporate this metadata into the `EntryRowView` or as a "Details" overlay.
+- **UI Integration**: Incorporate this metadata into the `EntryRowView`.
 
 ### FR9: Rich Content Rendering & Preview
 - **Enhanced Markdown**: Improve `MarkdownRenderer` to handle block-level elements (lists, headers) more reliably.
@@ -58,10 +58,14 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
 ### FR10: On-Demand Decryption Architecture
 - **Plaintext Metadata**: Store all UI-visible attributes in plaintext database columns (Timestamp, App Name, Window Title, Device Name, Content Type, isPinned, isRemote).
 - **Encrypted Content Blobs**: Keep only the actual "payload" (plain text, rich text, image data) encrypted with AES-256-GCM.
-- **Deferred Decryption**: Refactor the repository to avoid bulk decryption. Content should only be decrypted when:
-    1. An entry is selected for an enlarged preview.
-    2. An entry is "re-copied" or pasted.
-- **Performance**: Ensure the history list (50+ items) can be rendered without any Keychain access or cryptographic overhead.
+- **Deferred Decryption**: Content should only be decrypted when strictly needed (hover/select/paste).
+- **Performance**: Render the history list without Keychain access or cryptographic overhead.
+
+### FR11: Search & List Optimization
+- **Debounced Search**: Keystrokes in the search bar must be debounced (e.g., 300ms delay) to prevent redundant database queries during rapid typing.
+- **Lazy Loading & Pagination**: Use lazy loading (`LazyVStack` or `List`) and implement paginated database fetches for large result sets.
+- **Thumbnail Cache**: Cache decrypted thumbnails in memory (`NSCache`) to ensure smooth scrolling.
+- **FTS5 Tuning**: Optimize the search index for sub-50ms performance across 10,000+ entries.
 
 ## Acceptance Criteria
 1. Right-clicking the status icon shows a functional menu with Settings and Quit.
@@ -70,12 +74,12 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
 4. Hovering over an entry shows an enlarged preview.
 5. Copying a non-existent file triggers a user warning.
 6. Sensitive items are automatically purged after the configured time.
-7. Vault storage size is monitored; background trimming successfully removes old files when the 10GB limit (or user-defined limit) is reached.
+7. Vault storage size is monitored; background trimming successfully removes old files when the limit is reached.
 8. Settings UI allows configuring all values in the consolidated settings list.
 9. "Launch at Login" setting works and defaults to enabled.
 10. Clicking "Save" in the Settings window immediately applies and persists all changes.
-11. Every clipboard entry displays: App Name, Window/Document Title, Timestamp, and Device Origin icon/label.
-12. HTML and RTF clipboard items are rendered with preserved styling (font weight, color) in the history list.
-13. Markdown previews correctly render block elements like headers and lists.
-14. The history list renders using plaintext data; no decryption occurs until an item is interacted with.
-15. Metadata (Window Title, Device Info) is searchable and visible without keychain access.
+11. Every clipboard entry displays: App Name, Window/Document Title, Timestamp, and Device Origin.
+12. HTML and RTF items are rendered with preserved styling in the preview.
+13. Search results update with a 300ms debounce.
+14. Scrolling through 1,000 entries remains smooth at 60fps.
+15. History list renders instantly without Keychain access.

@@ -92,3 +92,27 @@
     - [ ] Commit: `feat(ui): Finalize settings UI with Save button and advanced controls`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+
+## Phase 5: Search & Performance Optimization
+
+- [ ] Task: Implement Debounced Search
+    - [ ] Add debounce logic (300ms) to the search query binding in `ClipboardViewModel`.
+    - [ ] Ensure database queries only trigger after the user stops typing.
+    - [ ] Commit: `perf(ui): Implement debounced search for history panel`
+
+- [ ] Task: Implement Pagination & Lazy Loading
+    - [ ] Update `ClipboardRepository` to support paginated fetches.
+    - [ ] Refactor history list to load additional items as the user scrolls.
+    - [ ] Commit: `perf(storage): Add paginated history loading`
+
+- [ ] Task: Implement In-Memory Thumbnail Cache
+    - [ ] Add `ThumbnailCache` utility using `NSCache`.
+    - [ ] Integrate cache into `EntryRowView` to avoid repeated re-decryption of images.
+    - [ ] Commit: `perf(ui): Add in-memory thumbnail caching for smooth scrolling`
+
+- [ ] Task: FTS5 Optimization & Tuning
+    - [ ] Audit SQLite search performance with large datasets.
+    - [ ] Implement porter tokenizers or prefix indexing if necessary.
+    - [ ] Commit: `perf(storage): Optimize FTS5 search index`
+
+- [ ] Task: Conductor - User Manual Verification 'Phase 5' (Protocol in workflow.md)
