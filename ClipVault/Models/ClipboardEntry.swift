@@ -65,6 +65,9 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
     /// Whether the entry is pinned to prevent auto-purge.
     var isPinned: Bool = false
 
+    /// Whether the full content is stored in the encrypted file vault.
+    var isVaultStored: Bool = false
+
     // MARK: - CodingKeys
 
     enum CodingKeys: String, CodingKey {
@@ -79,6 +82,7 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
         case sourceApplication
         case metadata
         case isPinned
+        case isVaultStored
     }
 
     // MARK: - MutablePersistableRecord
@@ -107,5 +111,6 @@ extension ClipboardEntry {
         static let sourceApplication = Column(CodingKeys.sourceApplication)
         static let metadata = Column(CodingKeys.metadata)
         static let isPinned = Column(CodingKeys.isPinned)
+        static let isVaultStored = Column(CodingKeys.isVaultStored)
     }
 }

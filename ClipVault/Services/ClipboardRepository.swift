@@ -37,7 +37,7 @@ final class ClipboardRepository {
         self.contentFilter = contentFilter
     }
     
-    private func getEncryptionKey() throws -> SymmetricKey {
+    func getEncryptionKey() throws -> SymmetricKey {
         if let key = try keychainManager.retrieveKey() {
             return key
         }
@@ -84,9 +84,19 @@ final class ClipboardRepository {
             return try encryptionService.decrypt(package: package, using: key)
         }
         
-        decryptedEntry.plainTextContent = try decryptData(entry.plainTextContent)
-        decryptedEntry.richTextContent = try decryptData(entry.richTextContent)
-        decryptedEntry.imageData = try decryptData(entry.imageData)
+        if entry.isVaultStored, let path = entry.fileURL {
+            let data = try VaultManager.shared.loadFromVault(at: path, using: key)
+            switch entry.contentType {
+            case "image": decryptedEntry.imageData = data
+            case "rtf", "html": decryptedEntry.richTextContent = data
+            default: decryptedEntry.plainTextContent = data
+            }
+        } else {
+            decryptedEntry.plainTextContent = try decryptData(entry.plainTextContent)
+            decryptedEntry.richTextContent = try decryptData(entry.richTextContent)
+            decryptedEntry.imageData = try decryptData(entry.imageData)
+        }
+        
         decryptedEntry.metadata = try decryptData(entry.metadata)
         
         return decryptedEntry

@@ -13,6 +13,7 @@ final class MenuBarController: NSObject {
     private let viewModel: ClipboardViewModel
     private let pasteService: PasteService
     private var eventMonitor: Any?
+    private var pastingTask: Task<Void, Never>?
     
     var isPanelVisible: Bool {
         panel?.isVisible ?? false
@@ -101,7 +102,8 @@ final class MenuBarController: NSObject {
             case "1"..."9":
                 if let digit = Int(characters), digit <= viewModel.entries.count {
                     let entry = viewModel.entries[digit - 1]
-                    Task {
+                    pastingTask?.cancel()
+                    pastingTask = Task {
                         try? await pasteService.preparePasteboard(for: entry)
                         await pasteService.simulatePaste()
                     }
@@ -137,7 +139,8 @@ final class MenuBarController: NSObject {
             if let index = viewModel.selectedIndex, index < viewModel.entries.count {
                 let entry = viewModel.entries[index]
                 let asPlainText = modifiers.contains(.option)
-                Task {
+                pastingTask?.cancel()
+                pastingTask = Task {
                     try? await pasteService.preparePasteboard(for: entry, asPlainText: asPlainText)
                     await pasteService.simulatePaste()
                 }

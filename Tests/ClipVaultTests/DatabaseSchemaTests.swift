@@ -42,9 +42,9 @@ final class DatabaseSchemaTests: XCTestCase {
         let expectedColumns: Set<String> = [
             "id", "timestamp", "contentType", "plainTextContent",
             "richTextContent", "imageData", "fileURL", "sourceApplication", "metadata",
-            "plainTextSearchContent", "isPinned"
+            "plainTextSearchContent", "isPinned", "isVaultStored"
         ]
-        XCTAssertEqual(columnNames, expectedColumns, "clipboardEntry should have exactly 11 expected columns")
+        XCTAssertEqual(columnNames, expectedColumns, "clipboardEntry should have exactly 12 expected columns")
     }
 
     func testPlainTextSearchContentColumnExists() throws {
@@ -102,6 +102,9 @@ final class DatabaseSchemaTests: XCTestCase {
 
         let isPinned = try XCTUnwrap(columnMap["isPinned"], "isPinned column missing")
         XCTAssertTrue(isPinned.isNotNull, "isPinned must be NOT NULL")
+
+        let isVaultStored = try XCTUnwrap(columnMap["isVaultStored"], "isVaultStored column missing")
+        XCTAssertTrue(isVaultStored.isNotNull, "isVaultStored must be NOT NULL")
 
         // All other columns should be nullable
         let nullableColumns = ["id", "plainTextContent", "richTextContent",

@@ -217,5 +217,11 @@ final class DatabaseManager {
                 t.add(column: "isPinned", .boolean).notNull().defaults(to: false)
             }
         }
+        
+        migrator.registerMigration("v3_add_isVaultStored") { db in
+            try db.alter(table: "clipboardEntry") { t in
+                t.add(column: "isVaultStored", .boolean).notNull().defaults(to: false)
+            }
+        }
     }
 }

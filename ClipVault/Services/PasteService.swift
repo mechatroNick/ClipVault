@@ -59,7 +59,11 @@ final class PasteService {
     
     /// Simulates a ⌘V paste action using HID events.
     @MainActor
-    func simulatePaste() {
+    func simulatePaste() async {
+        // Security/UX Hardening: Small delay to let the target application regain focus
+        // after the floating panel dismisses.
+        try? await Task.sleep(nanoseconds: 50_000_000) // 50ms
+        
         let src = CGEventSource(stateID: .combinedSessionState)
         
         let vDown = CGEvent(keyboardEventSource: src, virtualKey: 0x09, keyDown: true)
