@@ -12,6 +12,11 @@
     - [ ] Implement `closePanel` action.
     - [ ] Commit: `feat(ui): Add inline Settings and Close buttons to history panel`
 
+- [ ] Task: Implement 'Launch at Login'
+    - [ ] Integrate `LaunchAtLogin` helper or use `SMAppService`.
+    - [ ] Add logic to enable login item by default on first launch.
+    - [ ] Commit: `feat(lifecycle): Implement Launch at Login functionality`
+
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Resizability, Scaling & Persistence
@@ -44,23 +49,22 @@
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
-## Phase 4: Sensitive Expiry & Configuration
+## Phase 4: Sensitive Expiry & Advanced Settings
 
 - [ ] Task: Implement sensitive item auto-expiry
     - [ ] Update `ClipboardRepository` to assign default expiry (1h) to sensitive items.
     - [ ] Implement background purge task in `ClipboardCaptureService`.
     - [ ] Commit: `feat(security): Implement auto-expiry for sensitive entries`
 
-- [ ] Task: Update Settings UI
-    - [ ] Add configuration for "Sensitive Purge Time" (hours).
-    - [ ] Add configuration for "Storage Limit" (GB).
-    - [ ] Ensure "Large File Threshold" is configurable in Settings.
-    - [ ] Commit: `feat(ui): Enhance settings with expiry, threshold, and storage limits`
-
 - [ ] Task: Implement storage auto-trimming
     - [ ] Add `VaultSizeMonitor` service or background task to calculate total storage usage.
     - [ ] Implement trimming logic: sort vaulted files by age and delete until total size is below limit.
-    - [ ] Schedule background task to run periodically or after significant captures.
     - [ ] Commit: `feat(storage): Implement background vault size monitoring and auto-trimming`
+
+- [ ] Task: Finalize Settings UI with 'Save' button
+    - [ ] Add configuration for "Sensitive Purge Time", "Storage Limit", and "Launch at Login".
+    - [ ] Add a prominent "Save" button to the Settings window.
+    - [ ] Ensure "Save" triggers immediate persistence and application of all settings.
+    - [ ] Commit: `feat(ui): Finalize settings UI with Save button and advanced controls`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
