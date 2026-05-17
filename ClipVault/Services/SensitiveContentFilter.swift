@@ -8,52 +8,57 @@
 import Foundation
 
 /// Detects and redacts sensitive information like credit cards and secrets.
-struct SensitiveContentFilter {
+final class SensitiveContentFilter {
     
-    /// Regex patterns for common sensitive data types.
-    private var allPatterns: [String: String] {
-        let builtIn: [String: String] = [
-            "Credit Card": #"\b(?:\d[ -]*?){13,16}\b"#,
-            "SSN": #"\b\d{3}-\d{2}-\d{4}\b"#,
-            "IPv4": #"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"#,
-            // Generic secret/key pattern (case-insensitive labels followed by entropy-rich strings)
-            "Secret": #"(?i)(?:key|secret|token|password|auth|passwd|credential)[^a-z0-9]{1,10}[a-z0-9+/_.-]{8,}"#
-        ]
+    private let builtInPatterns: [String: String] = [
+        "Credit Card": #"\b(?:\d[ -]*?){13,16}\b"#,
+        "SSN": #"\b\d{3}-\d{2}-\d{4}\b"#,
+        "IPv4": #"\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b"#,
+        "Secret": #"(?i)(?:key|secret|token|password|auth|passwd|credential)[^a-z0-9]{1,10}[a-z0-9+/_.-]{8,}"#
+    ]
+    
+    private var compiledRegexes: [String: NSRegularExpression] = [:]
+    private var lastCustomPatterns: [String: String] = [:]
+    
+    init() {
+        updateRegexCache()
+    }
+    
+    private func updateRegexCache() {
+        let custom = SettingsManager.shared.customPatterns
+        if custom == lastCustomPatterns && !compiledRegexes.isEmpty { return }
         
-        // Merge with custom patterns from settings
-        var merged = builtIn
-        for (label, pattern) in SettingsManager.shared.customPatterns {
-            merged[label] = pattern
+        lastCustomPatterns = custom
+        var newCache: [String: NSRegularExpression] = [:]
+        
+        let all = builtInPatterns.merging(custom) { (_, new) in new }
+        
+        for (label, pattern) in all {
+            if let regex = try? NSRegularExpression(pattern: pattern) {
+                newCache[label] = regex
+            }
         }
-        return merged
+        compiledRegexes = newCache
     }
     
     /// Returns a version of the text where sensitive patterns are replaced with redaction labels.
-    ///
-    /// - Parameter text: The input string to filter.
-    /// - Returns: Redacted string for safe storage in plaintext indexes.
     func redact(_ text: String) -> String {
+        updateRegexCache()
         var redacted = text
-        for (label, pattern) in allPatterns {
-            if let regex = try? NSRegularExpression(pattern: pattern) {
-                let range = NSRange(redacted.startIndex..., in: redacted)
-                redacted = regex.stringByReplacingMatches(in: redacted, range: range, withTemplate: "[REDACTED \(label)]")
-            }
+        for (label, regex) in compiledRegexes {
+            let range = NSRange(redacted.startIndex..., in: redacted)
+            redacted = regex.stringByReplacingMatches(in: redacted, range: range, withTemplate: "[REDACTED \(label)]")
         }
         return redacted
     }
     
     /// Quickly checks if a string contains any sensitive content.
-    ///
-    /// - Parameter text: The string to check.
-    /// - Returns: True if any pattern matches.
     func containsSensitiveContent(_ text: String) -> Bool {
-        for pattern in allPatterns.values {
-            if let regex = try? NSRegularExpression(pattern: pattern) {
-                let range = NSRange(text.startIndex..., in: text)
-                if regex.firstMatch(in: text, range: range) != nil {
-                    return true
-                }
+        updateRegexCache()
+        for regex in compiledRegexes.values {
+            let range = NSRange(text.startIndex..., in: text)
+            if regex.firstMatch(in: text, range: range) != nil {
+                return true
             }
         }
         return false

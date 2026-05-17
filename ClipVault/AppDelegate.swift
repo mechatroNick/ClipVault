@@ -57,7 +57,16 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationWillTerminate(_ notification: Notification) {
-        captureService?.stop()
-        KeyboardHandler.shared.unregisterHotKey()
+        let capture = captureService
+        let handler = KeyboardHandler.shared
+        
+        // Use a detached task or similar if we need to wait, but usually
+        // for termination we just fire and hope for the best if we can't block.
+        // Actually, we can't easily wait for async cleanup in applicationWillTerminate.
+        // But we can at least signal stop.
+        Task {
+            await capture?.stop()
+        }
+        handler.unregisterHotKey()
     }
 }

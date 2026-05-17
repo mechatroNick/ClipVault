@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+                ST_STRESSTESTS_SWIFT_BUILD /* StressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */; };
+                PMT_MARKDOWNRENDERERTESTS_SWIFT_BUILD /* MarkdownRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = PMT_MARKDOWNRENDERERTESTS_SWIFT_REF /* MarkdownRendererTests.swift */; };
+                PM_MARKDOWNRENDERER_SWIFT_BUILD /* MarkdownRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = PM_MARKDOWNRENDERER_SWIFT_REF /* MarkdownRenderer.swift */; };
                 P5F_SETTINGSVIEW_SWIFT_BUILD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P5F_SETTINGSVIEW_SWIFT_REF /* SettingsView.swift */; };
                 P5F_VAULTMANAGER_SWIFT_BUILD /* VaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = P5F_VAULTMANAGER_SWIFT_REF /* VaultManager.swift */; };
                 P5F_SETTINGSMANAGER_SWIFT_BUILD /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = P5F_SETTINGSMANAGER_SWIFT_REF /* SettingsManager.swift */; };
@@ -63,6 +66,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+                ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StressTests.swift; path = Tests/ClipVaultTests/StressTests.swift; sourceTree = SOURCE_ROOT; };
+                PMT_MARKDOWNRENDERERTESTS_SWIFT_REF /* MarkdownRendererTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MarkdownRendererTests.swift; path = Tests/ClipVaultTests/MarkdownRendererTests.swift; sourceTree = SOURCE_ROOT; };
+                PM_MARKDOWNRENDERER_SWIFT_REF /* MarkdownRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MarkdownRenderer.swift; path = ClipVault/Utilities/MarkdownRenderer.swift; sourceTree = SOURCE_ROOT; };
                 P5F_SETTINGSVIEW_SWIFT_REF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = ClipVault/Views/SettingsView.swift; sourceTree = SOURCE_ROOT; };
                 P5F_VAULTMANAGER_SWIFT_REF /* VaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VaultManager.swift; path = ClipVault/Services/VaultManager.swift; sourceTree = SOURCE_ROOT; };
                 P5F_SETTINGSMANAGER_SWIFT_REF /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsManager.swift; path = ClipVault/Services/SettingsManager.swift; sourceTree = SOURCE_ROOT; };
@@ -206,7 +212,8 @@
 		C1D2E3F4A5B6C7D8E9F0A1B6 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-			);
+			                                PM_MARKDOWNRENDERER_SWIFT_REF /* MarkdownRenderer.swift */,
+);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
@@ -241,6 +248,8 @@
                                 P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */,
                                 P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */,
                                 P5_PASTESERVICETESTS_SWIFT_REF /* PasteServiceTests.swift */,
+                                PMT_MARKDOWNRENDERERTESTS_SWIFT_REF /* MarkdownRendererTests.swift */,
+                                ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -376,6 +385,7 @@
                                 P5F_SETTINGSMANAGER_SWIFT_BUILD /* SettingsManager.swift in Sources */,
                                 P5F_VAULTMANAGER_SWIFT_BUILD /* VaultManager.swift in Sources */,
                                 P5F_SETTINGSVIEW_SWIFT_BUILD /* SettingsView.swift in Sources */,
+                                PM_MARKDOWNRENDERER_SWIFT_BUILD /* MarkdownRenderer.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -398,6 +408,8 @@
                                 P4_MENUBARCONTROLLERTESTS_SWIFT_BUILD /* MenuBarControllerTests.swift in Sources */,
                                 P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_BUILD /* ContentPreviewTests.swift in Sources */,
                                 P5_PASTESERVICETESTS_SWIFT_BUILD /* PasteServiceTests.swift in Sources */,
+                                PMT_MARKDOWNRENDERERTESTS_SWIFT_BUILD /* MarkdownRendererTests.swift in Sources */,
+                                ST_STRESSTESTS_SWIFT_BUILD /* StressTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -538,14 +550,14 @@
 				CODE_SIGN_ENTITLEMENTS = ClipVault/ClipVault.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2026.05.17.01;
+				CURRENT_PROJECT_VERSION = 2026.05.17.02;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = ClipVault/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.clipvault.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -561,14 +573,14 @@
 				CODE_SIGN_ENTITLEMENTS = ClipVault/ClipVault.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 2026.05.17.01;
+				CURRENT_PROJECT_VERSION = 2026.05.17.02;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = ClipVault/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/../Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.clipvault.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -582,10 +594,10 @@
 				ARCHS = arm64;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2026.05.17.01;
+				CURRENT_PROJECT_VERSION = 2026.05.17.02;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.clipvault.app.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -600,10 +612,10 @@
 				ARCHS = arm64;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2026.05.17.01;
+				CURRENT_PROJECT_VERSION = 2026.05.17.02;
 				GENERATE_INFOPLIST_FILE = YES;
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.clipvault.app.tests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;

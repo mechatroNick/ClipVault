@@ -26,10 +26,9 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 - Pin/favorite frequently used entries
 
 ### 2. Markdown Rendering & Preview
-- Detect markdown content and render it inline with proper formatting
-- Syntax highlighting for code blocks within markdown
-- Toggle between raw source and rendered preview
-- Support for common markdown extensions (tables, task lists, footnotes)
+- Detect markdown content and render it inline with proper formatting (bold, italics)
+- Supports inline markdown syntax via SwiftUI AttributedString
+- No separate "preview pane" — content is visible immediately
 
 ### 3. Vault File Storage
 - Configurable "Vault" root location (default: `~/Documents/VaultClip`)
@@ -41,7 +40,7 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 ### 4. iPhone Clipboard Handoff
 - Native integration with Apple Universal Clipboard
 - Detect clipboard entries originating from iPhone/iPad
-- Preserve and display device-of-origin metadata
+- Preserve and display 'iPhone' badge for remote entries
 - No additional configuration required — works via iCloud handoff
 
 ## Security Model
@@ -85,3 +84,5 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 5. App Store ready: passes App Review with sandbox enabled
 6. iPhone clipboard entries appear with device-of-origin label
 7. Files >5MB saved to Vault; search index is redacted for sensitive patterns
+8. App runs as singleton to prevent duplicate processes
+9. Reliable exit via 'Quit' menu or Cmd+Q with background service cleanup

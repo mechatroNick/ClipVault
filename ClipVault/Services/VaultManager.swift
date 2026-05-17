@@ -16,12 +16,7 @@ final class VaultManager {
     private init() {}
     
     /// Saves data to the vault, organized by year and month, encrypted using AES-GCM.
-    ///
-    /// - Parameters:
-    ///   - data: The data to save.
-    ///   - ext: The file extension (e.g., "png", "txt").
-    ///   - key: The symmetric key for encryption.
-    /// - Returns: The full path to the saved file.
+    /// - Returns: The relative path within the vault (e.g., "2024-05/UUID.png").
     func saveToVault(data: Data, extension ext: String, using key: SymmetricKey) throws -> String {
         let root = URL(fileURLWithPath: settings.vaultRootPath)
         
@@ -42,17 +37,24 @@ final class VaultManager {
         let encrypted = try encryptionService.encrypt(plaintext: data, using: key)
         try encrypted.combined.write(to: fileURL)
         
-        return fileURL.path
+        return "\(folderName)/\(fileName)"
     }
     
     /// Loads and decrypts data from the vault.
     ///
     /// - Parameters:
-    ///   - path: The full path to the encrypted file.
+    ///   - path: The relative path or absolute path to the encrypted file.
     ///   - key: The symmetric key for decryption.
     /// - Returns: The decrypted data.
     func loadFromVault(at path: String, using key: SymmetricKey) throws -> Data {
-        let fileURL = URL(fileURLWithPath: path)
+        let fileURL: URL
+        if path.hasPrefix("/") {
+            fileURL = URL(fileURLWithPath: path)
+        } else {
+            let root = URL(fileURLWithPath: settings.vaultRootPath)
+            fileURL = root.appendingPathComponent(path)
+        }
+        
         let encryptedData = try Data(contentsOf: fileURL)
         let package = try EncryptedPackage(combined: encryptedData)
         return try encryptionService.decrypt(package: package, using: key)

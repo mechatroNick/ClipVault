@@ -59,7 +59,7 @@ final class ClipboardViewModel {
         }
     }
     
-    private var observation: Any?
+    private var observationTask: Task<Void, Never>?
 
     init(repository: ClipboardRepository = ClipboardRepository()) {
         self.repository = repository
@@ -67,33 +67,23 @@ final class ClipboardViewModel {
     }
 
     private func setupObservation() {
-        // Observe changes in the database and update 'entries' automatically.
-        let observation = ValueObservation.tracking { db in
-            try ClipboardEntry
-                .order(ClipboardEntry.Columns.timestamp.desc)
-                .limit(50)
-                .fetchAll(db)
-        }
-
-        self.observation = observation.start(
-            in: repository.dbManager.dbQueue,
-            onError: { error in print("Observation error: \(error)") },
-            onChange: { [weak self] entries in
-                Task { @MainActor in
-                    self?.entries = entries
+        observationTask?.cancel()
+        observationTask = Task {
+            let stream = repository.observeEntries(limit: 50)
+            for await decryptedEntries in stream {
+                if !Task.isCancelled {
+                    self.entries = decryptedEntries
                 }
             }
-        )
+        }
     }
 
     private func updateObservation() {
-        // If searchQuery changes, we might want to restart observation with a filter.
-        // For MVP simplicity, we can just fetch once for search, or restart observation.
         if searchQuery.isEmpty {
             setupObservation()
         } else {
-            // Cancel current observation and fetch search results
-            observation = nil
+            observationTask?.cancel()
+            observationTask = nil
             do {
                 entries = try repository.search(searchQuery)
             } catch {

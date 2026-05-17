@@ -130,7 +130,6 @@ actor ClipboardCaptureService {
         }
     }
     
-    @MainActor
     private func generateThumbnail(from image: NSImage, maxDimension: CGFloat) -> Data? {
         let originalSize = image.size
         let ratio = maxDimension / max(originalSize.width, originalSize.height)
@@ -139,11 +138,28 @@ actor ClipboardCaptureService {
         }
         
         let targetSize = NSSize(width: originalSize.width * ratio, height: originalSize.height * ratio)
-        let newImage = NSImage(size: targetSize, flipped: false) { rect in
-            image.draw(in: rect, from: NSRect(origin: .zero, size: originalSize), operation: .sourceOver, fraction: 1.0)
-            return true
+        
+        // Use CoreGraphics for background-safe image scaling
+        guard let tiffData = image.tiffRepresentation,
+              let source = CGImageSourceCreateWithData(tiffData as CFData, nil),
+              let cgImage = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
+            return nil
         }
         
-        return newImage.tiffRepresentation
+        let context = CGContext(data: nil,
+                                width: Int(targetSize.width),
+                                height: Int(targetSize.height),
+                                bitsPerComponent: 8,
+                                bytesPerRow: 0,
+                                space: CGColorSpaceCreateDeviceRGB(),
+                                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
+        
+        context?.interpolationQuality = .high
+        context?.draw(cgImage, in: CGRect(origin: .zero, size: targetSize))
+        
+        guard let scaledCGImage = context?.makeImage() else { return nil }
+        let scaledImage = NSImage(cgImage: scaledCGImage, size: targetSize)
+        
+        return scaledImage.tiffRepresentation
     }
 }

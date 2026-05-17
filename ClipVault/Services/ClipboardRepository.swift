@@ -143,6 +143,46 @@ final class ClipboardRepository {
         return decryptedEntry
     }
     
+    // MARK: - Observation
+    
+    /// Returns an AsyncStream of decrypted entries, updating whenever the database changes.
+    func observeEntries(limit: Int = 50) -> AsyncStream<[ClipboardEntry]> {
+        AsyncStream { continuation in
+            let observation = ValueObservation.tracking { db in
+                try ClipboardEntry
+                    .order(ClipboardEntry.Columns.timestamp.desc)
+                    .limit(limit)
+                    .fetchAll(db)
+            }
+            
+            let key: SymmetricKey
+            do {
+                key = try getEncryptionKey()
+            } catch {
+                continuation.finish()
+                return
+            }
+            
+            let cancellable = observation.start(
+                in: dbManager.dbQueue,
+                onError: { _ in continuation.finish() },
+                onChange: { [weak self] entries in
+                    guard let self = self else { return }
+                    do {
+                        let decrypted = try entries.map { try self.decryptEntry($0, using: key) }
+                        continuation.yield(decrypted)
+                    } catch {
+                        print("Decryption failed during observation: \(error)")
+                    }
+                }
+            )
+            
+            continuation.onTermination = { _ in
+                cancellable.cancel()
+            }
+        }
+    }
+    
     // MARK: - Fetching
     
     func fetchAll() throws -> [ClipboardEntry] {
