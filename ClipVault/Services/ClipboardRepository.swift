@@ -26,15 +26,21 @@ final class ClipboardRepository {
     private let encryptionService: EncryptionService
     private let keychainManager: KeychainManager
     private let contentFilter: SensitiveContentFilter
+    private let vaultManager: VaultManager
+    private let settings: SettingsManager
     
     init(dbManager: DatabaseManager = .shared,
          encryptionService: EncryptionService = EncryptionService(),
          keychainManager: KeychainManager = KeychainManager(service: "com.clipvault.encryption"),
-         contentFilter: SensitiveContentFilter = SensitiveContentFilter()) {
+         contentFilter: SensitiveContentFilter = SensitiveContentFilter(),
+         vaultManager: VaultManager = .shared,
+         settings: SettingsManager = .shared) {
         self.dbManager = dbManager
         self.encryptionService = encryptionService
         self.keychainManager = keychainManager
         self.contentFilter = contentFilter
+        self.vaultManager = vaultManager
+        self.settings = settings
     }
     
     func getEncryptionKey() throws -> SymmetricKey {
@@ -53,16 +59,51 @@ final class ClipboardRepository {
     func save(_ entry: inout ClipboardEntry) throws {
         let key = try getEncryptionKey()
         
-        func encryptData(_ data: Data?) throws -> Data? {
-            guard let data = data else { return nil }
-            return try encryptionService.encrypt(plaintext: data, using: key).combined
+        let thresholdBytes = settings.largeFileThresholdMB * 1024 * 1024
+        
+        // Handle Large File Vaulting automatically
+        func processLargeData(_ data: Data?, extension ext: String) throws -> (Data?, String?, Bool) {
+            guard let data = data else { return (nil, nil, false) }
+            if data.count > thresholdBytes {
+                let path = try vaultManager.saveToVault(data: data, extension: ext, using: key)
+                return (nil, path, true)
+            }
+            return (data, nil, false)
         }
         
-        // Extract FTS preview before encryption
+        // Extract FTS preview before encryption or vaulting
         if let ptData = entry.plainTextContent,
            let ptString = String(data: ptData, encoding: .utf8) {
             let preview = String(ptString.prefix(200))
             entry.plainTextSearchContent = contentFilter.redact(preview)
+        }
+        
+        if entry.contentType == "image", let data = entry.imageData {
+            let (_, path, vaulted) = try processLargeData(data, extension: "tiff")
+            if vaulted {
+                entry.imageData = nil
+                entry.fileURL = path
+                entry.isVaultStored = true
+            }
+        } else if (entry.contentType == "rtf" || entry.contentType == "html"), let data = entry.richTextContent {
+            let (_, path, vaulted) = try processLargeData(data, extension: entry.contentType)
+            if vaulted {
+                entry.richTextContent = nil
+                entry.fileURL = path
+                entry.isVaultStored = true
+            }
+        } else if let data = entry.plainTextContent {
+            let (_, path, vaulted) = try processLargeData(data, extension: "txt")
+            if vaulted {
+                entry.plainTextContent = nil
+                entry.fileURL = path
+                entry.isVaultStored = true
+            }
+        }
+
+        func encryptData(_ data: Data?) throws -> Data? {
+            guard let data = data else { return nil }
+            return try encryptionService.encrypt(plaintext: data, using: key).combined
         }
         
         entry.plainTextContent = try encryptData(entry.plainTextContent)

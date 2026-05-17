@@ -72,57 +72,43 @@ actor ClipboardCaptureService {
         var richText: Data? = nil
         var imageData: Data? = nil
         var fileURL: String? = nil
-        var isVaultStored = false
-        
-        let thresholdBytes = settings.largeFileThresholdMB * 1024 * 1024
         
         do {
-            let key = try repository.getEncryptionKey()
-            
             if let string = pasteboard.string(forType: .string) {
-                let data = Data(string.utf8)
-                if data.count > thresholdBytes {
-                    fileURL = try vaultManager.saveToVault(data: data, extension: "txt", using: key)
-                    isVaultStored = true
-                } else {
-                    plainText = data
-                }
+                plainText = Data(string.utf8)
             }
             
             switch type {
             case "image":
                 if let tiff = pasteboard.data(forType: .tiff) ?? pasteboard.data(forType: .png),
                    let image = NSImage(data: tiff) {
-                    print("DEBUG (Service): Before generateThumbnail")
                     imageData = await generateThumbnail(from: image, maxDimension: 48)
-                    print("DEBUG (Service): After generateThumbnail")
-                    
-                    if tiff.count > thresholdBytes {
-                        let ext = pasteboard.types?.contains(.png) == true ? "png" : "tiff"
-                        fileURL = try vaultManager.saveToVault(data: tiff, extension: ext, using: key)
-                        isVaultStored = true
-                    }
+                    // Note: original tiff is handled by repository vaulting if it's large,
+                    // but capture service currently doesn't store the full image in the entry object
+                    // if it only stores the thumbnail. 
+                    // Wait, the MVP capture service WAS storing the full TIFF if it was small, 
+                    // and vaulting it if large.
+                    // If I want to preserve full resolution, I should keep the data.
+                    imageData = tiff 
                 }
             case "file":
-                if let pathString = pasteboard.string(forType: .fileURL), let url = URL(string: pathString) {
-                    fileURL = url.path
+                if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL] {
+                    let paths = urls.map { $0.path }
+                    fileURL = paths.joined(separator: "\n")
                 }
             case "rtf", "html":
-                if let data = pasteboard.data(forType: .rtf) ?? pasteboard.data(forType: .html) {
-                    if data.count > thresholdBytes {
-                        let ext = pasteboard.types?.contains(.rtf) == true ? "rtf" : "html"
-                        fileURL = try vaultManager.saveToVault(data: data, extension: ext, using: key)
-                        isVaultStored = true
-                    } else {
-                        richText = data
-                    }
-                }
+                richText = pasteboard.data(forType: .rtf) ?? pasteboard.data(forType: .html)
             default:
                 break
             }
             
             let sourceApp = workspaceAppIdentifier() ?? "unknown"
-            let metadataString = "{\"app\":\"\(sourceApp)\"}"
+            
+            // Universal Clipboard detection
+            let isRemoteType = NSPasteboard.PasteboardType("com.apple.is-remote-pasteboard-item")
+            let isRemote = pasteboard.types?.contains(isRemoteType) ?? false
+            
+            let metadataString = "{\"app\":\"\(sourceApp)\",\"isRemote\":\(isRemote)}"
             let metadata = Data(metadataString.utf8)
             
             var entry = ClipboardEntry(
@@ -134,7 +120,7 @@ actor ClipboardCaptureService {
                 fileURL: fileURL,
                 sourceApplication: sourceApp,
                 metadata: metadata,
-                isVaultStored: isVaultStored
+                isRemote: isRemote
             )
             
             try repository.save(&entry)
