@@ -17,6 +17,11 @@
     - [ ] Add logic to enable login item by default on first launch.
     - [ ] Commit: `feat(lifecycle): Implement Launch at Login functionality`
 
+- [ ] Task: Enhanced Metadata Capture (Local)
+    - [ ] Update `ClipboardCaptureService` to use `NSWorkspace` for active window title.
+    - [ ] Update `ClipboardEntry` model to store `windowTitle`.
+    - [ ] Commit: `feat(clipboard): Capture active window title during copy`
+
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Resizability, Scaling & Persistence
@@ -46,6 +51,11 @@
     - [ ] Implement file existence check for file/folder references.
     - [ ] Show warning badge if file is missing.
     - [ ] Commit: `feat(ui): Add per-item copy with file existence validation`
+
+- [ ] Task: UI Integration for Granular Metadata
+    - [ ] Update `EntryRowView` to display: window title, formatted timestamp, and device origin icon.
+    - [ ] Add "Local Mac" vs "iPhone/iPad" labels based on `isRemote` flag.
+    - [ ] Commit: `feat(ui): Display granular metadata in history entries`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
