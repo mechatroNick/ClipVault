@@ -1,0 +1,8 @@
+{
+  "track_id": "frontend-polish_20260517",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-05-17T20:45:00Z",
+  "updated_at": "2026-05-17T20:45:00Z",
+  "description": "frontend-polish: fix accessibility of settings/quit, implement resizable panel, hover previews, manual copy with existence checks, and sensitive item auto-expiry."
+}
