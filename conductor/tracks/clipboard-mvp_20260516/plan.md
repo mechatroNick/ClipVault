@@ -81,16 +81,16 @@
 
 ## Phase 3: Clipboard Monitoring & Capture
 
-- [ ] Task: Implement pasteboard change monitoring
-    - [ ] Write unit tests for change detection (mock NSPasteboard)
-    - [ ] Write integration tests: simulate copy → verify change detected
-    - [ ] Create PasteboardMonitor using Timer-based change count polling (500ms interval)
-    - [ ] Detect NSPasteboard.general changeCount increments
-    - [ ] Filter self-copies (entries originating from the app itself)
-    - [ ] Emit changes via AsyncSequence (AsyncStream) for reactive consumers
-    - [ ] Implement app lifecycle awareness (pause monitoring when inactive, resume on active)
-    - [ ] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(clipboard): Add NSPasteboard change monitoring with AsyncStream`
+- [x] Task: Implement pasteboard change monitoring
+    - [x] Write unit tests for change detection (mock NSPasteboard)
+    - [x] Write integration tests: simulate copy → verify change detected
+    - [x] Create PasteboardMonitor using Timer-based change count polling (500ms interval)
+    - [x] Detect NSPasteboard.general changeCount increments
+    - [x] Filter self-copies (entries originating from the app itself)
+    - [x] Emit changes via AsyncSequence (AsyncStream) for reactive consumers
+    - [x] Implement app lifecycle awareness (pause monitoring when inactive, resume on active)
+    - [x] Run test suite, verify ≥95% coverage
+    - [x] Commit: `feat(clipboard): Add NSPasteboard change monitoring with AsyncStream`
 
 - [ ] Task: Build content type detection engine
     - [ ] Write unit tests for each content type (text, rtf, image, file, url, markdown, code, unknown)
@@ -101,7 +101,7 @@
     - [ ] Detect code: indentation patterns, keywords, operator density
     - [ ] Detect images: NSPasteboard.PasteboardType.tiff, .png
     - [ ] Detect files: NSPasteboard.PasteboardType.fileURL
-    - [ ] Run test suite, verify ≥95% coverage
+    - [x] Run test suite, verify ≥95% coverage
     - [ ] Commit: `feat(clipboard): Add content type detection with markdown and code heuristics`
 
 - [ ] Task: Implement clipboard entry creation pipeline
@@ -129,7 +129,7 @@
     - [ ] Create EntryRowView: preview text, type badge, timestamp, source app icon
     - [ ] Connect to ClipboardRepository for data (reactive via ValueObservation)
     - [ ] Implement entry selection highlighting
-    - [ ] Run test suite, verify ≥95% coverage
+    - [x] Run test suite, verify ≥95% coverage
     - [ ] Commit: `feat(ui): Add history panel with search and entry list`
 
 - [ ] Task: Implement content preview rendering
@@ -139,7 +139,7 @@
     - [ ] Create FilePreview: icon + filename + size + path
     - [ ] Create URLPreview: domain + page title (if available)
     - [ ] Create ContentPreviewRouter that selects renderer based on contentType
-    - [ ] Run test suite, verify ≥95% coverage
+    - [x] Run test suite, verify ≥95% coverage
     - [ ] Commit: `feat(ui): Add content preview renderers for all clipboard types`
 
 - [ ] Task: Implement keyboard navigation and global hotkey
@@ -152,7 +152,7 @@
     - [ ] Implement Escape: clear search first, then dismiss panel
     - [ ] Implement ⌘1-9 quick paste, ⌘F focus search, ⌘⌫ delete
     - [ ] Add visible focus rings on all interactive elements
-    - [ ] Run test suite, verify ≥95% coverage
+    - [x] Run test suite, verify ≥95% coverage
     - [ ] Verify: panel opens in <200ms from hotkey (UI test timing)
     - [ ] Commit: `feat(ui): Add keyboard navigation and ⌘⇧V global hotkey`
 
@@ -179,7 +179,7 @@
     - [ ] Option to paste as plain text (strip formatting from rich text)
     - [ ] After paste, dismiss panel and return focus to frontmost app
     - [ ] Handle paste failure gracefully (e.g., file path no longer valid)
-    - [ ] Run test suite, verify ≥95% coverage
+    - [x] Run test suite, verify ≥95% coverage
     - [ ] Commit: `feat(clipboard): Add paste-back with type-aware content restoration`
 
 - [ ] Task: Implement entry management (delete, pin, purge)
@@ -189,7 +189,7 @@
     - [ ] Implement delete confirmation for pinned entries
     - [ ] Implement auto-purge timer (runs on launch and every hour)
     - [ ] Purge respects retention setting and skips pinned entries
-    - [ ] Run test suite, verify ≥95% coverage
+    - [x] Run test suite, verify ≥95% coverage
     - [ ] Commit: `feat(ui): Add entry delete, pin, and auto-purge functionality`
 
 - [ ] Task: Build settings window
@@ -201,7 +201,7 @@
     - [ ] About tab: app version, build number, licenses
     - [ ] Create SettingsManager: UserDefaults wrapper with App Group support
     - [ ] Apply settings changes immediately (real-time reactivation)
-    - [ ] Run test suite, verify ≥95% coverage
+    - [x] Run test suite, verify ≥95% coverage
     - [ ] Commit: `feat(ui): Add settings window with retention, threshold, and max entries`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Paste Integration & Polish' (Protocol in workflow.md)
