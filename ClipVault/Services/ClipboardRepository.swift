@@ -25,13 +25,16 @@ final class ClipboardRepository {
     private let dbManager: DatabaseManager
     private let encryptionService: EncryptionService
     private let keychainManager: KeychainManager
+    private let contentFilter: SensitiveContentFilter
     
     init(dbManager: DatabaseManager = .shared,
          encryptionService: EncryptionService = EncryptionService(),
-         keychainManager: KeychainManager = KeychainManager(service: "com.clipvault.encryption")) {
+         keychainManager: KeychainManager = KeychainManager(service: "com.clipvault.encryption"),
+         contentFilter: SensitiveContentFilter = SensitiveContentFilter()) {
         self.dbManager = dbManager
         self.encryptionService = encryptionService
         self.keychainManager = keychainManager
+        self.contentFilter = contentFilter
     }
     
     private func getEncryptionKey() throws -> SymmetricKey {
@@ -58,7 +61,8 @@ final class ClipboardRepository {
         // Extract FTS preview before encryption
         if let ptData = entry.plainTextContent,
            let ptString = String(data: ptData, encoding: .utf8) {
-            entry.plainTextSearchContent = String(ptString.prefix(200))
+            let preview = String(ptString.prefix(200))
+            entry.plainTextSearchContent = contentFilter.redact(preview)
         }
         
         entry.plainTextContent = try encryptData(entry.plainTextContent)

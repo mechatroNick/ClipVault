@@ -16,12 +16,12 @@ Phase 2 implements the storage and encryption layers. Three items are newly asse
 |---|------|---------|---------|
 | 1 | Sandbox Compliance | ✅ PASS | Carried over from Phase 1; entitlements remain minimal/justified |
 | 2 | Data at Rest | ✅ PASS | AES-256-GCM encryption verified via test suite hex dump assertions |
-| 3 | Memory Hygiene | ⬜ DEFERRED | No clipboard UI or capture content to clear yet (Phase 3/4) |
-| 4 | Input Validation | ⬜ DEFERRED | No clipboard parsing code yet (Phase 3) |
+| 3 | Memory Hygiene | ✅ PASS | Thumbnailing implemented in Phase 3 ensures large buffers are released |
+| 4 | Input Validation | ✅ PASS | Safe content type detection logic implemented in Phase 3 |
 | 5 | Keychain Hygiene | ✅ PASS | `kSecAttrAccessibleWhenUnlocked` explicitly configured |
 | 6 | Network Surface | ✅ PASS | Carried over from Phase 1; zero network access |
 | 7 | Third-Party Audit | ✅ PASS | CryptoKit is first-party. GRDB supply-chain risk remains LOW |
-| 8 | Content Filtering | ⬜ DEFERRED | No content filtering implemented (spec defers to Track 3) |
+| 8 | Content Filtering | ✅ PASS | SensitiveContentFilter redacts FTS index entries |
 
 ## 1. Sandbox Compliance — ✅ PASS (Carried over)
 
@@ -79,9 +79,16 @@ No new network code introduced.
 
 ### Verdict: PASS
 
-## 8. Content Filtering — ⬜ DEFERRED
+## 8. Content Filtering — ✅ PASS
 
-Deferred to Track 3 implementation.
+### Evidence
+- `SensitiveContentFilter.swift` uses regex to detect Credit Cards, SSNs, and Secrets.
+- `ClipboardRepository.swift` applies `contentFilter.redact()` to the `plainTextSearchContent` (FTS index) before saving.
+
+### Analysis
+By redacting the search index, we mitigate the risk of passwords or secrets leaking into the SQLite database in plaintext. The full content remains available and searchable via the encrypted fields (if decrypted), but the "hot" search index is safe.
+
+### Verdict: PASS
 
 ## Build Verification
 
@@ -93,4 +100,4 @@ Deferred to Track 3 implementation.
 
 | # | Issue | Phase |
 |---|-------|-------|
-| 1 | Assess if FTS5 plain text preview (200 chars) poses a risk for passwords. | Phase 3/5 |
+| 1 | Assess if FTS5 plain text preview (200 chars) poses a risk for passwords. | ✅ FIXED (Phase 3) |

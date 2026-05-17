@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_BUILD /* SensitiveContentFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */; };
+                SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_BUILD /* SensitiveContentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */; };
 		01154DFD8E4780DCA8525C8D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA4CF2B61D7268629049C3 /* KeychainManager.swift */; };
 		30224799A6997F5892A3112F /* ClipboardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12245DEA1025927C80F8AB4 /* ClipboardRepository.swift */; };
 		3EFC4731B6BAE00994EDCCAC /* PasteboardMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A440328B2A14115F05ED6B /* PasteboardMonitorTests.swift */; };
@@ -41,6 +43,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SensitiveContentFilterTests.swift; path = Tests/ClipVaultTests/SensitiveContentFilterTests.swift; sourceTree = SOURCE_ROOT; };
+                SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SensitiveContentFilter.swift; path = ClipVault/Services/SensitiveContentFilter.swift; sourceTree = SOURCE_ROOT; };
 		0F484042A9D8EA0790AA55A2 /* ClipboardCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClipboardCaptureService.swift; path = ClipVault/Services/ClipboardCaptureService.swift; sourceTree = SOURCE_ROOT; };
 		16A440328B2A14115F05ED6B /* PasteboardMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasteboardMonitorTests.swift; path = Tests/ClipVaultTests/PasteboardMonitorTests.swift; sourceTree = SOURCE_ROOT; };
 		2DDC49DBBC9E239E8A1FA3C1 /* ContentTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentTypeDetector.swift; path = ClipVault/Services/ContentTypeDetector.swift; sourceTree = SOURCE_ROOT; };
@@ -131,7 +135,8 @@
 			children = (
 				B1C2D3E4F5A6B7C8D9E0F302 /* DatabaseManager.swift */,
 				B1C2D3E4F5A6B7C8D9E0F303 /* EncryptionService.swift */,
-			);
+			                                SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */,
+);
 			path = Services;
 			sourceTree = "<group>";
 		};
@@ -175,7 +180,8 @@
 				B1C2D3E4F5A6B7C8D9E0F204 /* DatabaseSchemaTests.swift */,
 				B1C2D3E4F5A6B7C8D9E0F205 /* DatabaseManagerTests.swift */,
 				B1C2D3E4F5A6B7C8D9E0F206 /* EncryptionServiceTests.swift */,
-			);
+			                                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */,
+);
 			path = ClipVaultTests;
 			sourceTree = "<group>";
 		};
@@ -289,7 +295,9 @@
 				7C7F410799CA195B5D44E0A9 /* ClipboardCaptureService.swift in Sources */,
 				30224799A6997F5892A3112F /* ClipboardRepository.swift in Sources */,
 				01154DFD8E4780DCA8525C8D /* KeychainManager.swift in Sources */,
-			);
+			                                SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_BUILD /* SensitiveContentFilter.swift in Sources */,
+                                
+);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F2A3B4C5D6E7F8A9B0C2D2E1 /* Sources */ = {
@@ -306,7 +314,8 @@
 				452340959336E0F70EB0E085 /* ContentTypeDetectorTests.swift in Sources */,
 				ABC1415B97228145E2EBE5B3 /* ClipboardCaptureServiceTests.swift in Sources */,
 				44A14E5C98CD540710387D64 /* ClipboardRepositoryTests.swift in Sources */,
-			);
+			                                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_BUILD /* SensitiveContentFilterTests.swift in Sources */,
+);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */

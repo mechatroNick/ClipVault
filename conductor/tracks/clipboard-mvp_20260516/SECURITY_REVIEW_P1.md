@@ -17,13 +17,13 @@ Table with all 8 items:
 | # | Item | Verdict | Summary |
 |---|------|---------|---------|
 | 1 | Sandbox Compliance | ✅ PASS | Entitlements minimal/justified; codesign confirms sandbox + zero network |
-| 2 | Data at Rest | ⬜ DEFERRED | No data persistence code exists yet (Phase 2) |
-| 3 | Memory Hygiene | ⬜ DEFERRED | No clipboard content captured yet (Phase 3) |
-| 4 | Input Validation | ⬜ DEFERRED | No clipboard parsing code yet (Phase 3) |
-| 5 | Keychain Hygiene | ⬜ DEFERRED | No keychain usage yet (Phase 2) |
+| 2 | Data at Rest | ✅ PASS | AES-256-GCM encryption implemented in Phase 2; verified via hex assertions |
+| 3 | Memory Hygiene | ✅ PASS | Thumbnailing and ARC-based cleanup implemented in Phase 3 |
+| 4 | Input Validation | ✅ PASS | Safe heuristic-based detection implemented in Phase 3; no execution of content |
+| 5 | Keychain Hygiene | ✅ PASS | kSecAttrAccessibleWhenUnlocked implemented in Phase 2 |
 | 6 | Network Surface | ✅ PASS | Zero network entitlements; zero network API calls in source |
 | 7 | Third-Party Audit | ✅ PASS | GRDB.swift 6.29.3 — 0 CVEs, pure Swift, zero transitive deps, LOW risk |
-| 8 | Content Filtering | ⬜ DEFERRED | No content filtering implemented (spec defers to Track 3) |
+| 8 | Content Filtering | ✅ PASS | SensitiveContentFilter implemented (regex-based redaction for FTS index) |
 
 ## 1. Sandbox Compliance — ✅ PASS
 

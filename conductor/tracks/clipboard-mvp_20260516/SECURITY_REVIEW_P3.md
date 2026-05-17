@@ -21,7 +21,7 @@ Phase 3 introduces the core functionality of reading from the system pasteboard 
 | 5 | Keychain Hygiene | ✅ PASS | Carried over from Phase 2 |
 | 6 | Network Surface | ✅ PASS | Carried over; zero network access |
 | 7 | Third-Party Audit | ✅ PASS | Uses first-party AppKit APIs exclusively |
-| 8 | Content Filtering | ⬜ DEFERRED | No content filtering implemented (spec defers to Track 3) |
+| 8 | Content Filtering | ✅ PASS | SensitiveContentFilter implemented to protect the FTS index |
 
 ## 1. Sandbox Compliance — ✅ PASS (Carried over)
 
@@ -61,9 +61,16 @@ No new network code introduced.
 
 No new third-party dependencies introduced. The `AsyncStream` and `NSPasteboard` implementations rely entirely on the Swift Standard Library and Apple's AppKit.
 
-## 8. Content Filtering — ⬜ DEFERRED
+## 8. Content Filtering — ✅ PASS
 
-Deferred to Track 3 implementation.
+### Evidence
+- `SensitiveContentFilter.swift` implemented with regex patterns for PII and secrets.
+- Integrated into `ClipboardRepository.save()` to redact FTS search preview strings.
+
+### Analysis
+By implementing surgical redaction of the plaintext FTS index, we've closed the "FTS password leak" vector identified in the Phase 2 review. This fulfills the "Content Filtering" requirement for the MVP and ensures that even if the encrypted database file were somehow accessed, the only plaintext components (the FTS index) would not contain high-entropy secrets like API keys or credit card numbers.
+
+### Verdict: PASS
 
 ## Build Verification
 

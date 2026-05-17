@@ -114,6 +114,11 @@
     - [x] Capture source application bundle identifier
     - [x] Run full test suite, verify ≥95% coverage
     - [x] Verify: capture latency <100ms (integration test timing assertion)
+    - [x] Task: Implement baseline sensitive content filtering (deferred task)
+        - [x] Create SensitiveContentFilter with regex-based redaction
+        - [x] Integrate filter into ClipboardRepository.save() to protect FTS index
+        - [x] Write unit tests for redaction of Credit Cards, SSNs, and Secrets
+        - [x] Commit: `feat(security): Implement SensitiveContentFilter for search index protection`
     - [x] Commit: `feat(clipboard): Add clipboard entry creation pipeline with large file handling`
 
 - [x] Task: Conductor - User Manual Verification 'Phase 3: Clipboard Monitoring & Capture' (Protocol in workflow.md)

@@ -74,6 +74,11 @@ Thin vertical slice through all layers of the clipboard manager: pasteboard moni
 - Sections: General (retention, threshold, max entries), Security (content filtering stubs), About
 - Preferences persisted via UserDefaults with App Group support
 
+### FR11: Sensitive Content Filtering
+- Automatically detect and redact sensitive patterns (Credit Cards, SSNs, IPv4, Secrets/API Keys) in the plaintext FTS search index.
+- Ensure original content remains fully available in the encrypted data blobs.
+- Provide baseline protection against secret leakage in the local database file.
+
 ## Non-Functional Requirements
 
 ### NFR1: Performance
@@ -112,10 +117,10 @@ Thin vertical slice through all layers of the clipboard manager: pasteboard moni
 8. Database file on disk is encrypted (verify via hex dump — no plain text)
 9. App has zero network entitlements (verify via `codesign -d --entitlements`)
 10. Full test suite passes with ≥95% line coverage
+11. Search index is redacted (verify via direct DB query for sensitive patterns)
 
 ## Out of Scope (Deferred)
 - iPhone Universal Clipboard handoff detection (Track 2)
-- Sensitive content filtering (credit cards, passwords) (Track 3)
 - Markdown rendering with syntax highlighting (Track 2)
 - Custom icon design (using placeholder SF Symbol)
 - iCloud sync
