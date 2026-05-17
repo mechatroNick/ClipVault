@@ -47,7 +47,9 @@ actor ClipboardCaptureService {
     }
     
     private func captureCurrentPasteboard() async {
+        print("DEBUG (Service): captureCurrentPasteboard called")
         let type = detector.detectType(from: pasteboard)
+        print("DEBUG (Service): detected type: \(type)")
         guard type != "unknown" else { return }
         
         var plainText: Data? = nil
@@ -63,7 +65,9 @@ actor ClipboardCaptureService {
         case "image":
             if let tiff = pasteboard.data(forType: .tiff) ?? pasteboard.data(forType: .png),
                let image = NSImage(data: tiff) {
-                imageData = generateThumbnail(from: image, maxDimension: 48)
+                print("DEBUG (Service): Before generateThumbnail")
+                imageData = await generateThumbnail(from: image, maxDimension: 48)
+                print("DEBUG (Service): After generateThumbnail")
             }
         case "file":
             if let pathString = pasteboard.string(forType: .fileURL), let url = URL(string: pathString) {
@@ -90,7 +94,7 @@ actor ClipboardCaptureService {
         }
         
         let sourceApp = workspaceAppIdentifier() ?? "unknown"
-        let metadataString = "{\"app\":\"\\(sourceApp)\"}"
+        let metadataString = "{\"app\":\"\(sourceApp)\"}"
         let metadata = Data(metadataString.utf8)
         
         var entry = ClipboardEntry(
@@ -106,11 +110,13 @@ actor ClipboardCaptureService {
         
         do {
             try repository.save(&entry)
+            print("DEBUG (Service): entry saved successfully")
         } catch {
-            print("Failed to save clipboard entry: \\(error)")
+            print("DEBUG (Service): Failed to save clipboard entry: \(error)")
         }
     }
     
+    @MainActor
     private func generateThumbnail(from image: NSImage, maxDimension: CGFloat) -> Data? {
         let originalSize = image.size
         let ratio = maxDimension / max(originalSize.width, originalSize.height)
@@ -119,14 +125,10 @@ actor ClipboardCaptureService {
         }
         
         let targetSize = NSSize(width: originalSize.width * ratio, height: originalSize.height * ratio)
-        let newImage = NSImage(size: targetSize)
-        
-        newImage.lockFocus()
-        image.draw(in: NSRect(origin: .zero, size: targetSize),
-                   from: NSRect(origin: .zero, size: originalSize),
-                   operation: .sourceOver,
-                   fraction: 1.0)
-        newImage.unlockFocus()
+        let newImage = NSImage(size: targetSize, flipped: false) { rect in
+            image.draw(in: rect, from: NSRect(origin: .zero, size: originalSize), operation: .sourceOver, fraction: 1.0)
+            return true
+        }
         
         return newImage.tiffRepresentation
     }

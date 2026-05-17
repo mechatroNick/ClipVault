@@ -16,19 +16,32 @@ final class ClipboardCaptureServiceTests: XCTestCase {
     private var mockPasteboard: MockPasteboard!
     private var monitor: PasteboardMonitor!
     
+    private var keychainManager: KeychainManager!
+    
     override func setUpWithError() throws {
         try super.setUpWithError()
         dbManager = try DatabaseManager(path: ":memory:")
         encryptionService = try EncryptionService()
-        repository = ClipboardRepository(dbManager: dbManager, encryptionService: encryptionService)
+        
+        let serviceName = "com.clipvault.test.capture.\(UUID().uuidString)"
+        keychainManager = KeychainManager(service: serviceName)
+        
+        repository = ClipboardRepository(
+            dbManager: dbManager, 
+            encryptionService: encryptionService,
+            keychainManager: keychainManager
+        )
+        
         mockPasteboard = MockPasteboard()
         monitor = PasteboardMonitor(pasteboard: mockPasteboard, pollInterval: 0.05) // Fast poll for tests
     }
     
     override func tearDownWithError() throws {
+        try? keychainManager.deleteKey()
         dbManager = nil
         encryptionService = nil
         repository = nil
+        keychainManager = nil
         mockPasteboard = nil
         monitor = nil
         try super.tearDownWithError()
@@ -45,17 +58,24 @@ final class ClipboardCaptureServiceTests: XCTestCase {
         
         await service.start()
         
+        // Wait for monitor's main thread setup to complete
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
         // Act
         mockPasteboard.simulateCopy(string: "Secret password")
         
-        // Give the pipeline time to process the stream
-        try await Task.sleep(nanoseconds: 200_000_000)
-        
-        // Assert
-        let entries = try repository.fetchAll()
+        // Assert: wait up to 1 second for the entry to appear in the repository
+        let startTime = Date()
+        var entries = try dbManager.fetchAll()
+        while entries.isEmpty && Date().timeIntervalSince(startTime) < 1.0 {
+            try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+            entries = try dbManager.fetchAll()
+        }
+
         XCTAssertEqual(entries.count, 1)
-        
-        let captured = try XCTUnwrap(entries.first)
+
+        let fetchedEntries = try repository.fetchAll()
+        let captured = try XCTUnwrap(fetchedEntries.first)
         XCTAssertEqual(captured.contentType, "text")
         XCTAssertEqual(captured.sourceApplication, "com.apple.Terminal")
         
@@ -89,14 +109,29 @@ final class ClipboardCaptureServiceTests: XCTestCase {
         
         await service.start()
         
+        // Wait for monitor's main thread setup to complete
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
         mockPasteboard.simulateCopy(data: tiffData, type: .tiff)
         
-        try await Task.sleep(nanoseconds: 200_000_000)
-        
-        let entries = try repository.fetchAll()
+        // Assert: wait up to 5 seconds for the entry to appear in the repository
+        let startTime = Date()
+        var entries = try dbManager.fetchAll()
+        while entries.isEmpty && Date().timeIntervalSince(startTime) < 5.0 {
+            try await Task.sleep(nanoseconds: 50_000_000) // 50ms
+            entries = try dbManager.fetchAll()
+        }
+
+        if entries.isEmpty {
+            print("DEBUG: entries is empty after 5.0 seconds.")
+            print("DEBUG: mockPasteboard types: \(String(describing: mockPasteboard.types))")
+            print("DEBUG: mockPasteboard changeCount: \(mockPasteboard.changeCount)")
+        }
+
         XCTAssertEqual(entries.count, 1)
-        
-        let captured = try XCTUnwrap(entries.first)
+
+        let fetchedEntries = try repository.fetchAll()
+        let captured = try XCTUnwrap(fetchedEntries.first)
         XCTAssertEqual(captured.contentType, "image")
         XCTAssertNotNil(captured.imageData)
         

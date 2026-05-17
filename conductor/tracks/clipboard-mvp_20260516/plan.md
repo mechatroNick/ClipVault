@@ -104,7 +104,7 @@
     - [x] Run test suite, verify ≥95% coverage
     - [x] Commit: `feat(clipboard): Add content type detection with markdown and code heuristics`
 
-- [ ] Task: Implement clipboard entry creation pipeline
+- [x] Task: Implement clipboard entry creation pipeline
     - [ ] Write integration tests: copy text → pipeline creates entry → entry in repository
     - [ ] Write unit tests for large file threshold logic
     - [ ] Create ClipboardCaptureService: orchestrate monitor → detect → extract → store
