@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+                P5F_SETTINGSVIEW_SWIFT_BUILD /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P5F_SETTINGSVIEW_SWIFT_REF /* SettingsView.swift */; };
+                P5F_VAULTMANAGER_SWIFT_BUILD /* VaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = P5F_VAULTMANAGER_SWIFT_REF /* VaultManager.swift */; };
+                P5F_SETTINGSMANAGER_SWIFT_BUILD /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = P5F_SETTINGSMANAGER_SWIFT_REF /* SettingsManager.swift */; };
+                P5_PASTESERVICETESTS_SWIFT_BUILD /* PasteServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P5_PASTESERVICETESTS_SWIFT_REF /* PasteServiceTests.swift */; };
+                P5_PASTESERVICE_SWIFT_BUILD /* PasteService.swift in Sources */ = {isa = PBXBuildFile; fileRef = P5_PASTESERVICE_SWIFT_REF /* PasteService.swift */; };
                 P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_BUILD /* ContentPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */; };
                 P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_BUILD /* ContentPreviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */; };
                 P4_PREVIEW_URLPREVIEW_SWIFT_BUILD /* URLPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_URLPREVIEW_SWIFT_REF /* URLPreview.swift */; };
@@ -58,6 +63,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+                P5F_SETTINGSVIEW_SWIFT_REF /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsView.swift; path = ClipVault/Views/SettingsView.swift; sourceTree = SOURCE_ROOT; };
+                P5F_VAULTMANAGER_SWIFT_REF /* VaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = VaultManager.swift; path = ClipVault/Services/VaultManager.swift; sourceTree = SOURCE_ROOT; };
+                P5F_SETTINGSMANAGER_SWIFT_REF /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsManager.swift; path = ClipVault/Services/SettingsManager.swift; sourceTree = SOURCE_ROOT; };
+                P5_PASTESERVICETESTS_SWIFT_REF /* PasteServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasteServiceTests.swift; path = Tests/ClipVaultTests/PasteServiceTests.swift; sourceTree = SOURCE_ROOT; };
+                P5_PASTESERVICE_SWIFT_REF /* PasteService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasteService.swift; path = ClipVault/Services/PasteService.swift; sourceTree = SOURCE_ROOT; };
                 P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentPreviewTests.swift; path = Tests/ClipVaultTests/ContentPreviewTests.swift; sourceTree = SOURCE_ROOT; };
                 P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentPreviewRouter.swift; path = ClipVault/Views/Previews/ContentPreviewRouter.swift; sourceTree = SOURCE_ROOT; };
                 P4_PREVIEW_URLPREVIEW_SWIFT_REF /* URLPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLPreview.swift; path = ClipVault/Views/Previews/URLPreview.swift; sourceTree = SOURCE_ROOT; };
@@ -169,6 +179,9 @@
 			                                SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */,
                                 P4T2_MENUBARCONTROLLER_SWIFT_REF /* MenuBarController.swift */,
                                 P4_KEYBOARDHANDLER_SWIFT_REF /* KeyboardHandler.swift */,
+                                P5_PASTESERVICE_SWIFT_REF /* PasteService.swift */,
+                                P5F_SETTINGSMANAGER_SWIFT_REF /* SettingsManager.swift */,
+                                P5F_VAULTMANAGER_SWIFT_REF /* VaultManager.swift */,
 );
 			path = Services;
 			sourceTree = "<group>";
@@ -185,6 +198,7 @@
                                 P4_PREVIEW_FILEPREVIEW_SWIFT_REF /* FilePreview.swift */,
                                 P4_PREVIEW_URLPREVIEW_SWIFT_REF /* URLPreview.swift */,
                                 P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */,
+                                P5F_SETTINGSVIEW_SWIFT_REF /* SettingsView.swift */,
 );
 			path = Views;
 			sourceTree = "<group>";
@@ -226,6 +240,7 @@
                                 P4_CLIPBOARDVIEWMODELTESTS_SWIFT_REF /* ClipboardViewModelTests.swift */,
                                 P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */,
                                 P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */,
+                                P5_PASTESERVICETESTS_SWIFT_REF /* PasteServiceTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -356,6 +371,11 @@
                                 P4_PREVIEW_URLPREVIEW_SWIFT_BUILD /* URLPreview.swift in Sources */,
                                 P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_BUILD /* ContentPreviewRouter.swift in Sources */,
                                 
+                                P5_PASTESERVICE_SWIFT_BUILD /* PasteService.swift in Sources */,
+                                
+                                P5F_SETTINGSMANAGER_SWIFT_BUILD /* SettingsManager.swift in Sources */,
+                                P5F_VAULTMANAGER_SWIFT_BUILD /* VaultManager.swift in Sources */,
+                                P5F_SETTINGSVIEW_SWIFT_BUILD /* SettingsView.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +397,7 @@
                                 P4_CLIPBOARDVIEWMODELTESTS_SWIFT_BUILD /* ClipboardViewModelTests.swift in Sources */,
                                 P4_MENUBARCONTROLLERTESTS_SWIFT_BUILD /* MenuBarControllerTests.swift in Sources */,
                                 P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_BUILD /* ContentPreviewTests.swift in Sources */,
+                                P5_PASTESERVICETESTS_SWIFT_BUILD /* PasteServiceTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

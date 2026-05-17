@@ -11,7 +11,7 @@ import AppKit
 struct ContentTypeDetector {
     
     /// Returns one of: "file", "url", "image", "html", "rtf", "markdown", "code", "text", "unknown"
-    func detectType(from pasteboard: PasteboardType) -> String {
+    func detectType(from pasteboard: PasteboardProtocol) -> String {
         let types = pasteboard.types ?? []
         
         if types.contains(.fileURL) {

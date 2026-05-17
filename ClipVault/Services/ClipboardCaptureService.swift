@@ -12,22 +12,26 @@ actor ClipboardCaptureService {
     private let monitor: PasteboardMonitor
     private let detector: ContentTypeDetector
     private let repository: ClipboardRepository
-    private let pasteboard: PasteboardType
+    private let pasteboard: PasteboardProtocol
+    private let vaultManager: VaultManager
+    private let settings: SettingsManager
     private let workspaceAppIdentifier: () -> String?
     
     private var streamTask: Task<Void, Never>?
     
-    private let largeFileThreshold: Int = 1_048_576 // 1MB
-    
     init(monitor: PasteboardMonitor,
          detector: ContentTypeDetector = ContentTypeDetector(),
          repository: ClipboardRepository,
-         pasteboard: PasteboardType = NSPasteboard.general,
+         pasteboard: PasteboardProtocol = NSPasteboard.general,
+         vaultManager: VaultManager = .shared,
+         settings: SettingsManager = .shared,
          workspaceAppIdentifier: @escaping () -> String? = { NSWorkspace.shared.frontmostApplication?.bundleIdentifier }) {
         self.monitor = monitor
         self.detector = detector
         self.repository = repository
         self.pasteboard = pasteboard
+        self.vaultManager = vaultManager
+        self.settings = settings
         self.workspaceAppIdentifier = workspaceAppIdentifier
     }
     
@@ -57,8 +61,15 @@ actor ClipboardCaptureService {
         var imageData: Data? = nil
         var fileURL: String? = nil
         
+        let thresholdBytes = settings.largeFileThresholdMB * 1024 * 1024
+        
         if let string = pasteboard.string(forType: .string) {
-            plainText = Data(string.utf8)
+            let data = Data(string.utf8)
+            if data.count > thresholdBytes {
+                fileURL = try? vaultManager.saveToVault(data: data, extension: "txt")
+            } else {
+                plainText = data
+            }
         }
         
         switch type {
@@ -68,26 +79,26 @@ actor ClipboardCaptureService {
                 print("DEBUG (Service): Before generateThumbnail")
                 imageData = await generateThumbnail(from: image, maxDimension: 48)
                 print("DEBUG (Service): After generateThumbnail")
+                
+                if tiff.count > thresholdBytes {
+                    let ext = pasteboard.types?.contains(.png) == true ? "png" : "tiff"
+                    fileURL = try? vaultManager.saveToVault(data: tiff, extension: ext)
+                }
             }
         case "file":
             if let pathString = pasteboard.string(forType: .fileURL), let url = URL(string: pathString) {
-                do {
-                    let attr = try FileManager.default.attributesOfItem(atPath: url.path)
-                    let size = attr[.size] as? Int ?? 0
-                    if size > largeFileThreshold {
-                        // Store only reference
-                        fileURL = url.path
-                    } else {
-                        // For small files, we still just store the reference for MVP to keep DB small.
-                        fileURL = url.path
-                    }
-                } catch {
-                    fileURL = url.path
-                }
+                // For MVP, always store relative path for file copies in Finder.
+                // Optionally could "Archive to Vault" in future logic.
+                fileURL = url.path
             }
         case "rtf", "html":
             if let data = pasteboard.data(forType: .rtf) ?? pasteboard.data(forType: .html) {
-                richText = data
+                if data.count > thresholdBytes {
+                    let ext = pasteboard.types?.contains(.rtf) == true ? "rtf" : "html"
+                    fileURL = try? vaultManager.saveToVault(data: data, extension: ext)
+                } else {
+                    richText = data
+                }
             }
         default:
             break

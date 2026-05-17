@@ -22,26 +22,3 @@ struct ClipVaultApp: App {
         }
     }
 }
-
-// MARK: - SettingsView
-
-/// Placeholder settings view. Replaced with full implementation in Phase 5.
-private struct SettingsView: View {
-    var body: some View {
-        TabView {
-            Text("General settings will appear here.")
-                .tabItem {
-                    Label("General", systemImage: "gearshape")
-                }
-            Text("Security settings will appear here.")
-                .tabItem {
-                    Label("Security", systemImage: "lock.shield")
-                }
-            Text("About ClipVault")
-                .tabItem {
-                    Label("About", systemImage: "info.circle")
-                }
-        }
-        .frame(width: 450, height: 300)
-    }
-}

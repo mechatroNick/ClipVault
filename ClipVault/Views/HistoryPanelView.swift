@@ -29,7 +29,9 @@ struct HistoryPanelView: View {
                     ForEach(Array(viewModel.entries.enumerated()), id: \.element.id) { index, entry in
                         EntryRowView(
                             entry: entry,
-                            isSelected: viewModel.selectedIndex == index
+                            isSelected: viewModel.selectedIndex == index,
+                            onTogglePin: { viewModel.togglePin(at: index) },
+                            onDelete: { viewModel.deleteEntry(at: index) }
                         )
                         .onTapGesture {
                             viewModel.selectedIndex = index

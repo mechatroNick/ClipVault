@@ -37,6 +37,28 @@ final class ClipboardViewModel {
         }
     }
     
+    func deleteEntry(at index: Int) {
+        guard index >= 0 && index < entries.count else { return }
+        let entry = entries[index]
+        if let id = entry.id {
+            try? repository.delete(id: id)
+            // ValueObservation will update 'entries' automatically
+        }
+    }
+    
+    func togglePin(at index: Int) {
+        guard index >= 0 && index < entries.count else { return }
+        let entry = entries[index]
+        if let id = entry.id {
+            if entry.isPinned {
+                try? repository.unpin(id: id)
+            } else {
+                try? repository.pin(id: id)
+            }
+            // ValueObservation will update 'entries' automatically
+        }
+    }
+    
     private var observation: Any?
 
     init(repository: ClipboardRepository = ClipboardRepository()) {

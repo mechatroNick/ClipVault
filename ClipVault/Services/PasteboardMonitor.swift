@@ -8,20 +8,24 @@
 import AppKit
 
 /// Protocol to abstract NSPasteboard for unit testing.
-protocol PasteboardType {
+protocol PasteboardProtocol {
     var changeCount: Int { get }
     var types: [NSPasteboard.PasteboardType]? { get }
     func string(forType dataType: NSPasteboard.PasteboardType) -> String?
     func data(forType dataType: NSPasteboard.PasteboardType) -> Data?
+    
+    @discardableResult func clearContents() -> Int
+    @discardableResult func setString(_ string: String, forType dataType: NSPasteboard.PasteboardType) -> Bool
+    @discardableResult func setData(_ data: Data?, forType dataType: NSPasteboard.PasteboardType) -> Bool
 }
 
-extension NSPasteboard: PasteboardType {}
+extension NSPasteboard: PasteboardProtocol {}
 
 /// Monitors the system pasteboard for changes via polling and emits
 /// updates via an AsyncStream. Includes app lifecycle awareness to pause
 /// when the app is inactive if needed, and filtering for self-copies.
 final class PasteboardMonitor: @unchecked Sendable {
-    private let pasteboard: PasteboardType
+    private let pasteboard: PasteboardProtocol
     private let pollInterval: TimeInterval
     
     private var timer: Timer?
@@ -32,7 +36,7 @@ final class PasteboardMonitor: @unchecked Sendable {
     /// If true, the next detected change is ignored (used when the app itself pastes/copies).
     private var ignoreNextChange = false
     
-    init(pasteboard: PasteboardType = NSPasteboard.general, pollInterval: TimeInterval = 0.5) {
+    init(pasteboard: PasteboardProtocol = NSPasteboard.general, pollInterval: TimeInterval = 0.5) {
         self.pasteboard = pasteboard
         self.pollInterval = pollInterval
         self.lastChangeCount = pasteboard.changeCount

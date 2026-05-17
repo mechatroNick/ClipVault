@@ -8,7 +8,7 @@
 import XCTest
 @testable import ClipVault
 
-final class MockPasteboard: PasteboardType {
+final class MockPasteboard: PasteboardProtocol {
     var changeCount: Int = 0
     var types: [NSPasteboard.PasteboardType]? = []
     
@@ -21,6 +21,35 @@ final class MockPasteboard: PasteboardType {
     
     func data(forType dataType: NSPasteboard.PasteboardType) -> Data? {
         return dataDict[dataType]
+    }
+    
+    func clearContents() -> Int {
+        strings.removeAll()
+        dataDict.removeAll()
+        types = []
+        changeCount += 1
+        return changeCount
+    }
+    
+    func setString(_ string: String, forType dataType: NSPasteboard.PasteboardType) -> Bool {
+        strings[dataType] = string
+        if types?.contains(dataType) == false {
+            types?.append(dataType)
+        }
+        return true
+    }
+    
+    func setData(_ data: Data?, forType dataType: NSPasteboard.PasteboardType) -> Bool {
+        if let data = data {
+            dataDict[dataType] = data
+            if types?.contains(dataType) == false {
+                types?.append(dataType)
+            }
+        } else {
+            dataDict.removeValue(forKey: dataType)
+            types?.removeAll(where: { $0 == dataType })
+        }
+        return true
     }
     
     // Test helpers

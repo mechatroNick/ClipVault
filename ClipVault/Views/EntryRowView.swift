@@ -8,6 +8,8 @@ import SwiftUI
 struct EntryRowView: View {
     let entry: ClipboardEntry
     let isSelected: Bool
+    var onTogglePin: (() -> Void)? = nil
+    var onDelete: (() -> Void)? = nil
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -39,10 +41,22 @@ struct EntryRowView: View {
             
             Spacer()
             
-            if entry.isPinned {
-                Image(systemName: "pin.fill")
-                    .font(.system(size: 10))
+            HStack(spacing: 8) {
+                if isSelected || entry.isPinned {
+                    Button(action: { onTogglePin?() }) {
+                        Image(systemName: entry.isPinned ? "pin.fill" : "pin")
+                            .font(.system(size: 10))
+                    }
+                    .buttonStyle(.plain)
                     .foregroundColor(isSelected ? .white : .secondary)
+                    
+                    Button(action: { onDelete?() }) {
+                        Image(systemName: "trash")
+                            .font(.system(size: 10))
+                    }
+                    .buttonStyle(.plain)
+                    .foregroundColor(isSelected ? .white : .secondary)
+                }
             }
         }
         .padding(.vertical, 8)

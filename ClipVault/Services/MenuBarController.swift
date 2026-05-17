@@ -11,14 +11,16 @@ final class MenuBarController: NSObject {
     private var statusItem: NSStatusItem?
     private var panel: HistoryPanel?
     private let viewModel: ClipboardViewModel
+    private let pasteService: PasteService
     private var eventMonitor: Any?
     
     var isPanelVisible: Bool {
         panel?.isVisible ?? false
     }
     
-    init(viewModel: ClipboardViewModel) {
+    init(viewModel: ClipboardViewModel, pasteService: PasteService = PasteService()) {
         self.viewModel = viewModel
+        self.pasteService = pasteService
         super.init()
         setupStatusItem()
         setupPanel()
@@ -89,7 +91,7 @@ final class MenuBarController: NSObject {
         }
     }
     
-    private func handleKeyDown(_ event: NSEvent) -> NSEvent? {
+    func handleKeyDown(_ event: NSEvent) -> NSEvent? {
         guard let panel = panel, panel.isVisible else { return event }
         
         let modifiers = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
@@ -98,9 +100,11 @@ final class MenuBarController: NSObject {
             switch characters {
             case "1"..."9":
                 if let digit = Int(characters), digit <= viewModel.entries.count {
-                    viewModel.selectedIndex = digit - 1
-                    print("DEBUG: Cmd+\(digit) pressed")
-                    // Phase 5: pasteEntry(viewModel.entries[digit-1])
+                    let entry = viewModel.entries[digit - 1]
+                    Task {
+                        try? await pasteService.preparePasteboard(for: entry)
+                        await pasteService.simulatePaste()
+                    }
                     closePanel()
                     return nil
                 }
@@ -131,8 +135,12 @@ final class MenuBarController: NSObject {
             return nil
         case 36: // Enter
             if let index = viewModel.selectedIndex, index < viewModel.entries.count {
-                print("DEBUG: Enter pressed on index \(index)")
-                // Phase 5: pasteEntry(viewModel.entries[index])
+                let entry = viewModel.entries[index]
+                let asPlainText = modifiers.contains(.option)
+                Task {
+                    try? await pasteService.preparePasteboard(for: entry, asPlainText: asPlainText)
+                    await pasteService.simulatePaste()
+                }
                 closePanel()
             }
             return nil
@@ -144,7 +152,7 @@ final class MenuBarController: NSObject {
         }
     }
     
-    private func closePanel() {
+    func closePanel() {
         NSAnimationContext.runAnimationGroup({ context in
             context.duration = 0.1
             panel?.animator().alphaValue = 0
