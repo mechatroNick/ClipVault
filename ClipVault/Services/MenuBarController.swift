@@ -163,21 +163,25 @@ final class MenuBarController: NSObject {
     private func positionPanel() {
         guard let panel = panel, let button = statusItem?.button, let window = button.window else { return }
         
-        let screenRect = window.screen?.visibleFrame ?? .zero
+        let screen = window.screen ?? NSScreen.main ?? NSScreen.screens[0]
+        let screenRect = screen.visibleFrame
         let buttonRect = window.frame
         
         let panelWidth: CGFloat = 350
         let panelHeight: CGFloat = 500
         
+        // Calculate x position, centering the panel under the status item
         var x = buttonRect.origin.x + (buttonRect.width / 2) - (panelWidth / 2)
-        let y = screenRect.origin.y + screenRect.height - panelHeight - 5
         
-        // Ensure panel stays on screen
+        // Ensure panel stays within the current screen bounds
         if x < screenRect.origin.x {
             x = screenRect.origin.x + 5
         } else if x + panelWidth > screenRect.origin.x + screenRect.width {
             x = screenRect.origin.x + screenRect.width - panelWidth - 5
         }
+        
+        // Calculate y position, just below the menu bar
+        let y = screenRect.origin.y + screenRect.height - panelHeight - 5
         
         panel.setFrame(NSRect(x: x, y: y, width: panelWidth, height: panelHeight), display: true)
     }

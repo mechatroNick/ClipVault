@@ -49,5 +49,9 @@ struct EntryRowView: View {
         .padding(.horizontal, 12)
         .background(isSelected ? Color.accentColor : Color.clear)
         .cornerRadius(6)
+        .overlay(
+            RoundedRectangle(cornerRadius: 6)
+                .stroke(Color.accentColor, lineWidth: isSelected ? 2 : 0)
+        )
     }
 }
