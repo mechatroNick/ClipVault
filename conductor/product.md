@@ -71,7 +71,8 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 1. **Menu Bar Native** — Status item in the macOS menu bar; one click to open, Escape to close. Never occupies dock space.
 2. **Keyboard-First** — Global hotkey to show/hide (default: ⌘⇧V). Full keyboard navigation within the history panel. Arrow keys to browse, Enter to paste, ⌘+number for quick select.
 3. **Rich Previews** — Inline previews for images (thumbnails), code (syntax highlighted), markdown (rendered), files (metadata card). No separate "preview pane" — content is visible immediately.
-4. **macOS Native** — SwiftUI interface following Apple HIG. Native context menus, haptic feedback, dark mode support, and VoiceOver accessibility.
+4. **Visual Delight & Eye Candy** — Subtle animations for panel transitions, hover-responsive icons, haptic feedback on success/failure, and a polished, semi-transparent frosted glass aesthetic (Vibrancy).
+5. **macOS Native** — SwiftUI interface following Apple HIG. Native context menus, dark mode support, and VoiceOver accessibility.
 
 ### Interaction Flow
 1. User copies content anywhere (⌘C or right-click → Copy)

@@ -67,19 +67,16 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
 - **Thumbnail Cache**: Cache decrypted thumbnails in memory (`NSCache`) to ensure smooth scrolling.
 - **FTS5 Tuning**: Optimize the search index for sub-50ms performance across 10,000+ entries.
 
+### FR12: Visual Delight & Eye Candy
+- **Fluid Animations**: Smooth fade and slide animations for the history panel when appearing/disappearing.
+- **Hover Effects**: Subtly scale or brighten icons (Copy, Pin, Delete) when the mouse hovers over them.
+- **Haptic Feedback**: Trigger standard system haptics (for supported trackpads) on successful copy/paste and entry deletion.
+- **Visual Feedback**: Temporary success/fail badges or checkmarks when performing actions (e.g., "Copied!" checkmark).
+- **Vibrancy & Aesthetic**: Apply `NSVisualEffectView` (frosted glass) for a modern, native macOS feel.
+
 ## Acceptance Criteria
-1. Right-clicking the status icon shows a functional menu with Settings and Quit.
-2. The history panel has visible and working Settings and Close buttons.
-3. Resizing and zooming persist across app restarts.
-4. Hovering over an entry shows an enlarged preview.
-5. Copying a non-existent file triggers a user warning.
-6. Sensitive items are automatically purged after the configured time.
-7. Vault storage size is monitored; background trimming successfully removes old files when the limit is reached.
-8. Settings UI allows configuring all values in the consolidated settings list.
-9. "Launch at Login" setting works and defaults to enabled.
-10. Clicking "Save" in the Settings window immediately applies and persists all changes.
-11. Every clipboard entry displays: App Name, Window/Document Title, Timestamp, and Device Origin.
-12. HTML and RTF items are rendered with preserved styling in the preview.
-13. Search results update with a 300ms debounce.
-14. Scrolling through 1,000 entries remains smooth at 60fps.
+...
 15. History list renders instantly without Keychain access.
+16. Panel transitions are smooth (60fps) with no abrupt flickering.
+17. Buttons and entry rows provide immediate visual feedback (hover, click states).
+18. Haptic feedback occurs on key user actions.
