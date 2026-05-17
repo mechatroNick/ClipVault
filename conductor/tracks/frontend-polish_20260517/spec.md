@@ -50,6 +50,11 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
 - **Detailed Timestamps**: Display the exact time of copy in a user-friendly format (e.g., "Today at 2:45 PM" or relative "5m ago").
 - **UI Integration**: Incorporate this metadata into the `EntryRowView` or as a "Details" overlay.
 
+### FR9: Rich Content Rendering & Preview
+- **Enhanced Markdown**: Improve `MarkdownRenderer` to handle block-level elements (lists, headers) more reliably.
+- **HTML/RTF Support**: Implement a `RichTextRenderer` that converts captured RTF/HTML data into `AttributedString` for native SwiftUI display.
+- **Styling Preservation**: Preserve basic formatting (bold, italic, color) while ensuring the text scales correctly with the UI Zoom Level.
+
 ## Acceptance Criteria
 1. Right-clicking the status icon shows a functional menu with Settings and Quit.
 2. The history panel has visible and working Settings and Close buttons.
@@ -62,3 +67,5 @@ Address UI accessibility issues, implement enhanced visualization (resize, zoom,
 9. "Launch at Login" setting works and defaults to enabled.
 10. Clicking "Save" in the Settings window immediately applies and persists all changes.
 11. Every clipboard entry displays: App Name, Window/Document Title, Timestamp, and Device Origin icon/label.
+12. HTML and RTF clipboard items are rendered with preserved styling (font weight, color) in the history list.
+13. Markdown previews correctly render block elements like headers and lists.

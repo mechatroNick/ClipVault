@@ -57,6 +57,12 @@
     - [ ] Add "Local Mac" vs "iPhone/iPad" labels based on `isRemote` flag.
     - [ ] Commit: `feat(ui): Display granular metadata in history entries`
 
+- [ ] Task: Implement Rich Content Rendering (Markdown & HTML)
+    - [ ] Enhance `MarkdownRenderer` to support block-level styles.
+    - [ ] Implement `RichTextRenderer` for RTF and HTML data using `NSAttributedString`.
+    - [ ] Update `ContentPreviewRouter` to route "rtf" and "html" types to a new `RichTextPreview` component.
+    - [ ] Commit: `feat(ui): Add HTML and RTF rendering to history panel`
+
 - [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
 ## Phase 4: Sensitive Expiry & Advanced Settings

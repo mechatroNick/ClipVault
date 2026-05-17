@@ -25,17 +25,17 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 - Browseable, scrollable history with configurable retention
 - Pin/favorite frequently used entries
 
-### 2. Markdown Rendering & Preview
-- Detect markdown content and render it inline with proper formatting (bold, italics)
-- Supports inline markdown syntax via SwiftUI AttributedString
-- No separate "preview pane" — content is visible immediately
+### 2. Rich Content Rendering & Preview
+- **Markdown**: Detect markdown content and render it inline with proper formatting (bold, italics, headers) using native `AttributedString`.
+- **HTML & RTF**: Support rendering of Rich Text (RTF) and HTML clipboard content, preserving basic styling (colors, fonts, layout) in the history preview.
+- No separate \"preview pane\" — content is visible immediately and styled natively.
 
 ### 3. Vault File Storage
 - Configurable "Vault" root location (default: `~/Documents/VaultClip`)
 - Automatic date-based organization: files saved into `YYYY-MM` subfolders within the Vault
 - Large content (images, large text > 5MB) is saved as organized files instead of DB blobs
-- For files copied in Finder: store relative path reference to original; provide option to "Archive to Vault"
-- Vault directory structure created automatically on first save of a given month
+- Storage Limit: Default 10GB limit with background auto-trimming (FIFO)
+- User-Configurable: Threshold, Root Path, and Storage Limit are all adjustable in Settings.
 
 ### 4. iPhone Clipboard Handoff
 - Native integration with Apple Universal Clipboard
@@ -43,13 +43,20 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 - Preserve and display 'iPhone' badge for remote entries
 - No additional configuration required — works via iCloud handoff
 
+### 5. Comprehensive User Settings
+- **General**: Launch at Login toggle, configurable retention period, and max entry count.
+- **Visuals**: UI Zoom/Scaling (80% - 150%) for the history panel.
+- **Security**: Configurable auto-purge for sensitive items and custom search redaction rules.
+- **Persistence**: All changes applied and saved immediately via a dedicated "Save" button.
+
 ## Security Model
 
 ### Principles
 1. **Least Privilege by Default** — macOS App Sandbox with only explicitly required entitlements
 2. **Data at Rest Protection** — All clipboard history encrypted on disk; decrypted in memory only when displayed
-3. **User-Controlled Filtering** — Configurable exclusion rules for sensitive content types
+3. **User-Controlled Filtering** — Configurable exclusion rules for sensitive content types and custom regex redaction.
 4. **No Network by Default** — Zero network access required; handoff uses system-level iCloud infrastructure
+5. **Auto-Expiration**: Mandatory auto-purge for sensitive items (e.g. API keys) with a default 1h TTL, configurable by the user.
 
 ### Specific Measures
 - **App Sandbox**: Confined to sandbox with no arbitrary file system access
@@ -86,3 +93,5 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 7. Files >5MB saved to Vault; search index is redacted for sensitive patterns
 8. App runs as singleton to prevent duplicate processes
 9. Reliable exit via 'Quit' menu or Cmd+Q with background service cleanup
+10. "Launch at Login" setting works and defaults to enabled.
+11. Clicking "Save" in the Settings window immediately applies and persists all changes.
