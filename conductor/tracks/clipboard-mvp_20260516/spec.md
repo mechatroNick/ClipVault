@@ -28,10 +28,12 @@ Thin vertical slice through all layers of the clipboard manager: pasteboard moni
 - Enable FTS5 full-text search index on text content
 - Schema supports: id, content (encrypted blob), contentType, plainTextPreview, timestamp, sourceAppBundleId, isPinned, filePath (nullable for file references)
 
-### FR4: Large File Handling
-- Configurable size threshold (default: 1 MB / 1,048,576 bytes)
-- Entries exceeding threshold: store file path/URL only, never load content
-- Display file metadata (name, size, type, path) in preview
+### FR4: Vault File Storage
+- Configurable "Vault" root location (default: `~/Documents/VaultClip`).
+- Automatic date-based organization: files saved into `YYYY-MM` subfolders within the Vault.
+- Large content (images, large text > 1MB) is saved as organized files instead of DB blobs.
+- For files copied in Finder: store relative path reference to original; provide option to "Archive to Vault" (copying file to organized folder).
+- Vault directory structure created automatically on first save of a given month.
 
 ### FR5: Menu Bar Integration
 - NSStatusItem in the macOS menu bar
@@ -108,8 +110,8 @@ Thin vertical slice through all layers of the clipboard manager: pasteboard moni
 ## Acceptance Criteria
 
 1. Copy text in any app → panel shows entry with preview within 100ms
-2. Copy image → panel shows thumbnail preview
-3. Copy file in Finder → panel shows file metadata, not file contents
+2. Copy image → panel shows thumbnail preview; full image saved to `VaultClip/YYYY-MM/` if >1MB
+3. Copy file in Finder → panel shows file metadata; Vault organizes references or copies by date
 4. Press ⌘⇧V → panel opens in <200ms, keyboard navigation works
 5. Search filters entries in real-time with sub-50ms latency
 6. Press Enter → selected entry pasted into frontmost app

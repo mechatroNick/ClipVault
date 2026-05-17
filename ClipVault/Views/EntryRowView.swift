@@ -13,18 +13,8 @@ struct EntryRowView: View {
         HStack(alignment: .top, spacing: 12) {
             // Content Preview
             VStack(alignment: .leading, spacing: 4) {
-                if entry.contentType == "image", let imageData = entry.imageData, let image = NSImage(data: imageData) {
-                    Image(nsImage: image)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(maxWidth: 200, maxHeight: 100)
-                        .cornerRadius(4)
-                } else {
-                    Text(entry.plainTextSearchContent ?? "No content")
-                        .font(.system(size: 13))
-                        .lineLimit(3)
-                        .foregroundColor(isSelected ? .white : .primary)
-                }
+                ContentPreviewRouter(entry: entry)
+                    .foregroundColor(isSelected ? .white : .primary)
                 
                 HStack(spacing: 8) {
                     Text(entry.contentType.uppercased())

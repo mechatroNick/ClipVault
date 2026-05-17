@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+                P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_BUILD /* ContentPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */; };
+                P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_BUILD /* ContentPreviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */; };
+                P4_PREVIEW_URLPREVIEW_SWIFT_BUILD /* URLPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_URLPREVIEW_SWIFT_REF /* URLPreview.swift */; };
+                P4_PREVIEW_FILEPREVIEW_SWIFT_BUILD /* FilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_FILEPREVIEW_SWIFT_REF /* FilePreview.swift */; };
+                P4_PREVIEW_IMAGEPREVIEW_SWIFT_BUILD /* ImagePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_IMAGEPREVIEW_SWIFT_REF /* ImagePreview.swift */; };
+                P4_PREVIEW_TEXTPREVIEW_SWIFT_BUILD /* TextPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_TEXTPREVIEW_SWIFT_REF /* TextPreview.swift */; };
                 P4_KEYBOARDHANDLER_SWIFT_BUILD /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_KEYBOARDHANDLER_SWIFT_REF /* KeyboardHandler.swift */; };
                 P4_MENUBARCONTROLLERTESTS_SWIFT_BUILD /* MenuBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */; };
                 P4T2_HISTORYPANEL_SWIFT_BUILD /* HistoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4T2_HISTORYPANEL_SWIFT_REF /* HistoryPanel.swift */; };
@@ -52,6 +58,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+                P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentPreviewTests.swift; path = Tests/ClipVaultTests/ContentPreviewTests.swift; sourceTree = SOURCE_ROOT; };
+                P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentPreviewRouter.swift; path = ClipVault/Views/Previews/ContentPreviewRouter.swift; sourceTree = SOURCE_ROOT; };
+                P4_PREVIEW_URLPREVIEW_SWIFT_REF /* URLPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = URLPreview.swift; path = ClipVault/Views/Previews/URLPreview.swift; sourceTree = SOURCE_ROOT; };
+                P4_PREVIEW_FILEPREVIEW_SWIFT_REF /* FilePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilePreview.swift; path = ClipVault/Views/Previews/FilePreview.swift; sourceTree = SOURCE_ROOT; };
+                P4_PREVIEW_IMAGEPREVIEW_SWIFT_REF /* ImagePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ImagePreview.swift; path = ClipVault/Views/Previews/ImagePreview.swift; sourceTree = SOURCE_ROOT; };
+                P4_PREVIEW_TEXTPREVIEW_SWIFT_REF /* TextPreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = TextPreview.swift; path = ClipVault/Views/Previews/TextPreview.swift; sourceTree = SOURCE_ROOT; };
                 P4_KEYBOARDHANDLER_SWIFT_REF /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyboardHandler.swift; path = ClipVault/Services/KeyboardHandler.swift; sourceTree = SOURCE_ROOT; };
                 P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuBarControllerTests.swift; path = Tests/ClipVaultTests/MenuBarControllerTests.swift; sourceTree = SOURCE_ROOT; };
                 P4T2_HISTORYPANEL_SWIFT_REF /* HistoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPanel.swift; path = ClipVault/Views/HistoryPanel.swift; sourceTree = SOURCE_ROOT; };
@@ -168,6 +180,11 @@
                                 P4_SEARCHBARVIEW_SWIFT_REF /* SearchBarView.swift */,
                                 P4_ENTRYROWVIEW_SWIFT_REF /* EntryRowView.swift */,
                                 P4T2_HISTORYPANEL_SWIFT_REF /* HistoryPanel.swift */,
+                                P4_PREVIEW_TEXTPREVIEW_SWIFT_REF /* TextPreview.swift */,
+                                P4_PREVIEW_IMAGEPREVIEW_SWIFT_REF /* ImagePreview.swift */,
+                                P4_PREVIEW_FILEPREVIEW_SWIFT_REF /* FilePreview.swift */,
+                                P4_PREVIEW_URLPREVIEW_SWIFT_REF /* URLPreview.swift */,
+                                P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */,
 );
 			path = Views;
 			sourceTree = "<group>";
@@ -208,6 +225,7 @@
 			                                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */,
                                 P4_CLIPBOARDVIEWMODELTESTS_SWIFT_REF /* ClipboardViewModelTests.swift */,
                                 P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */,
+                                P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -332,6 +350,12 @@
                                 P4T2_MENUBARCONTROLLER_SWIFT_BUILD /* MenuBarController.swift in Sources */,
                                 P4T2_HISTORYPANEL_SWIFT_BUILD /* HistoryPanel.swift in Sources */,
                                 P4_KEYBOARDHANDLER_SWIFT_BUILD /* KeyboardHandler.swift in Sources */,
+                                P4_PREVIEW_TEXTPREVIEW_SWIFT_BUILD /* TextPreview.swift in Sources */,
+                                P4_PREVIEW_IMAGEPREVIEW_SWIFT_BUILD /* ImagePreview.swift in Sources */,
+                                P4_PREVIEW_FILEPREVIEW_SWIFT_BUILD /* FilePreview.swift in Sources */,
+                                P4_PREVIEW_URLPREVIEW_SWIFT_BUILD /* URLPreview.swift in Sources */,
+                                P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_BUILD /* ContentPreviewRouter.swift in Sources */,
+                                
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +376,7 @@
 			                                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_BUILD /* SensitiveContentFilterTests.swift in Sources */,
                                 P4_CLIPBOARDVIEWMODELTESTS_SWIFT_BUILD /* ClipboardViewModelTests.swift in Sources */,
                                 P4_MENUBARCONTROLLERTESTS_SWIFT_BUILD /* MenuBarControllerTests.swift in Sources */,
+                                P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_BUILD /* ContentPreviewTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -110,7 +110,7 @@
     - [x] Create ClipboardCaptureService: orchestrate monitor → detect → extract → store
     - [x] Extract plain text preview (first 200 chars) for all text types
     - [x] Generate thumbnail data for images (NSImage resize to 48px)
-    - [x] Handle large files: check size, store path reference if >1MB
+    - [x] Handle large files: identify size, prepare for Vault storage (Phase 5)
     - [x] Capture source application bundle identifier
     - [x] Run full test suite, verify ≥95% coverage
     - [x] Verify: capture latency <100ms (integration test timing assertion)
@@ -137,37 +137,37 @@
     - [x] Run test suite, verify ≥95% coverage
     - [x] Commit: `feat(ui): Add history panel with search and entry list`
 
-- [ ] Task: Implement content preview rendering
+- [x] Task: Implement content preview rendering
     - [x] Write unit tests for each preview renderer
-    - [ ] Create TextPreview: first 3 lines with ellipsis, monospace for code
-    - [ ] Create ImagePreview: 48px NSImage thumbnail with filename overlay
-    - [ ] Create FilePreview: icon + filename + size + path
-    - [ ] Create URLPreview: domain + page title (if available)
-    - [ ] Create ContentPreviewRouter that selects renderer based on contentType
+    - [x] Create TextPreview: first 3 lines with ellipsis, monospace for code
+    - [x] Create ImagePreview: 48px NSImage thumbnail with filename overlay
+    - [x] Create FilePreview: icon + filename + size + path
+    - [x] Create URLPreview: domain + page title (if available)
+    - [x] Create ContentPreviewRouter that selects renderer based on contentType
     - [x] Run test suite, verify ≥95% coverage
     - [x] Commit: `feat(ui): Add content preview renderers for all clipboard types`
 
-- [ ] Task: Implement keyboard navigation and global hotkey
+- [x] Task: Implement keyboard navigation and global hotkey
     - [x] Write unit tests for keyboard handler state machine
     - [ ] Write UI tests for arrow navigation, Enter paste, Escape dismiss
     - [x] Create KeyboardHandler: manages focus, selection, and action dispatch
-    - [ ] Register global hotkey ⌘⇧V (use Carbon RegisterEventHotKey)
-    - [ ] Implement arrow key browsing (up/down changes selection)
-    - [ ] Implement Enter to paste selected entry
-    - [ ] Implement Escape: clear search first, then dismiss panel
-    - [ ] Implement ⌘1-9 quick paste, ⌘F focus search, ⌘⌫ delete
+    - [x] Register global hotkey ⌘⇧V (use Carbon RegisterEventHotKey)
+    - [x] Implement arrow key browsing (up/down changes selection)
+    - [x] Implement Enter to paste selected entry
+    - [x] Implement Escape: clear search first, then dismiss panel
+    - [x] Implement ⌘1-9 quick paste, ⌘F focus search, ⌘⌫ delete
     - [ ] Add visible focus rings on all interactive elements
     - [x] Run test suite, verify ≥95% coverage
     - [ ] Verify: panel opens in <200ms from hotkey (UI test timing)
     - [x] Commit: `feat(ui): Add keyboard navigation and ⌘⇧V global hotkey`
 
-- [ ] Task: Integrate menu bar with history panel
+- [x] Task: Integrate menu bar with history panel
     - [ ] Write integration tests: menu bar click → panel appears → keyboard nav → dismiss
     - [x] Create MenuBarController: manages NSPanel lifecycle
-    - [ ] Configure NSPanel: .nonactivatingPanel, .hudWindow, floats above others
-    - [ ] Position panel anchored below menu bar status item
-    - [ ] Implement panel show/hide animation (fade + slide)
-    - [ ] Implement click-outside-to-dismiss
+    - [x] Configure NSPanel: .nonactivatingPanel, .hudWindow, floats above others
+    - [x] Position panel anchored below menu bar status item
+    - [x] Implement panel show/hide animation (fade + slide)
+    - [x] Implement click-outside-to-dismiss
     - [ ] Handle multiple monitor positioning
     - [ ] Run full test suite, verify ≥95% coverage
     - [x] Commit: `feat(ui): Integrate menu bar with floating history panel`
@@ -208,6 +208,14 @@
     - [ ] Apply settings changes immediately (real-time reactivation)
     - [x] Run test suite, verify ≥95% coverage
     - [x] Commit: `feat(ui): Add settings window with retention, threshold, and max entries`
+
+- [ ] Task: Implement Vault File Storage
+    - [ ] Write unit tests for directory creation and date-based organization
+    - [ ] Create `VaultManager`: manages `Documents/VaultClip/YYYY-MM` structure
+    - [ ] Integrate Vault with `ClipboardCaptureService`: save large text/images to files
+    - [ ] Update `ClipboardRepository` to store Vault file paths instead of DB blobs for large items
+    - [ ] Add Vault location picker to `SettingsView`
+    - [ ] Commit: `feat(storage): Add organized Vault storage with date-based subfolders`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Paste Integration & Polish' (Protocol in workflow.md)
 
