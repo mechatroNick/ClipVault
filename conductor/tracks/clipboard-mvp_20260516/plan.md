@@ -127,7 +127,7 @@
 
 - [x] Task: Build history panel SwiftUI view hierarchy
     - [x] Write unit tests for ClipboardViewModel state management
-    - [ ] Write UI tests for panel open/close behavior
+    - [x] Write UI tests for panel open/close behavior
     - [x] Create ClipboardViewModel (@Observable): entries list, search query, selected index
     - [x] Create HistoryPanelView: List with ClipboardEntryRow views
     - [x] Implement SearchBarView with real-time filtering
@@ -149,14 +149,14 @@
 
 - [x] Task: Implement keyboard navigation and global hotkey
     - [x] Write unit tests for keyboard handler state machine
-    - [ ] Write UI tests for arrow navigation, Enter paste, Escape dismiss
+    - [x] Write UI tests for arrow navigation, Enter paste, Escape dismiss
     - [x] Create KeyboardHandler: manages focus, selection, and action dispatch
     - [x] Register global hotkey ⌘⇧V (use Carbon RegisterEventHotKey)
     - [x] Implement arrow key browsing (up/down changes selection)
     - [x] Implement Enter to paste selected entry
     - [x] Implement Escape: clear search first, then dismiss panel
     - [x] Implement ⌘1-9 quick paste, ⌘F focus search, ⌘⌫ delete
-    - [ ] Add visible focus rings on all interactive elements
+    - [x] Add visible focus rings on all interactive elements
     - [x] Run test suite, verify ≥95% coverage
     - [ ] Verify: panel opens in <200ms from hotkey (UI test timing)
     - [x] Commit: `feat(ui): Add keyboard navigation and ⌘⇧V global hotkey`
@@ -168,7 +168,7 @@
     - [x] Position panel anchored below menu bar status item
     - [x] Implement panel show/hide animation (fade + slide)
     - [x] Implement click-outside-to-dismiss
-    - [ ] Handle multiple monitor positioning
+    - [x] Handle multiple monitor positioning
     - [ ] Run full test suite, verify ≥95% coverage
     - [x] Commit: `feat(ui): Integrate menu bar with floating history panel`
 
@@ -199,7 +199,7 @@
 
 - [ ] Task: Build settings window
     - [x] Write unit tests for settings persistence (UserDefaults)
-    - [ ] Write UI tests for settings window navigation
+    - [x] Write UI tests for settings window navigation
     - [ ] Create SettingsView (SwiftUI Settings scene, ⌘,)
     - [ ] General tab: retention period picker, size threshold slider, max entries stepper
     - [ ] Security tab: placeholder for content filtering (deferred), encryption status indicator
