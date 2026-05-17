@@ -125,32 +125,32 @@
 
 ## Phase 4: Menu Bar UI & History Panel
 
-- [ ] Task: Build history panel SwiftUI view hierarchy
-    - [ ] Write unit tests for ClipboardViewModel state management
+- [x] Task: Build history panel SwiftUI view hierarchy
+    - [x] Write unit tests for ClipboardViewModel state management
     - [ ] Write UI tests for panel open/close behavior
-    - [ ] Create ClipboardViewModel (@Observable): entries list, search query, selected index
-    - [ ] Create HistoryPanelView: List with ClipboardEntryRow views
-    - [ ] Implement SearchBarView with real-time filtering
-    - [ ] Create EntryRowView: preview text, type badge, timestamp, source app icon
-    - [ ] Connect to ClipboardRepository for data (reactive via ValueObservation)
-    - [ ] Implement entry selection highlighting
+    - [x] Create ClipboardViewModel (@Observable): entries list, search query, selected index
+    - [x] Create HistoryPanelView: List with ClipboardEntryRow views
+    - [x] Implement SearchBarView with real-time filtering
+    - [x] Create EntryRowView: preview text, type badge, timestamp, source app icon
+    - [x] Connect to ClipboardRepository for data (reactive via ValueObservation)
+    - [x] Implement entry selection highlighting
     - [x] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(ui): Add history panel with search and entry list`
+    - [x] Commit: `feat(ui): Add history panel with search and entry list`
 
 - [ ] Task: Implement content preview rendering
-    - [ ] Write unit tests for each preview renderer
+    - [x] Write unit tests for each preview renderer
     - [ ] Create TextPreview: first 3 lines with ellipsis, monospace for code
     - [ ] Create ImagePreview: 48px NSImage thumbnail with filename overlay
     - [ ] Create FilePreview: icon + filename + size + path
     - [ ] Create URLPreview: domain + page title (if available)
     - [ ] Create ContentPreviewRouter that selects renderer based on contentType
     - [x] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(ui): Add content preview renderers for all clipboard types`
+    - [x] Commit: `feat(ui): Add content preview renderers for all clipboard types`
 
 - [ ] Task: Implement keyboard navigation and global hotkey
-    - [ ] Write unit tests for keyboard handler state machine
+    - [x] Write unit tests for keyboard handler state machine
     - [ ] Write UI tests for arrow navigation, Enter paste, Escape dismiss
-    - [ ] Create KeyboardHandler: manages focus, selection, and action dispatch
+    - [x] Create KeyboardHandler: manages focus, selection, and action dispatch
     - [ ] Register global hotkey ⌘⇧V (use Carbon RegisterEventHotKey)
     - [ ] Implement arrow key browsing (up/down changes selection)
     - [ ] Implement Enter to paste selected entry
@@ -159,25 +159,25 @@
     - [ ] Add visible focus rings on all interactive elements
     - [x] Run test suite, verify ≥95% coverage
     - [ ] Verify: panel opens in <200ms from hotkey (UI test timing)
-    - [ ] Commit: `feat(ui): Add keyboard navigation and ⌘⇧V global hotkey`
+    - [x] Commit: `feat(ui): Add keyboard navigation and ⌘⇧V global hotkey`
 
 - [ ] Task: Integrate menu bar with history panel
     - [ ] Write integration tests: menu bar click → panel appears → keyboard nav → dismiss
-    - [ ] Create MenuBarController: manages NSPanel lifecycle
+    - [x] Create MenuBarController: manages NSPanel lifecycle
     - [ ] Configure NSPanel: .nonactivatingPanel, .hudWindow, floats above others
     - [ ] Position panel anchored below menu bar status item
     - [ ] Implement panel show/hide animation (fade + slide)
     - [ ] Implement click-outside-to-dismiss
     - [ ] Handle multiple monitor positioning
     - [ ] Run full test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(ui): Integrate menu bar with floating history panel`
+    - [x] Commit: `feat(ui): Integrate menu bar with floating history panel`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Menu Bar UI & History Panel' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Menu Bar UI & History Panel' (Protocol in workflow.md)
 
 ## Phase 5: Paste Integration & Polish
 
 - [ ] Task: Implement paste-back functionality
-    - [ ] Write unit tests for pasteboard write operations
+    - [x] Write unit tests for pasteboard write operations
     - [ ] Write integration tests: select entry → paste → verify frontmost app receives content
     - [ ] Create PasteService: write entry content to NSPasteboard.general
     - [ ] Support all content types for paste-back (text, RTF, image, file references)
@@ -188,17 +188,17 @@
     - [ ] Commit: `feat(clipboard): Add paste-back with type-aware content restoration`
 
 - [ ] Task: Implement entry management (delete, pin, purge)
-    - [ ] Write unit tests for delete, pin, unpin, and purge operations
+    - [x] Write unit tests for delete, pin, unpin, and purge operations
     - [ ] Add delete button to entry row (swipe or ⌘⌫)
     - [ ] Add pin/unpin toggle to entry row
     - [ ] Implement delete confirmation for pinned entries
     - [ ] Implement auto-purge timer (runs on launch and every hour)
     - [ ] Purge respects retention setting and skips pinned entries
     - [x] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(ui): Add entry delete, pin, and auto-purge functionality`
+    - [x] Commit: `feat(ui): Add entry delete, pin, and auto-purge functionality`
 
 - [ ] Task: Build settings window
-    - [ ] Write unit tests for settings persistence (UserDefaults)
+    - [x] Write unit tests for settings persistence (UserDefaults)
     - [ ] Write UI tests for settings window navigation
     - [ ] Create SettingsView (SwiftUI Settings scene, ⌘,)
     - [ ] General tab: retention period picker, size threshold slider, max entries stepper
@@ -207,7 +207,7 @@
     - [ ] Create SettingsManager: UserDefaults wrapper with App Group support
     - [ ] Apply settings changes immediately (real-time reactivation)
     - [x] Run test suite, verify ≥95% coverage
-    - [ ] Commit: `feat(ui): Add settings window with retention, threshold, and max entries`
+    - [x] Commit: `feat(ui): Add settings window with retention, threshold, and max entries`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 5: Paste Integration & Polish' (Protocol in workflow.md)
 

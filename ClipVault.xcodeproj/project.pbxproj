@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+                P4_KEYBOARDHANDLER_SWIFT_BUILD /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_KEYBOARDHANDLER_SWIFT_REF /* KeyboardHandler.swift */; };
+                P4_MENUBARCONTROLLERTESTS_SWIFT_BUILD /* MenuBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */; };
+                P4T2_HISTORYPANEL_SWIFT_BUILD /* HistoryPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4T2_HISTORYPANEL_SWIFT_REF /* HistoryPanel.swift */; };
+                P4T2_MENUBARCONTROLLER_SWIFT_BUILD /* MenuBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4T2_MENUBARCONTROLLER_SWIFT_REF /* MenuBarController.swift */; };
                 P4_ENTRYROWVIEW_SWIFT_BUILD /* EntryRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_ENTRYROWVIEW_SWIFT_REF /* EntryRowView.swift */; };
                 P4_SEARCHBARVIEW_SWIFT_BUILD /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_SEARCHBARVIEW_SWIFT_REF /* SearchBarView.swift */; };
                 P4_HISTORYPANELVIEW_SWIFT_BUILD /* HistoryPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_HISTORYPANELVIEW_SWIFT_REF /* HistoryPanelView.swift */; };
@@ -48,6 +52,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+                P4_KEYBOARDHANDLER_SWIFT_REF /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyboardHandler.swift; path = ClipVault/Services/KeyboardHandler.swift; sourceTree = SOURCE_ROOT; };
+                P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuBarControllerTests.swift; path = Tests/ClipVaultTests/MenuBarControllerTests.swift; sourceTree = SOURCE_ROOT; };
+                P4T2_HISTORYPANEL_SWIFT_REF /* HistoryPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPanel.swift; path = ClipVault/Views/HistoryPanel.swift; sourceTree = SOURCE_ROOT; };
+                P4T2_MENUBARCONTROLLER_SWIFT_REF /* MenuBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuBarController.swift; path = ClipVault/Services/MenuBarController.swift; sourceTree = SOURCE_ROOT; };
                 P4_ENTRYROWVIEW_SWIFT_REF /* EntryRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EntryRowView.swift; path = ClipVault/Views/EntryRowView.swift; sourceTree = SOURCE_ROOT; };
                 P4_SEARCHBARVIEW_SWIFT_REF /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SearchBarView.swift; path = ClipVault/Views/SearchBarView.swift; sourceTree = SOURCE_ROOT; };
                 P4_HISTORYPANELVIEW_SWIFT_REF /* HistoryPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPanelView.swift; path = ClipVault/Views/HistoryPanelView.swift; sourceTree = SOURCE_ROOT; };
@@ -147,6 +155,8 @@
 				B1C2D3E4F5A6B7C8D9E0F302 /* DatabaseManager.swift */,
 				B1C2D3E4F5A6B7C8D9E0F303 /* EncryptionService.swift */,
 			                                SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */,
+                                P4T2_MENUBARCONTROLLER_SWIFT_REF /* MenuBarController.swift */,
+                                P4_KEYBOARDHANDLER_SWIFT_REF /* KeyboardHandler.swift */,
 );
 			path = Services;
 			sourceTree = "<group>";
@@ -157,6 +167,7 @@
 			                                P4_HISTORYPANELVIEW_SWIFT_REF /* HistoryPanelView.swift */,
                                 P4_SEARCHBARVIEW_SWIFT_REF /* SearchBarView.swift */,
                                 P4_ENTRYROWVIEW_SWIFT_REF /* EntryRowView.swift */,
+                                P4T2_HISTORYPANEL_SWIFT_REF /* HistoryPanel.swift */,
 );
 			path = Views;
 			sourceTree = "<group>";
@@ -196,6 +207,7 @@
 				B1C2D3E4F5A6B7C8D9E0F206 /* EncryptionServiceTests.swift */,
 			                                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */,
                                 P4_CLIPBOARDVIEWMODELTESTS_SWIFT_REF /* ClipboardViewModelTests.swift */,
+                                P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -317,6 +329,9 @@
                                 P4_HISTORYPANELVIEW_SWIFT_BUILD /* HistoryPanelView.swift in Sources */,
                                 P4_SEARCHBARVIEW_SWIFT_BUILD /* SearchBarView.swift in Sources */,
                                 P4_ENTRYROWVIEW_SWIFT_BUILD /* EntryRowView.swift in Sources */,
+                                P4T2_MENUBARCONTROLLER_SWIFT_BUILD /* MenuBarController.swift in Sources */,
+                                P4T2_HISTORYPANEL_SWIFT_BUILD /* HistoryPanel.swift in Sources */,
+                                P4_KEYBOARDHANDLER_SWIFT_BUILD /* KeyboardHandler.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -326,7 +341,7 @@
 			files = (
 				A1B2C3D4E5F6A7B8C9D0E2F1 /* ClipVaultTests.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E2F2 /* EntitlementVerificationTests.swift in Sources */,
-				A1B2C3D4E5F6A7B8C9D0E203 /* MenuBarLifecycleTests.swift in Sources */,
+				
 				A1B2C3D4E5F6A7B8C9D0E204 /* DatabaseSchemaTests.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E205 /* DatabaseManagerTests.swift in Sources */,
 				A1B2C3D4E5F6A7B8C9D0E206 /* EncryptionServiceTests.swift in Sources */,
@@ -336,6 +351,7 @@
 				44A14E5C98CD540710387D64 /* ClipboardRepositoryTests.swift in Sources */,
 			                                SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_BUILD /* SensitiveContentFilterTests.swift in Sources */,
                                 P4_CLIPBOARDVIEWMODELTESTS_SWIFT_BUILD /* ClipboardViewModelTests.swift in Sources */,
+                                P4_MENUBARCONTROLLERTESTS_SWIFT_BUILD /* MenuBarControllerTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

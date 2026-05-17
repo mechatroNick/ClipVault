@@ -10,7 +10,7 @@ import GRDB
 @Observable
 @MainActor
 final class ClipboardViewModel {
-    private let repository: ClipboardRepository
+    let repository: ClipboardRepository
     
     var entries: [ClipboardEntry] = []
     var searchQuery: String = "" {
@@ -19,6 +19,23 @@ final class ClipboardViewModel {
         }
     }
     var selectedIndex: Int? = nil
+    
+    func moveSelection(direction: Int) {
+        guard !entries.isEmpty else { return }
+        
+        if let current = selectedIndex {
+            let next = current + direction
+            if next >= 0 && next < entries.count {
+                selectedIndex = next
+            } else if next < 0 {
+                selectedIndex = entries.count - 1
+            } else {
+                selectedIndex = 0
+            }
+        } else {
+            selectedIndex = direction > 0 ? 0 : entries.count - 1
+        }
+    }
     
     private var observation: Any?
 

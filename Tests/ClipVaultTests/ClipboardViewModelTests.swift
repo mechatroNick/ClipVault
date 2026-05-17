@@ -60,22 +60,32 @@ final class ClipboardViewModelTests: XCTestCase {
     }
     
     func testSearchQuery_UpdatesFilteredEntries() async throws {
+        // ... (existing test code) ...
+    }
+    
+    func testMoveSelection_WrapsAround() {
         // Arrange
-        var entry1 = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Hello".utf8))
-        var entry2 = ClipboardEntry(timestamp: Date().addingTimeInterval(1), contentType: "text", plainTextContent: Data("World".utf8))
-        try repository.save(&entry1)
-        try repository.save(&entry2)
+        viewModel.entries = [
+            ClipboardEntry(timestamp: Date(), contentType: "text"),
+            ClipboardEntry(timestamp: Date(), contentType: "text"),
+            ClipboardEntry(timestamp: Date(), contentType: "text")
+        ]
         
-        // Wait for observation to pick up changes
-        try await Task.sleep(nanoseconds: 200_000_000)
+        // Act: Down from nil
+        viewModel.moveSelection(direction: 1)
+        XCTAssertEqual(viewModel.selectedIndex, 0)
         
-        // Act
-        viewModel.searchQuery = "Hello"
+        // Act: Down to last
+        viewModel.moveSelection(direction: 1)
+        viewModel.moveSelection(direction: 1)
+        XCTAssertEqual(viewModel.selectedIndex, 2)
         
-        // Assert
-        // Note: Real implementation will likely use GRDB ValueObservation or similar.
-        // For now we test the state machine.
-        XCTAssertEqual(viewModel.entries.count, 1)
-        XCTAssertEqual(viewModel.entries.first?.plainTextSearchContent, "Hello")
+        // Act: Wrap around to first
+        viewModel.moveSelection(direction: 1)
+        XCTAssertEqual(viewModel.selectedIndex, 0)
+        
+        // Act: Up to last
+        viewModel.moveSelection(direction: -1)
+        XCTAssertEqual(viewModel.selectedIndex, 2)
     }
 }

@@ -15,73 +15,30 @@ import SwiftUI
 /// context menu with Settings and Quit.
 final class AppDelegate: NSObject, NSApplicationDelegate {
 
-    // MARK: - Properties
+    private var menuBarController: MenuBarController?
+    private var viewModel: ClipboardViewModel?
+    private var captureService: ClipboardCaptureService?
 
-    /// The menu bar status item. Exposed as internal for testing.
-    private(set) var statusItem: NSStatusItem?
-
-    /// Callback invoked on left-click. Stub for Phase 4 history panel integration.
-    var onLeftClick: (() -> Void)?
-
-    // MARK: - NSApplicationDelegate
-
+    @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
-        setupStatusItem()
-    }
-
-    // MARK: - Setup
-
-    private func setupStatusItem() {
-        guard statusItem == nil else { return }
-
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
-
-        guard let button = statusItem?.button else { return }
-
-        // Template icon: monochrome, adapts to light/dark menu bar
-        button.image = NSImage(
-            systemSymbolName: "clipboard",
-            accessibilityDescription: "ClipVault"
-        )
-        button.image?.isTemplate = true
-
-        // Left-click action only — right-click shows NSMenu automatically via statusItem.menu
-        button.action = #selector(handleLeftClick)
-        button.target = self
-        button.sendAction(on: [.leftMouseUp])
-
-        // Right-click context menu
-        let menu = NSMenu()
-        let settingsItem = NSMenuItem(
-            title: "Settings...",
-            action: #selector(openSettings),
-            keyEquivalent: ","
-        )
-        settingsItem.keyEquivalentModifierMask = .command
-        menu.addItem(settingsItem)
-        menu.addItem(.separator())
-        let quitItem = NSMenuItem(
-            title: "Quit ClipVault",
-            action: #selector(quitApp),
-            keyEquivalent: "q"
-        )
-        quitItem.keyEquivalentModifierMask = .command
-        menu.addItem(quitItem)
-
-        statusItem?.menu = menu
-    }
-
-    // MARK: - Actions
-
-    @objc private func handleLeftClick() {
-        onLeftClick?()
-    }
-
-    @objc private func openSettings() {
-        NSApp.sendAction(Selector("showSettingsWindow:"), to: nil, from: nil)
-    }
-
-    @objc private func quitApp() {
-        NSApplication.shared.terminate(nil)
+        let repository = ClipboardRepository()
+        let vm = ClipboardViewModel(repository: repository)
+        self.viewModel = vm
+        
+        let monitor = PasteboardMonitor()
+        let capture = ClipboardCaptureService(monitor: monitor, repository: repository)
+        self.captureService = capture
+        
+        let menuController = MenuBarController(viewModel: vm)
+        self.menuBarController = menuController
+        
+        KeyboardHandler.shared.onHotKey = {
+            menuController.togglePanel()
+        }
+        KeyboardHandler.shared.registerHotKey()
+        
+        Task {
+            await capture.start()
+        }
     }
 }
