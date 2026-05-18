@@ -58,6 +58,20 @@ final class ClipboardViewModel {
             // ValueObservation will update 'entries' automatically
         }
     }
+
+    func copyEntry(at index: Int) {
+        guard index >= 0 && index < entries.count else { return }
+        let entry = entries[index]
+        Task {
+            do {
+                let decrypted = try repository.decryptContent(for: entry)
+                let pasteService = PasteService()
+                try await pasteService.preparePasteboard(for: decrypted)
+            } catch {
+                print("Failed to copy entry: \(error)")
+            }
+        }
+    }
     
     private var observationTask: Task<Void, Never>?
 

@@ -64,8 +64,10 @@ struct HistoryPanelView: View {
                         EntryRowView(
                             entry: entry,
                             isSelected: viewModel.selectedIndex == index,
+                            repository: viewModel.repository,
                             onTogglePin: { viewModel.togglePin(at: index) },
-                            onDelete: { viewModel.deleteEntry(at: index) }
+                            onDelete: { viewModel.deleteEntry(at: index) },
+                            onCopy: { viewModel.copyEntry(at: index) }
                         )
                         .onTapGesture {
                             viewModel.selectedIndex = index
