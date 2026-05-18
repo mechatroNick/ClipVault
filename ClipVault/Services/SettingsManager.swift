@@ -42,6 +42,18 @@ final class SettingsManager: ObservableObject {
     @Published var zoomLevel: Double {
         didSet { UserDefaults.standard.set(zoomLevel, forKey: Keys.zoomLevel) }
     }
+
+    @Published var sensitivePurgeTimeHours: Int {
+        didSet { UserDefaults.standard.set(sensitivePurgeTimeHours, forKey: Keys.sensitivePurgeTimeHours) }
+    }
+
+    @Published var vaultStorageLimitGB: Int {
+        didSet { UserDefaults.standard.set(vaultStorageLimitGB, forKey: Keys.vaultStorageLimitGB) }
+    }
+
+    @Published var isAutoTrimEnabled: Bool {
+        didSet { UserDefaults.standard.set(isAutoTrimEnabled, forKey: Keys.isAutoTrimEnabled) }
+    }
     
     @Published var launchAtLogin: Bool = false {
         didSet {
@@ -56,7 +68,6 @@ final class SettingsManager: ObservableObject {
             } catch {
                 print("LaunchAtLogin: Failed to \(intended ? "register" : "unregister"): \(error)")
                 let actual = SMAppService.mainApp.status == .enabled
-                // avoid infinite loop if status matches
                 if actual != launchAtLogin {
                     launchAtLogin = actual
                 }
@@ -74,6 +85,9 @@ final class SettingsManager: ObservableObject {
         static let panelWidth = "cv_panelWidth"
         static let panelHeight = "cv_panelHeight"
         static let zoomLevel = "cv_zoomLevel"
+        static let sensitivePurgeTimeHours = "cv_sensitivePurgeTimeHours"
+        static let vaultStorageLimitGB = "cv_vaultStorageLimitGB"
+        static let isAutoTrimEnabled = "cv_isAutoTrimEnabled"
         static let launchAtLogin = "cv_launchAtLogin"
     }
     
@@ -94,6 +108,10 @@ final class SettingsManager: ObservableObject {
         self.panelWidth = UserDefaults.standard.double(forKey: Keys.panelWidth) == 0 ? 350 : CGFloat(UserDefaults.standard.double(forKey: Keys.panelWidth))
         self.panelHeight = UserDefaults.standard.double(forKey: Keys.panelHeight) == 0 ? 500 : CGFloat(UserDefaults.standard.double(forKey: Keys.panelHeight))
         self.zoomLevel = UserDefaults.standard.double(forKey: Keys.zoomLevel) == 0 ? 1.0 : UserDefaults.standard.double(forKey: Keys.zoomLevel)
+
+        self.sensitivePurgeTimeHours = UserDefaults.standard.integer(forKey: Keys.sensitivePurgeTimeHours) == 0 ? 1 : UserDefaults.standard.integer(forKey: Keys.sensitivePurgeTimeHours)
+        self.vaultStorageLimitGB = UserDefaults.standard.integer(forKey: Keys.vaultStorageLimitGB) == 0 ? 10 : UserDefaults.standard.integer(forKey: Keys.vaultStorageLimitGB)
+        self.isAutoTrimEnabled = UserDefaults.standard.object(forKey: Keys.isAutoTrimEnabled) == nil ? true : UserDefaults.standard.bool(forKey: Keys.isAutoTrimEnabled)
 
         let currentStatus = (SMAppService.mainApp.status == .enabled)
         if UserDefaults.standard.object(forKey: Keys.launchAtLogin) == nil {
