@@ -12,6 +12,7 @@ final class LaunchAtLoginTests: XCTestCase {
     override func setUp() {
         // Clean up: unregister to start fresh
         try? SMAppService.mainApp.unregister()
+        SettingsManager.shared.launchAtLogin = false
     }
 
     override func tearDown() {

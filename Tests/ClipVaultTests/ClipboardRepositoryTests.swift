@@ -61,7 +61,8 @@ final class ClipboardRepositoryTests: XCTestCase {
         let savedId = try XCTUnwrap(entry.id)
         
         // Retrieve via repository (should decrypt)
-        let fetched = try repository.fetch(id: savedId)
+        let fetchedRaw = try repository.fetch(id: savedId)
+        let fetched = try repository.decryptContent(for: fetchedRaw)
         
         // Assert
         XCTAssertEqual(fetched.plainTextContent, plainText)
@@ -117,7 +118,8 @@ final class ClipboardRepositoryTests: XCTestCase {
         // Assert
         XCTAssertEqual(results.count, 1)
         XCTAssertEqual(results.first?.id, entry1.id)
-        XCTAssertEqual(String(data: results.first!.plainTextContent!, encoding: .utf8), "apple banana cherry")
+        let decryptedResult = try repository.decryptContent(for: results.first!)
+        XCTAssertEqual(String(data: decryptedResult.plainTextContent!, encoding: .utf8), "apple banana cherry")
     }
     
     // MARK: - Fetch All

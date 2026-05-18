@@ -75,7 +75,9 @@ final class ClipboardCaptureServiceTests: XCTestCase {
         XCTAssertEqual(entries.count, 1)
 
         let fetchedEntries = try repository.fetchAll()
-        let captured = try XCTUnwrap(fetchedEntries.first)
+        let capturedRaw = try XCTUnwrap(fetchedEntries.first)
+        let captured = try repository.decryptContent(for: capturedRaw)
+        
         XCTAssertEqual(captured.contentType, "text")
         XCTAssertEqual(captured.sourceApplication, "com.apple.Terminal")
         
@@ -131,7 +133,8 @@ final class ClipboardCaptureServiceTests: XCTestCase {
         XCTAssertEqual(entries.count, 1)
 
         let fetchedEntries = try repository.fetchAll()
-        let captured = try XCTUnwrap(fetchedEntries.first)
+        let capturedRaw = try XCTUnwrap(fetchedEntries.first)
+        let captured = try repository.decryptContent(for: capturedRaw)
         XCTAssertEqual(captured.contentType, "image")
         XCTAssertNotNil(captured.imageData)
         

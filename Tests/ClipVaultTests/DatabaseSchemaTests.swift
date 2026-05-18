@@ -42,9 +42,10 @@ final class DatabaseSchemaTests: XCTestCase {
         let expectedColumns: Set<String> = [
             "id", "timestamp", "contentType", "plainTextContent",
             "richTextContent", "imageData", "fileURL", "sourceApplication", "metadata",
-            "plainTextSearchContent", "isPinned", "isVaultStored", "isRemote"
+            "plainTextSearchContent", "isPinned", "isVaultStored", "isRemote",
+            "windowTitle", "deviceName", "contentHash", "isSensitive", "expiryDate"
         ]
-        XCTAssertEqual(columnNames, expectedColumns, "clipboardEntry should have exactly 13 expected columns")
+        XCTAssertEqual(columnNames, expectedColumns, "clipboardEntry should have exactly 18 expected columns")
     }
 
     func testPlainTextSearchContentColumnExists() throws {
@@ -109,10 +110,14 @@ final class DatabaseSchemaTests: XCTestCase {
         let isRemote = try XCTUnwrap(columnMap["isRemote"], "isRemote column missing")
         XCTAssertTrue(isRemote.isNotNull, "isRemote must be NOT NULL")
 
+        let isSensitive = try XCTUnwrap(columnMap["isSensitive"], "isSensitive column missing")
+        XCTAssertTrue(isSensitive.isNotNull, "isSensitive must be NOT NULL")
+
         // All other columns should be nullable
         let nullableColumns = ["id", "plainTextContent", "richTextContent",
                                "imageData", "fileURL", "sourceApplication", "metadata",
-                               "plainTextSearchContent"]
+                               "plainTextSearchContent", "windowTitle", "deviceName",
+                               "contentHash", "expiryDate"]
         for name in nullableColumns {
             let col = try XCTUnwrap(columnMap[name], "\(name) column missing")
             XCTAssertFalse(col.isNotNull, "\(name) should be nullable")

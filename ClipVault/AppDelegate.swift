@@ -22,17 +22,19 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     @MainActor
     func applicationDidFinishLaunching(_ notification: Notification) {
         // Singleton enforcement: check if another instance is already running
-        let bundleID = Bundle.main.bundleIdentifier!
-        let runningApps = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
-        
-        if runningApps.count > 1 {
-            // Found another instance. Focus it and terminate self.
-            for app in runningApps where app != NSRunningApplication.current {
-                app.activate(options: [.activateIgnoringOtherApps])
-                break
+        if ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] == nil {
+            let bundleID = Bundle.main.bundleIdentifier!
+            let runningApps = NSRunningApplication.runningApplications(withBundleIdentifier: bundleID)
+            
+            if runningApps.count > 1 {
+                // Found another instance. Focus it and terminate self.
+                for app in runningApps where app != NSRunningApplication.current {
+                    app.activate(options: [.activateIgnoringOtherApps])
+                    break
+                }
+                NSApplication.shared.terminate(nil)
+                return
             }
-            NSApplication.shared.terminate(nil)
-            return
         }
 
         let repository = ClipboardRepository()
