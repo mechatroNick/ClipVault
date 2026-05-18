@@ -55,27 +55,27 @@
 
 ## Phase 3: Interactive Previews & Controls
 
-- [ ] Task: Implement Hover Previews
-    - [ ] Add hover state tracking to `EntryRowView`.
-    - [ ] Implement enlarged overlay preview using `ContentPreviewRouter`.
-    - [ ] Commit: `feat(ui): Add interactive hover previews for entries`
+- [x] Task: Implement Hover Previews
+    - [x] Add hover state tracking to `EntryRowView`.
+    - [x] Implement enlarged overlay preview using `ContentPreviewRouter`.
+    - [x] Commit: `feat(ui): Add interactive hover previews for entries`
 
-- [ ] Task: Add 'Copy' button with file validation
-    - [ ] Add 'Copy' button to each entry row.
-    - [ ] Implement file existence check for file/folder references.
-    - [ ] Show warning badge if file is missing.
-    - [ ] Commit: `feat(ui): Add per-item copy with file existence validation`
+- [x] Task: Add 'Copy' button with file validation
+    - [x] Add 'Copy' button to each entry row.
+    - [x] Implement file existence check for file/folder references.
+    - [x] Show warning badge if file is missing.
+    - [x] Commit: `feat(ui): Add per-item copy with file existence validation`
 
-- [ ] Task: UI Integration for Granular Metadata
-    - [ ] Update `EntryRowView` to display: window title, formatted timestamp, and device origin icon.
-    - [ ] Add "Local Mac" vs "iPhone/iPad" labels based on `isRemote` flag.
-    - [ ] Commit: `feat(ui): Display granular metadata in history entries`
+- [x] Task: UI Integration for Granular Metadata
+    - [x] Update `EntryRowView` to display: window title, formatted timestamp, and device origin icon.
+    - [x] Add "Local Mac" vs "iPhone/iPad" labels based on `isRemote` flag.
+    - [x] Commit: `feat(ui): Display granular metadata in history entries`
 
-- [ ] Task: Implement Rich Content Rendering (Markdown & HTML)
-    - [ ] Enhance `MarkdownRenderer` to support block-level styles.
-    - [ ] Implement `RichTextRenderer` for RTF and HTML data using `NSAttributedString`.
-    - [ ] Update `ContentPreviewRouter` to route "rtf" and "html" types to a new `RichTextPreview` component.
-    - [ ] Commit: `feat(ui): Add HTML and RTF rendering to history panel`
+- [x] Task: Implement Rich Content Rendering (Markdown & HTML)
+    - [x] Enhance `MarkdownRenderer` to support block-level styles.
+    - [x] Implement `RichTextRenderer` for RTF and HTML data using `NSAttributedString`.
+    - [x] Update `ContentPreviewRouter` to route "rtf" and "html" types to a new `RichTextPreview` component.
+    - [x] Commit: `feat(ui): Add HTML and RTF rendering to history panel`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
