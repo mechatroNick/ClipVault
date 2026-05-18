@@ -130,4 +130,51 @@ final class MenuBarControllerTests: XCTestCase {
         
         controller.togglePanel() // Close for next iteration/cleanup
     }
+    
+    func testHandleAction_RightClick_DoesNotTogglePanel() async throws {
+        // Arrange
+        let rightClickEvent = NSEvent.mouseEvent(
+            with: .rightMouseUp,
+            location: .zero,
+            modifierFlags: [],
+            timestamp: 0,
+            windowNumber: 0,
+            context: nil,
+            eventNumber: 0,
+            clickCount: 1,
+            pressure: 0
+        )!
+        
+        XCTAssertFalse(controller.isPanelVisible)
+        
+        // Act
+        controller.handleAction(event: rightClickEvent)
+        
+        // Assert: Panel should NOT be visible because it should show context menu instead
+        XCTAssertFalse(controller.isPanelVisible)
+    }
+    
+    func testHandleAction_LeftClick_TogglesPanel() async throws {
+        // Arrange
+        let leftClickEvent = NSEvent.mouseEvent(
+            with: .leftMouseUp,
+            location: .zero,
+            modifierFlags: [],
+            timestamp: 0,
+            windowNumber: 0,
+            context: nil,
+            eventNumber: 0,
+            clickCount: 1,
+            pressure: 0
+        )!
+        
+        XCTAssertFalse(controller.isPanelVisible)
+        
+        // Act
+        controller.handleAction(event: leftClickEvent)
+        try await Task.sleep(nanoseconds: 300_000_000)
+        
+        // Assert
+        XCTAssertTrue(controller.isPanelVisible)
+    }
 }

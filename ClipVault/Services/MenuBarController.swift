@@ -60,15 +60,19 @@ final class MenuBarController: NSObject {
     }
     
     @objc func togglePanel() {
-        guard let panel = panel else { return }
+        handleAction(event: NSApp.currentEvent)
+    }
+    
+    func handleAction(event: NSEvent?) {
+        guard let _ = panel else { return }
         
         // Check if it was a right click
-        if let event = NSApp.currentEvent, event.type == .rightMouseUp {
+        if let event = event, event.type == .rightMouseUp {
             showContextMenu()
             return
         }
         
-        if panel.isVisible {
+        if isPanelVisible {
             closePanel()
         } else {
             openPanel()
@@ -205,7 +209,7 @@ final class MenuBarController: NSObject {
         panel.setFrame(NSRect(x: x, y: y, width: panelWidth, height: panelHeight), display: true)
     }
     
-    private func showContextMenu() {
+    func showContextMenu() {
         let menu = NSMenu()
         menu.addItem(NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ","))
         menu.addItem(NSMenuItem.separator())
