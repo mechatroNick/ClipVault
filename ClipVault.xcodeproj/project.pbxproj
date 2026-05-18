@@ -36,6 +36,7 @@
 		P4_HISTORYPANELVIEW_SWIFT_BUILD /* HistoryPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_HISTORYPANELVIEW_SWIFT_REF /* HistoryPanelView.swift */; };
 		P4_KEYBOARDHANDLER_SWIFT_BUILD /* KeyboardHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_KEYBOARDHANDLER_SWIFT_REF /* KeyboardHandler.swift */; };
 		P4_MENUBARCONTROLLERTESTS_SWIFT_BUILD /* MenuBarControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */; };
+		P4_HISTORYCONTROLS_SWIFT_BUILD /* HistoryPanelControlTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_HISTORYCONTROLS_SWIFT_REF /* HistoryPanelControlTests.swift */; };
 		P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_BUILD /* ContentPreviewRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */; };
 		P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_BUILD /* ContentPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */; };
 		P4_PREVIEW_FILEPREVIEW_SWIFT_BUILD /* FilePreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = P4_PREVIEW_FILEPREVIEW_SWIFT_REF /* FilePreview.swift */; };
@@ -98,6 +99,7 @@
 		P4_HISTORYPANELVIEW_SWIFT_REF /* HistoryPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPanelView.swift; path = ClipVault/Views/HistoryPanelView.swift; sourceTree = SOURCE_ROOT; };
 		P4_KEYBOARDHANDLER_SWIFT_REF /* KeyboardHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = KeyboardHandler.swift; path = ClipVault/Services/KeyboardHandler.swift; sourceTree = SOURCE_ROOT; };
 		P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MenuBarControllerTests.swift; path = Tests/ClipVaultTests/MenuBarControllerTests.swift; sourceTree = SOURCE_ROOT; };
+		P4_HISTORYCONTROLS_SWIFT_REF /* HistoryPanelControlTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = HistoryPanelControlTests.swift; path = Tests/ClipVaultTests/HistoryPanelControlTests.swift; sourceTree = SOURCE_ROOT; };
 		P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentPreviewRouter.swift; path = ClipVault/Views/Previews/ContentPreviewRouter.swift; sourceTree = SOURCE_ROOT; };
 		P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentPreviewTests.swift; path = Tests/ClipVaultTests/ContentPreviewTests.swift; sourceTree = SOURCE_ROOT; };
 		P4_PREVIEW_FILEPREVIEW_SWIFT_REF /* FilePreview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = FilePreview.swift; path = ClipVault/Views/Previews/FilePreview.swift; sourceTree = SOURCE_ROOT; };
@@ -248,6 +250,7 @@
 				SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */,
 				P4_CLIPBOARDVIEWMODELTESTS_SWIFT_REF /* ClipboardViewModelTests.swift */,
 				P4_MENUBARCONTROLLERTESTS_SWIFT_REF /* MenuBarControllerTests.swift */,
+				P4_HISTORYCONTROLS_SWIFT_REF /* HistoryPanelControlTests.swift */,
 				P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_REF /* ContentPreviewTests.swift */,
 				P5_PASTESERVICETESTS_SWIFT_REF /* PasteServiceTests.swift */,
 				PMT_MARKDOWNRENDERERTESTS_SWIFT_REF /* MarkdownRendererTests.swift */,
@@ -402,6 +405,7 @@
 				SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_BUILD /* SensitiveContentFilterTests.swift in Sources */,
 				P4_CLIPBOARDVIEWMODELTESTS_SWIFT_BUILD /* ClipboardViewModelTests.swift in Sources */,
 				P4_MENUBARCONTROLLERTESTS_SWIFT_BUILD /* MenuBarControllerTests.swift in Sources */,
+				P4_HISTORYCONTROLS_SWIFT_BUILD /* HistoryPanelControlTests.swift in Sources */,
 				P4_PREVIEW_CONTENTPREVIEWTESTS_SWIFT_BUILD /* ContentPreviewTests.swift in Sources */,
 				P5_PASTESERVICETESTS_SWIFT_BUILD /* PasteServiceTests.swift in Sources */,
 				PMT_MARKDOWNRENDERERTESTS_SWIFT_BUILD /* MarkdownRendererTests.swift in Sources */,

@@ -46,7 +46,15 @@ final class MenuBarController: NSObject {
     }
     
     private func setupPanel() {
-        let view = HistoryPanelView(viewModel: viewModel)
+        let view = HistoryPanelView(
+            viewModel: viewModel,
+            onClose: { [weak self] in
+                self?.closePanel()
+            },
+            onOpenSettings: { [weak self] in
+                self?.openSettings()
+            }
+        )
         let hostingView = NSHostingView(rootView: view)
         panel = HistoryPanel(contentView: hostingView)
     }

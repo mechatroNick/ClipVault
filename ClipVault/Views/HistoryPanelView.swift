@@ -8,10 +8,44 @@ import SwiftUI
 struct HistoryPanelView: View {
     @State var viewModel: ClipboardViewModel
     
+    /// Called when the close (X) button is tapped.
+    var onClose: (() -> Void)? = nil
+    /// Called when the gear (settings) button is tapped.
+    var onOpenSettings: (() -> Void)? = nil
+    
     var body: some View {
         VStack(spacing: 0) {
+            // Header bar with gear (left) and close (right)
+            HStack {
+                Button(action: {
+                    onOpenSettings?()
+                }) {
+                    Image(systemName: "gearshape")
+                        .font(.system(size: 14))
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Settings")
+                
+                Spacer()
+                
+                Button(action: {
+                    onClose?()
+                }) {
+                    Image(systemName: "xmark")
+                        .font(.system(size: 12, weight: .bold))
+                        .foregroundColor(.secondary)
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Close")
+            }
+            .padding(.horizontal, 12)
+            .padding(.top, 10)
+            .padding(.bottom, 4)
+            
             SearchBarView(text: $viewModel.searchQuery)
-                .padding()
+                .padding(.horizontal)
+                .padding(.bottom, 8)
             
             Divider()
             
