@@ -67,4 +67,52 @@ final class VaultManager {
             try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         }
     }
+
+    /// Calculates the total size of the vault in bytes.
+    func calculateVaultSize() -> Int64 {
+        let root = URL(fileURLWithPath: settings.vaultRootPath)
+        var totalSize: Int64 = 0
+        let enumerator = FileManager.default.enumerator(at: root, includingPropertiesForKeys: [.fileSizeKey])
+        
+        while let fileURL = enumerator?.nextObject() as? URL {
+            if let resources = try? fileURL.resourceValues(forKeys: [.fileSizeKey]),
+               let fileSize = resources.fileSize {
+                totalSize += Int64(fileSize)
+            }
+        }
+        return totalSize
+    }
+
+    /// Trims the vault to stay within the storage limit.
+    /// Deletes the oldest files first.
+    func trimVault() throws {
+        guard settings.isAutoTrimEnabled else { return }
+        let limitBytes = Int64(settings.vaultStorageLimitGB) * 1024 * 1024 * 1024
+        var currentSize = calculateVaultSize()
+        
+        if currentSize <= limitBytes { return }
+        
+        let root = URL(fileURLWithPath: settings.vaultRootPath)
+        let keys: [URLResourceKey] = [.fileSizeKey, .contentModificationDateKey]
+        let enumerator = FileManager.default.enumerator(at: root, includingPropertiesForKeys: keys)
+        
+        var files: [(url: URL, size: Int64, date: Date)] = []
+        while let fileURL = enumerator?.nextObject() as? URL {
+            let resources = try? fileURL.resourceValues(forKeys: Set(keys))
+            if let fileSize = resources?.fileSize,
+               let modDate = resources?.contentModificationDate {
+                files.append((url: fileURL, size: Int64(fileSize), date: modDate))
+            }
+        }
+        
+        // Sort by modification date (oldest first)
+        files.sort { $0.date < $1.date }
+        
+        for file in files {
+            if currentSize <= limitBytes { break }
+            try FileManager.default.removeItem(at: file.url)
+            currentSize -= file.size
+            print("VaultManager: Purged old file: \(file.url.lastPathComponent)")
+        }
+    }
 }
