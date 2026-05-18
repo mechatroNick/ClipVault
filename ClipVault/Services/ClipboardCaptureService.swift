@@ -6,6 +6,7 @@
 //
 
 import AppKit
+import CryptoKit
 
 /// Orchestrates the pipeline from detecting a pasteboard change to storing an encrypted entry.
 actor ClipboardCaptureService {
@@ -82,7 +83,7 @@ actor ClipboardCaptureService {
             case "image":
                 if let tiff = pasteboard.data(forType: .tiff) ?? pasteboard.data(forType: .png),
                    let image = NSImage(data: tiff) {
-                    imageData = await generateThumbnail(from: image, maxDimension: 48)
+                    imageData = generateThumbnail(from: image, maxDimension: 48)
                     // Note: original tiff is handled by repository vaulting if it's large,
                     // but capture service currently doesn't store the full image in the entry object
                     // if it only stores the thumbnail. 
@@ -103,6 +104,20 @@ actor ClipboardCaptureService {
             }
             
             let sourceApp = workspaceAppIdentifier() ?? "unknown"
+            let windowTitle = getActiveWindowTitle()
+            let deviceName = Host.current().localizedName ?? "This Mac"
+            
+            // Generate content hash for deduplication
+            let contentToHash = (plainText ?? Data()) + (richText ?? Data()) + (imageData ?? Data())
+            let hash = SHA256.hash(data: contentToHash).map { String(format: "%02x", $0) }.joined()
+            
+            // Check for consecutive duplicate
+            if let lastEntry = try? repository.fetchLastEntry(),
+               lastEntry.contentHash == hash,
+               lastEntry.sourceApplication == sourceApp {
+                print("DEBUG (Service): Skipping duplicate consecutive entry from \(sourceApp)")
+                return
+            }
             
             // Universal Clipboard detection
             let isRemoteType = NSPasteboard.PasteboardType("com.apple.is-remote-pasteboard-item")
@@ -120,6 +135,9 @@ actor ClipboardCaptureService {
                 fileURL: fileURL,
                 sourceApplication: sourceApp,
                 metadata: metadata,
+                windowTitle: windowTitle,
+                deviceName: deviceName,
+                contentHash: hash,
                 isRemote: isRemote
             )
             
@@ -128,6 +146,23 @@ actor ClipboardCaptureService {
         } catch {
             print("DEBUG (Service): Failed to capture or save clipboard entry: \(error)")
         }
+    }
+
+    private func getActiveWindowTitle() -> String? {
+        let options = CGWindowListOption(arrayLiteral: .excludeDesktopElements, .optionOnScreenOnly)
+        let windowListInfo = CGWindowListCopyWindowInfo(options, kCGNullWindowID) as? [[String: Any]] ?? []
+        
+        guard let frontmostApp = NSWorkspace.shared.frontmostApplication else { return nil }
+        let frontmostPid = frontmostApp.processIdentifier
+        
+        for window in windowListInfo {
+            if let pid = window[kCGWindowOwnerPID as String] as? Int32, pid == frontmostPid {
+                if let title = window[kCGWindowName as String] as? String, !title.isEmpty {
+                    return title
+                }
+            }
+        }
+        return frontmostApp.localizedName
     }
     
     private func generateThumbnail(from image: NSImage, maxDimension: CGFloat) -> Data? {

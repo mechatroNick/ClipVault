@@ -229,5 +229,18 @@ final class DatabaseManager {
                 t.add(column: "isRemote", .boolean).notNull().defaults(to: false)
             }
         }
+        
+        migrator.registerMigration("v5_add_metadata_columns") { db in
+            try db.alter(table: "clipboardEntry") { t in
+                t.add(column: "windowTitle", .text)
+                t.add(column: "deviceName", .text)
+            }
+        }
+
+        migrator.registerMigration("v6_add_content_hash") { db in
+            try db.alter(table: "clipboardEntry") { t in
+                t.add(column: "contentHash", .text).indexed()
+            }
+        }
     }
 }

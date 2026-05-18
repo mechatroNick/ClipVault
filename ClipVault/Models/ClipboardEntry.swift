@@ -62,6 +62,15 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
     /// Encrypted JSON metadata blob (source app info, pasteboard change count, etc.).
     var metadata: Data?
 
+    /// The title of the active window when the content was captured.
+    var windowTitle: String?
+
+    /// The name of the device where the content originated.
+    var deviceName: String?
+
+    /// Hash of the content for deduplication.
+    var contentHash: String?
+
     /// Whether the entry is pinned to prevent auto-purge.
     var isPinned: Bool = false
 
@@ -84,6 +93,9 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
         case fileURL
         case sourceApplication
         case metadata
+        case windowTitle
+        case deviceName
+        case contentHash
         case isPinned
         case isVaultStored
         case isRemote
@@ -114,6 +126,9 @@ extension ClipboardEntry {
         static let fileURL = Column(CodingKeys.fileURL)
         static let sourceApplication = Column(CodingKeys.sourceApplication)
         static let metadata = Column(CodingKeys.metadata)
+        static let windowTitle = Column(CodingKeys.windowTitle)
+        static let deviceName = Column(CodingKeys.deviceName)
+        static let contentHash = Column(CodingKeys.contentHash)
         static let isPinned = Column(CodingKeys.isPinned)
         static let isVaultStored = Column(CodingKeys.isVaultStored)
         static let isRemote = Column(CodingKeys.isRemote)
