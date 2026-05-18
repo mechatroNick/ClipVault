@@ -10,7 +10,7 @@ final class HistoryPanel: NSPanel {
     init(contentView: NSView) {
         super.init(
             contentRect: NSRect(x: 0, y: 0, width: 350, height: 500),
-            styleMask: [.nonactivatingPanel, .titled, .fullSizeContentView],
+            styleMask: [.nonactivatingPanel, .titled, .fullSizeContentView, .resizable],
             backing: .buffered,
             defer: false
         )

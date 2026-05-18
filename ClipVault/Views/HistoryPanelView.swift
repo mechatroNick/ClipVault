@@ -75,7 +75,7 @@ struct HistoryPanelView: View {
                 .listStyle(.plain)
             }
         }
-        .frame(width: 350, height: 500)
+        .frame(minWidth: 300, minHeight: 400)
         .background(VisualEffectView(material: .hudWindow, blendingMode: .behindWindow))
     }
 }
