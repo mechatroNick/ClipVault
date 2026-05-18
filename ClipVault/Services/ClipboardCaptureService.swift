@@ -19,6 +19,7 @@ actor ClipboardCaptureService {
     private let workspaceAppIdentifier: () -> String?
     
     private var streamTask: Task<Void, Never>?
+    private var purgeTask: Task<Void, Never>?
     
     init(monitor: PasteboardMonitor,
          detector: ContentTypeDetector = ContentTypeDetector(),
@@ -43,11 +44,27 @@ actor ClipboardCaptureService {
                 await captureCurrentPasteboard()
             }
         }
+
+        purgeTask = Task {
+            while !Task.isCancelled {
+                do {
+                    let retentionSeconds = TimeInterval(settings.retentionDays * 24 * 3600)
+                    try repository.purgeExpired(olderThan: retentionSeconds)
+                    try vaultManager.trimVault()
+                } catch {
+                    print("Background purge failed: \(error)")
+                }
+                // Run every 10 minutes
+                try? await Task.sleep(nanoseconds: 600_000_000_000)
+            }
+        }
     }
     
     func stop() {
         streamTask?.cancel()
         streamTask = nil
+        purgeTask?.cancel()
+        purgeTask = nil
         monitor.stop()
     }
     

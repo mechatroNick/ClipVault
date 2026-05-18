@@ -76,6 +76,13 @@ final class ClipboardRepository {
            let ptString = String(data: ptData, encoding: .utf8) {
             let preview = String(ptString.prefix(200))
             entry.plainTextSearchContent = contentFilter.redact(preview)
+            
+            // Sensitive Detection
+            if contentFilter.containsSensitiveContent(ptString) {
+                entry.isSensitive = true
+                let expiryInterval = TimeInterval(settings.sensitivePurgeTimeHours * 3600)
+                entry.expiryDate = Date().addingTimeInterval(expiryInterval)
+            }
         }
         
         if entry.contentType == "image", let data = entry.imageData {
@@ -231,12 +238,22 @@ final class ClipboardRepository {
     }
     
     /// Purges entries older than `retentionSeconds` that are not pinned.
+    /// Also purges sensitive entries that have passed their `expiryDate`.
     func purgeExpired(olderThan retentionSeconds: TimeInterval) throws {
         let cutoffDate = Date().addingTimeInterval(-retentionSeconds)
+        let now = Date()
+        
         _ = try dbManager.dbQueue.write { db in
+            // Purge by general retention
             try ClipboardEntry
                 .filter(ClipboardEntry.Columns.isPinned == false)
                 .filter(ClipboardEntry.Columns.timestamp < cutoffDate)
+                .deleteAll(db)
+            
+            // Purge by sensitive expiry
+            try ClipboardEntry
+                .filter(ClipboardEntry.Columns.isPinned == false)
+                .filter(ClipboardEntry.Columns.expiryDate < now)
                 .deleteAll(db)
         }
     }

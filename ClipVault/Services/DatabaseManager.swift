@@ -242,5 +242,12 @@ final class DatabaseManager {
                 t.add(column: "contentHash", .text).indexed()
             }
         }
+
+        migrator.registerMigration("v7_add_sensitive_expiry") { db in
+            try db.alter(table: "clipboardEntry") { t in
+                t.add(column: "isSensitive", .boolean).notNull().defaults(to: false)
+                t.add(column: "expiryDate", .date)
+            }
+        }
     }
 }

@@ -71,6 +71,12 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
     /// Hash of the content for deduplication.
     var contentHash: String?
 
+    /// Whether the entry contains sensitive information.
+    var isSensitive: Bool = false
+
+    /// When the entry should be automatically purged.
+    var expiryDate: Date?
+
     /// Whether the entry is pinned to prevent auto-purge.
     var isPinned: Bool = false
 
@@ -96,6 +102,8 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
         case windowTitle
         case deviceName
         case contentHash
+        case isSensitive
+        case expiryDate
         case isPinned
         case isVaultStored
         case isRemote
@@ -129,6 +137,8 @@ extension ClipboardEntry {
         static let windowTitle = Column(CodingKeys.windowTitle)
         static let deviceName = Column(CodingKeys.deviceName)
         static let contentHash = Column(CodingKeys.contentHash)
+        static let isSensitive = Column(CodingKeys.isSensitive)
+        static let expiryDate = Column(CodingKeys.expiryDate)
         static let isPinned = Column(CodingKeys.isPinned)
         static let isVaultStored = Column(CodingKeys.isVaultStored)
         static let isRemote = Column(CodingKeys.isRemote)
