@@ -40,16 +40,16 @@
 
 ## Phase 2: Resizability, Scaling & Persistence
 
-- [ ] Task: Enable resizable NSPanel
-    - [ ] Add `.resizable` to `HistoryPanel` style mask.
-    - [ ] Ensure SwiftUI content correctly adapts to window resizing.
-    - [ ] Commit: `feat(ui): Enable history panel resizability`
+- [x] Task: Enable resizable NSPanel
+    - [x] Add `.resizable` to `HistoryPanel` style mask.
+    - [x] Ensure SwiftUI content correctly adapts to window resizing.
+    - [x] Commit: `feat(ui): Enable history panel resizability`
 
-- [ ] Task: Implement size and position persistence
-    - [ ] Add `panelFrame` and `zoomLevel` to `SettingsManager`.
-    - [ ] Update `MenuBarController` to save/restore frame on open/close/resize.
-    - [ ] Implement Keyboard Zoom (⌘+/⌘-).
-    - [ ] Commit: `feat(ui): Persist panel frame and implement UI zoom`
+- [x] Task: Implement size and position persistence
+    - [x] Add `panelFrame` and `zoomLevel` to `SettingsManager`.
+    - [x] Update `MenuBarController` to save/restore frame on open/close/resize.
+    - [x] Implement Keyboard Zoom (⌘+/⌘-).
+    - [x] Commit: `feat(ui): Persist panel frame and implement UI zoom`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 
