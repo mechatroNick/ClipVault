@@ -46,6 +46,10 @@ struct GeneralSettingsView: View {
                 Stepper("Max Entries: \(settings.maxEntries)", value: $settings.maxEntries, in: 10...1000, step: 10)
             }
             
+            Section(header: Text("Startup")) {
+                Toggle("Launch at Login", isOn: $settings.launchAtLogin)
+            }
+            
             Section(header: Text("Vault")) {
                 HStack {
                     Text("Vault Location")

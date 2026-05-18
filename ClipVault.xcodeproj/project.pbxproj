@@ -54,6 +54,7 @@
 		SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_BUILD /* SensitiveContentFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */; };
 		SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_BUILD /* SensitiveContentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */; };
 		ST_STRESSTESTS_SWIFT_BUILD /* StressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */; };
+		T3_LAUNCHATLOGINTESTS_SWIFT_BUILD /* LaunchAtLoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T3_LAUNCHATLOGINTESTS_SWIFT_REF /* LaunchAtLoginTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		SENSITIVE_SENSITIVECONTENTFILTERTESTS_SWIFT_REF /* SensitiveContentFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SensitiveContentFilterTests.swift; path = Tests/ClipVaultTests/SensitiveContentFilterTests.swift; sourceTree = SOURCE_ROOT; };
 		SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SensitiveContentFilter.swift; path = ClipVault/Services/SensitiveContentFilter.swift; sourceTree = SOURCE_ROOT; };
 		ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StressTests.swift; path = Tests/ClipVaultTests/StressTests.swift; sourceTree = SOURCE_ROOT; };
+		T3_LAUNCHATLOGINTESTS_SWIFT_REF /* LaunchAtLoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LaunchAtLoginTests.swift; path = Tests/ClipVaultTests/LaunchAtLoginTests.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -255,6 +257,7 @@
 				P5_PASTESERVICETESTS_SWIFT_REF /* PasteServiceTests.swift */,
 				PMT_MARKDOWNRENDERERTESTS_SWIFT_REF /* MarkdownRendererTests.swift */,
 				ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */,
+				T3_LAUNCHATLOGINTESTS_SWIFT_REF /* LaunchAtLoginTests.swift */,
 			);
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				P5_PASTESERVICETESTS_SWIFT_BUILD /* PasteServiceTests.swift in Sources */,
 				PMT_MARKDOWNRENDERERTESTS_SWIFT_BUILD /* MarkdownRendererTests.swift in Sources */,
 				ST_STRESSTESTS_SWIFT_BUILD /* StressTests.swift in Sources */,
+				T3_LAUNCHATLOGINTESTS_SWIFT_BUILD /* LaunchAtLoginTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

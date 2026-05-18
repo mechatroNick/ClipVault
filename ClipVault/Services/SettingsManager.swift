@@ -5,6 +5,7 @@
 
 import Foundation
 import Combine
+import ServiceManagement
 
 /// Manages application settings using UserDefaults.
 final class SettingsManager: ObservableObject {
@@ -30,12 +31,34 @@ final class SettingsManager: ObservableObject {
         didSet { UserDefaults.standard.set(customPatterns, forKey: Keys.customPatterns) }
     }
     
+    @Published var launchAtLogin: Bool = false {
+        didSet {
+            let intended = launchAtLogin
+            do {
+                if intended {
+                    try SMAppService.mainApp.register()
+                } else {
+                    try SMAppService.mainApp.unregister()
+                }
+                // Only persist to UserDefaults after confirmed success
+                UserDefaults.standard.set(intended, forKey: Keys.launchAtLogin)
+            } catch {
+                print("LaunchAtLogin: Failed to \(intended ? "register" : "unregister"): \(error)")
+                // Revert property to actual system state and sync UserDefaults
+                let actual = SMAppService.mainApp.status == .enabled
+                launchAtLogin = actual
+                UserDefaults.standard.set(actual, forKey: Keys.launchAtLogin)
+            }
+        }
+    }
+    
     private enum Keys {
         static let retentionDays = "cv_retentionDays"
         static let largeFileThresholdMB = "cv_largeFileThresholdMB"
         static let maxEntries = "cv_maxEntries"
         static let vaultRootPath = "cv_vaultRootPath"
         static let customPatterns = "cv_customPatterns"
+        static let launchAtLogin = "cv_launchAtLogin"
     }
     
     private init() {
@@ -51,5 +74,10 @@ final class SettingsManager: ObservableObject {
         }
         
         self.customPatterns = UserDefaults.standard.dictionary(forKey: Keys.customPatterns) as? [String: String] ?? [:]
+        
+        // Prefer actual SMAppService status over UserDefaults for launchAtLogin,
+        // since the user can change it in System Settings independently.
+        // .notFound and .requiresApproval both map to false (not enabled).
+        launchAtLogin = (SMAppService.mainApp.status == .enabled)
     }
 }
