@@ -116,7 +116,10 @@ final class ClipboardRepository {
     
     // MARK: - Decryption Helper
     
-    private func decryptEntry(_ entry: ClipboardEntry, using key: SymmetricKey) throws -> ClipboardEntry {
+    /// Decrypts all sensitive fields of an entry.
+    /// Used for on-demand decryption when an item is selected or pasted.
+    func decryptContent(for entry: ClipboardEntry) throws -> ClipboardEntry {
+        let key = try getEncryptionKey()
         var decryptedEntry = entry
         
         func decryptData(_ data: Data?) throws -> Data? {
@@ -145,7 +148,8 @@ final class ClipboardRepository {
     
     // MARK: - Observation
     
-    /// Returns an AsyncStream of decrypted entries, updating whenever the database changes.
+    /// Returns an AsyncStream of raw entries, updating whenever the database changes.
+    /// Metadata visible in the UI (timestamp, type, app, window title, device) is plaintext.
     func observeEntries(limit: Int = 50) -> AsyncStream<[ClipboardEntry]> {
         AsyncStream { continuation in
             let observation = ValueObservation.tracking { db in
@@ -155,25 +159,11 @@ final class ClipboardRepository {
                     .fetchAll(db)
             }
             
-            let key: SymmetricKey
-            do {
-                key = try getEncryptionKey()
-            } catch {
-                continuation.finish()
-                return
-            }
-            
             let cancellable = observation.start(
                 in: dbManager.dbQueue,
                 onError: { _ in continuation.finish() },
-                onChange: { [weak self] entries in
-                    guard let self = self else { return }
-                    do {
-                        let decrypted = try entries.map { try self.decryptEntry($0, using: key) }
-                        continuation.yield(decrypted)
-                    } catch {
-                        print("Decryption failed during observation: \(error)")
-                    }
+                onChange: { entries in
+                    continuation.yield(entries)
                 }
             )
             
@@ -186,9 +176,7 @@ final class ClipboardRepository {
     // MARK: - Fetching
     
     func fetchAll() throws -> [ClipboardEntry] {
-        let entries = try dbManager.fetchAll()
-        let key = try getEncryptionKey()
-        return try entries.map { try decryptEntry($0, using: key) }
+        return try dbManager.fetchAll()
     }
     
     func fetch(id: Int64) throws -> ClipboardEntry {
@@ -198,20 +186,25 @@ final class ClipboardRepository {
         guard let entry = entry else {
             throw ClipboardRepositoryError.entryNotFound
         }
-        let key = try getEncryptionKey()
-        return try decryptEntry(entry, using: key)
+        return entry
     }
     
     func search(_ query: String) throws -> [ClipboardEntry] {
-        let entries = try dbManager.search(query)
-        let key = try getEncryptionKey()
-        return try entries.map { try decryptEntry($0, using: key) }
+        return try dbManager.search(query)
+    }
+    
+    func fetchLastEntry() throws -> ClipboardEntry? {
+        try dbManager.dbQueue.read { db in
+            try ClipboardEntry
+                .order(ClipboardEntry.Columns.timestamp.desc)
+                .fetchOne(db)
+        }
     }
     
     // MARK: - Entry Management
     
     func delete(id: Int64) throws {
-        try dbManager.dbQueue.write { db in
+        _ = try dbManager.dbQueue.write { db in
             let deleted = try ClipboardEntry.deleteOne(db, key: id)
             if !deleted {
                 throw ClipboardRepositoryError.entryNotFound
@@ -228,7 +221,7 @@ final class ClipboardRepository {
     }
     
     private func updatePinStatus(id: Int64, isPinned: Bool) throws {
-        try dbManager.dbQueue.write { db in
+        _ = try dbManager.dbQueue.write { db in
             guard var entry = try ClipboardEntry.fetchOne(db, key: id) else {
                 throw ClipboardRepositoryError.entryNotFound
             }
@@ -240,7 +233,7 @@ final class ClipboardRepository {
     /// Purges entries older than `retentionSeconds` that are not pinned.
     func purgeExpired(olderThan retentionSeconds: TimeInterval) throws {
         let cutoffDate = Date().addingTimeInterval(-retentionSeconds)
-        try dbManager.dbQueue.write { db in
+        _ = try dbManager.dbQueue.write { db in
             try ClipboardEntry
                 .filter(ClipboardEntry.Columns.isPinned == false)
                 .filter(ClipboardEntry.Columns.timestamp < cutoffDate)
