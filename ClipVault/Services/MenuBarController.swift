@@ -7,11 +7,12 @@ import AppKit
 import SwiftUI
 
 @MainActor
-final class MenuBarController: NSObject {
+final class MenuBarController: NSObject, NSWindowDelegate {
     private var statusItem: NSStatusItem?
     private var panel: HistoryPanel?
     private let viewModel: ClipboardViewModel
     private let pasteService: PasteService
+    private let settings: SettingsManager
     private var eventMonitor: Any?
     private var pastingTask: Task<Void, Never>?
     
@@ -19,9 +20,12 @@ final class MenuBarController: NSObject {
         panel?.isVisible ?? false
     }
     
-    init(viewModel: ClipboardViewModel, pasteService: PasteService = PasteService()) {
+    init(viewModel: ClipboardViewModel, 
+         pasteService: PasteService = PasteService(),
+         settings: SettingsManager = .shared) {
         self.viewModel = viewModel
         self.pasteService = pasteService
+        self.settings = settings
         super.init()
         setupStatusItem()
         setupPanel()
@@ -55,8 +59,11 @@ final class MenuBarController: NSObject {
                 self?.openSettings()
             }
         )
+        .scaleEffect(settings.zoomLevel)
+        
         let hostingView = NSHostingView(rootView: view)
         panel = HistoryPanel(contentView: hostingView)
+        panel?.delegate = self
     }
     
     @objc func togglePanel() {
@@ -125,6 +132,18 @@ final class MenuBarController: NSObject {
             case "f":
                 // Focus search logic: just let the event pass to TextField
                 return event
+            case "+", "=":
+                settings.zoomLevel = min(settings.zoomLevel + 0.1, 2.0)
+                refreshPanelContent()
+                return nil
+            case "-":
+                settings.zoomLevel = max(settings.zoomLevel - 0.1, 0.5)
+                refreshPanelContent()
+                return nil
+            case "0":
+                settings.zoomLevel = 1.0
+                refreshPanelContent()
+                return nil
             default:
                 break
             }
@@ -190,8 +209,8 @@ final class MenuBarController: NSObject {
         let screenRect = screen.visibleFrame
         let buttonRect = window.frame
         
-        let panelWidth: CGFloat = 350
-        let panelHeight: CGFloat = 500
+        let panelWidth = settings.panelWidth
+        let panelHeight = settings.panelHeight
         
         // Calculate x position, centering the panel under the status item
         var x = buttonRect.origin.x + (buttonRect.width / 2) - (panelWidth / 2)
@@ -207,6 +226,29 @@ final class MenuBarController: NSObject {
         let y = screenRect.origin.y + screenRect.height - panelHeight - 5
         
         panel.setFrame(NSRect(x: x, y: y, width: panelWidth, height: panelHeight), display: true)
+    }
+
+    private func refreshPanelContent() {
+        let view = HistoryPanelView(
+            viewModel: viewModel,
+            onClose: { [weak self] in
+                self?.closePanel()
+            },
+            onOpenSettings: { [weak self] in
+                self?.openSettings()
+            }
+        )
+        .scaleEffect(settings.zoomLevel)
+        
+        panel?.contentView = NSHostingView(rootView: view)
+    }
+
+    // MARK: - NSWindowDelegate
+
+    func windowDidResize(_ notification: Notification) {
+        guard let panel = panel else { return }
+        settings.panelWidth = panel.frame.width
+        settings.panelHeight = panel.frame.height
     }
     
     func showContextMenu() {

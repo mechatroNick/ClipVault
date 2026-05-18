@@ -30,6 +30,18 @@ final class SettingsManager: ObservableObject {
     @Published var customPatterns: [String: String] {
         didSet { UserDefaults.standard.set(customPatterns, forKey: Keys.customPatterns) }
     }
+
+    @Published var panelWidth: CGFloat {
+        didSet { UserDefaults.standard.set(Double(panelWidth), forKey: Keys.panelWidth) }
+    }
+
+    @Published var panelHeight: CGFloat {
+        didSet { UserDefaults.standard.set(Double(panelHeight), forKey: Keys.panelHeight) }
+    }
+
+    @Published var zoomLevel: Double {
+        didSet { UserDefaults.standard.set(zoomLevel, forKey: Keys.zoomLevel) }
+    }
     
     @Published var launchAtLogin: Bool = false {
         didSet {
@@ -40,13 +52,14 @@ final class SettingsManager: ObservableObject {
                 } else {
                     try SMAppService.mainApp.unregister()
                 }
-                // Only persist to UserDefaults after confirmed success
                 UserDefaults.standard.set(intended, forKey: Keys.launchAtLogin)
             } catch {
                 print("LaunchAtLogin: Failed to \(intended ? "register" : "unregister"): \(error)")
-                // Revert property to actual system state and sync UserDefaults
                 let actual = SMAppService.mainApp.status == .enabled
-                launchAtLogin = actual
+                // avoid infinite loop if status matches
+                if actual != launchAtLogin {
+                    launchAtLogin = actual
+                }
                 UserDefaults.standard.set(actual, forKey: Keys.launchAtLogin)
             }
         }
@@ -58,6 +71,9 @@ final class SettingsManager: ObservableObject {
         static let maxEntries = "cv_maxEntries"
         static let vaultRootPath = "cv_vaultRootPath"
         static let customPatterns = "cv_customPatterns"
+        static let panelWidth = "cv_panelWidth"
+        static let panelHeight = "cv_panelHeight"
+        static let zoomLevel = "cv_zoomLevel"
         static let launchAtLogin = "cv_launchAtLogin"
     }
     
@@ -75,12 +91,11 @@ final class SettingsManager: ObservableObject {
         
         self.customPatterns = UserDefaults.standard.dictionary(forKey: Keys.customPatterns) as? [String: String] ?? [:]
         
-        // Prefer actual SMAppService status over UserDefaults for launchAtLogin,
-        // since the user can change it in System Settings independently.
-        // .notFound and .requiresApproval both map to false (not enabled).
+        self.panelWidth = UserDefaults.standard.double(forKey: Keys.panelWidth) == 0 ? 350 : CGFloat(UserDefaults.standard.double(forKey: Keys.panelWidth))
+        self.panelHeight = UserDefaults.standard.double(forKey: Keys.panelHeight) == 0 ? 500 : CGFloat(UserDefaults.standard.double(forKey: Keys.panelHeight))
+        self.zoomLevel = UserDefaults.standard.double(forKey: Keys.zoomLevel) == 0 ? 1.0 : UserDefaults.standard.double(forKey: Keys.zoomLevel)
+
         let currentStatus = (SMAppService.mainApp.status == .enabled)
-        
-        // Default to enabled on first launch
         if UserDefaults.standard.object(forKey: Keys.launchAtLogin) == nil {
             if !currentStatus {
                 do {
