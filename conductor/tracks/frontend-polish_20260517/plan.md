@@ -2,39 +2,39 @@
 
 ## Phase 1: Lifecycle & UI Accessibility
 
-- [ ] Task: Implement right-click context menu for status item
-    - [ ] Update `MenuBarController` to handle right-click events.
-    - [ ] Add `Settings...` and `Quit` items to the context menu.
-    - [ ] Commit: `feat(ui): Add right-click context menu to status bar icon`
+- [x] Task: Implement right-click context menu for status item
+    - [x] Update `MenuBarController` to handle right-click events.
+    - [x] Add `Settings...` and `Quit` items to the context menu.
+    - [x] Commit: `feat(ui): Add right-click context menu to status bar icon`
 
-- [ ] Task: Add inline Panel controls
-    - [ ] Update `HistoryPanelView` header to include Gear (Settings) and Close (X) buttons.
-    - [ ] Implement `closePanel` action.
-    - [ ] Commit: `feat(ui): Add inline Settings and Close buttons to history panel`
+- [x] Task: Add inline Panel controls
+    - [x] Update `HistoryPanelView` header to include Gear (Settings) and Close (X) buttons.
+    - [x] Implement `closePanel` action.
+    - [x] Commit: `feat(ui): Add inline Settings and Close buttons to history panel`
 
-- [ ] Task: Implement 'Launch at Login'
-    - [ ] Integrate `LaunchAtLogin` helper or use `SMAppService`.
-    - [ ] Add logic to enable login item by default on first launch.
-    - [ ] Commit: `feat(lifecycle): Implement Launch at Login functionality`
+- [x] Task: Implement 'Launch at Login'
+    - [x] Integrate `LaunchAtLogin` helper or use `SMAppService`.
+    - [x] Add logic to enable login item by default on first launch.
+    - [x] Commit: `feat(lifecycle): Implement Launch at Login functionality`
 
-- [ ] Task: Enhanced Metadata Capture (Local)
-    - [ ] Update `ClipboardCaptureService` to use `NSWorkspace` for active window title.
-    - [ ] Update `ClipboardEntry` model to store `windowTitle`.
-    - [ ] Commit: `feat(clipboard): Capture active window title during copy`
+- [x] Task: Enhanced Metadata Capture (Local)
+    - [x] Update `ClipboardCaptureService` to use `NSWorkspace` for active window title.
+    - [x] Update `ClipboardEntry` model to store `windowTitle`.
+    - [x] Commit: `feat(clipboard): Capture active window title during copy`
 
-- [ ] Task: Implement On-Demand Decryption Architecture
-    - [ ] Update `ClipboardEntry` with `windowTitle` and `deviceName` string columns.
-    - [ ] Add migration to add these columns to the database.
-    - [ ] Refactor `ClipboardRepository.observeEntries` to remove bulk decryption.
-    - [ ] Implement `ClipboardRepository.decryptContent(for:)` for lazy loading.
-    - [ ] Update `ClipboardCaptureService` to populate new plaintext columns.
-    - [ ] Commit: `refactor(storage): Implement on-demand decryption and plaintext metadata`
+- [x] Task: Implement On-Demand Decryption Architecture
+    - [x] Update `ClipboardEntry` with `windowTitle` and `deviceName` string columns.
+    - [x] Add migration to add these columns to the database.
+    - [x] Refactor `ClipboardRepository.observeEntries` to remove bulk decryption.
+    - [x] Implement `ClipboardRepository.decryptContent(for:)` for lazy loading.
+    - [x] Update `ClipboardCaptureService` to populate new plaintext columns.
+    - [x] Commit: `refactor(storage): Implement on-demand decryption and plaintext metadata`
 
-- [ ] Task: Implement Smart Consecutive Deduplication
-    - [ ] Integrate a quick hashing utility (e.g., SHA-256 via CryptoKit).
-    - [ ] Update `ClipboardCaptureService` to hash new content and compare against the latest history entry.
-    - [ ] Skip storage if both the content hash and source application are identical.
-    - [ ] Commit: `feat(clipboard): Add consecutive deduplication with efficient hashing`
+- [x] Task: Implement Smart Consecutive Deduplication
+    - [x] Integrate a quick hashing utility (e.g., SHA-256 via CryptoKit).
+    - [x] Update `ClipboardCaptureService` to hash new content and compare against the latest history entry.
+    - [x] Skip storage if both the content hash and source application are identical.
+    - [x] Commit: `feat(clipboard): Add consecutive deduplication with efficient hashing`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
