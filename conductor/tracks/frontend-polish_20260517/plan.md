@@ -81,21 +81,21 @@
 
 ## Phase 4: Sensitive Expiry & Advanced Settings
 
-- [ ] Task: Implement sensitive item auto-expiry
-    - [ ] Update `ClipboardRepository` to assign default expiry (1h) to sensitive items.
-    - [ ] Implement background purge task in `ClipboardCaptureService`.
-    - [ ] Commit: `feat(security): Implement auto-expiry for sensitive entries`
+- [x] Task: Implement sensitive item auto-expiry
+    - [x] Update `ClipboardRepository` to assign default expiry (1h) to sensitive items.
+    - [x] Implement background purge task in `ClipboardCaptureService`.
+    - [x] Commit: `feat(security): Implement auto-expiry for sensitive entries`
 
-- [ ] Task: Implement storage auto-trimming
-    - [ ] Add `VaultSizeMonitor` service or background task to calculate total storage usage.
-    - [ ] Implement trimming logic: sort vaulted files by age and delete until total size is below limit.
-    - [ ] Commit: `feat(storage): Implement background vault size monitoring and auto-trimming`
+- [x] Task: Implement storage auto-trimming
+    - [x] Add `VaultSizeMonitor` service or background task to calculate total storage usage.
+    - [x] Implement trimming logic: sort vaulted files by age and delete until total size is below limit.
+    - [x] Commit: `feat(storage): Implement background vault size monitoring and auto-trimming`
 
-- [ ] Task: Finalize Settings UI with 'Save' button
-    - [ ] Add configuration for "Sensitive Purge Time", "Storage Limit", and "Launch at Login".
-    - [ ] Add a prominent "Save" button to the Settings window.
-    - [ ] Ensure "Save" triggers immediate persistence and application of all settings.
-    - [ ] Commit: `feat(ui): Finalize settings UI with Save button and advanced controls`
+- [x] Task: Finalize Settings UI with 'Save' button
+    - [x] Add configuration for "Sensitive Purge Time", "Storage Limit", and "Launch at Login".
+    - [x] Add a prominent "Save" button to the Settings window.
+    - [x] Ensure "Save" triggers immediate persistence and application of all settings.
+    - [x] Commit: `feat(ui): Finalize settings UI with Save button and advanced controls`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
 
