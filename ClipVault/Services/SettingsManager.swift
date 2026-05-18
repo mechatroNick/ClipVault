@@ -78,6 +78,25 @@ final class SettingsManager: ObservableObject {
         // Prefer actual SMAppService status over UserDefaults for launchAtLogin,
         // since the user can change it in System Settings independently.
         // .notFound and .requiresApproval both map to false (not enabled).
-        launchAtLogin = (SMAppService.mainApp.status == .enabled)
+        let currentStatus = (SMAppService.mainApp.status == .enabled)
+        
+        // Default to enabled on first launch
+        if UserDefaults.standard.object(forKey: Keys.launchAtLogin) == nil {
+            if !currentStatus {
+                do {
+                    try SMAppService.mainApp.register()
+                    launchAtLogin = true
+                    UserDefaults.standard.set(true, forKey: Keys.launchAtLogin)
+                } catch {
+                    print("LaunchAtLogin: Initial registration failed: \(error)")
+                    launchAtLogin = false
+                }
+            } else {
+                launchAtLogin = true
+                UserDefaults.standard.set(true, forKey: Keys.launchAtLogin)
+            }
+        } else {
+            launchAtLogin = currentStatus
+        }
     }
 }
