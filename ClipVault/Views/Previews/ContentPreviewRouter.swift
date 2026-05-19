@@ -15,7 +15,7 @@ struct ContentPreviewRouter: View {
         switch currentEntry.contentType {
         case "image":
             if let imageData = currentEntry.imageData {
-                ImagePreview(imageData: imageData)
+                ImagePreview(imageData: imageData, id: currentEntry.id)
             } else {
                 Text("Image data missing")
             }

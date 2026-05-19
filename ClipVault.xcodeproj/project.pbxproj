@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BFC2607578B331DAF7EAAE16 /* ThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */; };
 		01154DFD8E4780DCA8525C8D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA4CF2B61D7268629049C3 /* KeychainManager.swift */; };
 		30224799A6997F5892A3112F /* ClipboardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12245DEA1025927C80F8AB4 /* ClipboardRepository.swift */; };
 		3EFC4731B6BAE00994EDCCAC /* PasteboardMonitorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A440328B2A14115F05ED6B /* PasteboardMonitorTests.swift */; };
@@ -68,6 +69,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailCache.swift; sourceTree = "<group>"; };
 		0F484042A9D8EA0790AA55A2 /* ClipboardCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClipboardCaptureService.swift; path = ClipVault/Services/ClipboardCaptureService.swift; sourceTree = SOURCE_ROOT; };
 		16A440328B2A14115F05ED6B /* PasteboardMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasteboardMonitorTests.swift; path = Tests/ClipVaultTests/PasteboardMonitorTests.swift; sourceTree = SOURCE_ROOT; };
 		2DDC49DBBC9E239E8A1FA3C1 /* ContentTypeDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ContentTypeDetector.swift; path = ClipVault/Services/ContentTypeDetector.swift; sourceTree = SOURCE_ROOT; };
@@ -219,7 +221,8 @@
 			isa = PBXGroup;
 			children = (
 				PM_MARKDOWNRENDERER_SWIFT_REF /* MarkdownRenderer.swift */,
-			);
+							TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */,
+);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
@@ -389,7 +392,8 @@
 				P5F_VAULTMANAGER_SWIFT_BUILD /* VaultManager.swift in Sources */,
 				P5F_SETTINGSVIEW_SWIFT_BUILD /* SettingsView.swift in Sources */,
 				PM_MARKDOWNRENDERER_SWIFT_BUILD /* MarkdownRenderer.swift in Sources */,
-			);
+							BFC2607578B331DAF7EAAE16 /* ThumbnailCache.swift in Sources */,
+);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		F2A3B4C5D6E7F8A9B0C2D2E1 /* Sources */ = {

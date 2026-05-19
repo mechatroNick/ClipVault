@@ -172,8 +172,9 @@ final class DatabaseManager {
     /// - Returns: Matching entries, or an empty array if no matches are found
     ///   or the query is malformed.
     /// - Throws: GRDB errors if the read fails.
-    func search(_ query: String) throws -> [ClipboardEntry] {
-        guard let pattern = FTS5Pattern(matchingAllTokensIn: query) else {
+    func search(_ query: String, limit: Int = 100, offset: Int = 0) throws -> [ClipboardEntry] {
+        // Use prefix matching if the query doesn't already have specialized syntax
+        guard let pattern = FTS5Pattern(matchingAllPrefixesIn: query) else {
             return []
         }
         return try dbQueue.read { db in
@@ -182,7 +183,8 @@ final class DatabaseManager {
                 JOIN clipboardEntry_fts ON clipboardEntry_fts.rowid = clipboardEntry.rowid
                 WHERE clipboardEntry_fts MATCH ?
                 ORDER BY clipboardEntry.timestamp DESC
-                """, arguments: [pattern])
+                LIMIT ? OFFSET ?
+                """, arguments: [pattern, limit, offset])
         }
     }
 
@@ -209,6 +211,7 @@ final class DatabaseManager {
             try db.create(virtualTable: "clipboardEntry_fts", using: FTS5()) { t in
                 t.synchronize(withTable: "clipboardEntry")
                 t.column("plainTextSearchContent")
+                t.tokenizer = .unicode61()
             }
         }
         

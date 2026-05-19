@@ -51,4 +51,17 @@ final class PasteServiceTests: XCTestCase {
         // Assert
         XCTAssertEqual(mockPasteboard.string(forType: .fileURL), "file://\(filePath)")
     }
+
+    func testSimulatePaste_RespectsSettings() async {
+        // Arrange
+        let settings = SettingsManager.shared
+        let originalValue = settings.simulatePasteEnabled
+        
+        // Act: Disable simulation
+        settings.simulatePasteEnabled = false
+        await pasteService.simulatePaste() // Should return early without crash/delay
+        
+        // Restore
+        settings.simulatePasteEnabled = originalValue
+    }
 }

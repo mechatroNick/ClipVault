@@ -97,31 +97,36 @@
     - [x] Ensure "Save" triggers immediate persistence and application of all settings.
     - [x] Commit: `feat(ui): Finalize settings UI with Save button and advanced controls`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
 
 ## Phase 5: Search & Performance Optimization
 
-- [ ] Task: Implement Debounced Search
-    - [ ] Add debounce logic (300ms) to the search query binding in `ClipboardViewModel`.
-    - [ ] Ensure database queries only trigger after the user stops typing.
-    - [ ] Commit: `perf(ui): Implement debounced search for history panel`
+- [x] Task: Implement Debounced Search
+    - [x] Add debounce logic (300ms) to the search query binding in `ClipboardViewModel`.
+    - [x] Ensure database queries only trigger after the user stops typing.
+    - [x] Commit: `perf(ui): Implement debounced search for history panel`
 
-- [ ] Task: Implement Pagination & Lazy Loading
-    - [ ] Update `ClipboardRepository` to support paginated fetches.
-    - [ ] Refactor history list to load additional items as the user scrolls.
-    - [ ] Commit: `perf(storage): Add paginated history loading`
+- [x] Task: Implement Pagination & Lazy Loading
+    - [x] Update `ClipboardRepository` to support paginated fetches.
+    - [x] Refactor history list to load additional items as the user scrolls.
+    - [x] Commit: `perf(storage): Add paginated history loading`
 
-- [ ] Task: Implement In-Memory Thumbnail Cache
-    - [ ] Add `ThumbnailCache` utility using `NSCache`.
-    - [ ] Integrate cache into `EntryRowView` to avoid repeated re-decryption of images.
-    - [ ] Commit: `perf(ui): Add in-memory thumbnail caching for smooth scrolling`
+- [x] Task: Implement In-Memory Thumbnail Cache
+    - [x] Add `ThumbnailCache` utility using `NSCache`.
+    - [x] Integrate cache into `EntryRowView` to avoid repeated re-decryption of images.
+    - [x] Commit: `perf(ui): Add in-memory thumbnail caching for smooth scrolling`
 
-- [ ] Task: FTS5 Optimization & Tuning
-    - [ ] Audit SQLite search performance with large datasets.
-    - [ ] Implement porter tokenizers or prefix indexing if necessary.
-    - [ ] Commit: `perf(storage): Optimize FTS5 search index`
+- [x] Task: FTS5 Optimization & Tuning
+    - [x] Audit SQLite search performance with large datasets.
+    - [x] Implement prefix indexing and standardized tokenizer.
+    - [x] Commit: `perf(storage): Optimize FTS5 search index`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 5' (Protocol in workflow.md)
+- [x] Task: Make Accessibility Privileges Optional
+    - [x] Add `simulatePasteEnabled` toggle in `SettingsManager`.
+    - [x] Update `PasteService` to gate HID event simulation behind this setting.
+    - [x] Commit: `feat(security): Make high-privilege automated pasting optional`
+
+- [x] Task: Conductor - User Manual Verification 'Phase 5' (Protocol in workflow.md)
 
 ## Phase 6: Visual Delight & Eye Candy
 

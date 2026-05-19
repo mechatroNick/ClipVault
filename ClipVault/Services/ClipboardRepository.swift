@@ -185,6 +185,15 @@ final class ClipboardRepository {
     func fetchAll() throws -> [ClipboardEntry] {
         return try dbManager.fetchAll()
     }
+
+    func fetchEntries(limit: Int, offset: Int) throws -> [ClipboardEntry] {
+        try dbManager.dbQueue.read { db in
+            try ClipboardEntry
+                .order(ClipboardEntry.Columns.timestamp.desc)
+                .limit(limit, offset: offset)
+                .fetchAll(db)
+        }
+    }
     
     func fetch(id: Int64) throws -> ClipboardEntry {
         let entry = try dbManager.dbQueue.read { db in
@@ -196,8 +205,8 @@ final class ClipboardRepository {
         return entry
     }
     
-    func search(_ query: String) throws -> [ClipboardEntry] {
-        return try dbManager.search(query)
+    func search(_ query: String, limit: Int = 100, offset: Int = 0) throws -> [ClipboardEntry] {
+        return try dbManager.search(query, limit: limit, offset: offset)
     }
     
     func fetchLastEntry() throws -> ClipboardEntry? {

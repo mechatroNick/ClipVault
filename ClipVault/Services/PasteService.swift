@@ -57,9 +57,14 @@ final class PasteService {
         }
     }
     
-    /// Simulates a ⌘V paste action using HID events.
+    /// Simulates a ⌘V paste action using HID events if enabled in settings.
     @MainActor
     func simulatePaste() async {
+        guard SettingsManager.shared.simulatePasteEnabled else {
+            print("Auto-paste disabled or Accessibility permissions not requested.")
+            return
+        }
+        
         // Security/UX Hardening: Small delay to let the target application regain focus
         // after the floating panel dismisses.
         try? await Task.sleep(nanoseconds: 50_000_000) // 50ms

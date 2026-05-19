@@ -55,6 +55,10 @@ final class SettingsManager: ObservableObject {
         didSet { UserDefaults.standard.set(isAutoTrimEnabled, forKey: Keys.isAutoTrimEnabled) }
     }
     
+    @Published var simulatePasteEnabled: Bool {
+        didSet { UserDefaults.standard.set(simulatePasteEnabled, forKey: Keys.simulatePasteEnabled) }
+    }
+    
     @Published var launchAtLogin: Bool = false {
         didSet {
             let intended = launchAtLogin
@@ -89,12 +93,14 @@ final class SettingsManager: ObservableObject {
         static let vaultStorageLimitGB = "cv_vaultStorageLimitGB"
         static let isAutoTrimEnabled = "cv_isAutoTrimEnabled"
         static let launchAtLogin = "cv_launchAtLogin"
+        static let simulatePasteEnabled = "cv_simulatePasteEnabled"
     }
     
     private init() {
         self.retentionDays = UserDefaults.standard.integer(forKey: Keys.retentionDays) == 0 ? 7 : UserDefaults.standard.integer(forKey: Keys.retentionDays)
         self.largeFileThresholdMB = UserDefaults.standard.integer(forKey: Keys.largeFileThresholdMB) == 0 ? 5 : UserDefaults.standard.integer(forKey: Keys.largeFileThresholdMB)
         self.maxEntries = UserDefaults.standard.integer(forKey: Keys.maxEntries) == 0 ? 50 : UserDefaults.standard.integer(forKey: Keys.maxEntries)
+        self.simulatePasteEnabled = UserDefaults.standard.bool(forKey: Keys.simulatePasteEnabled)
         
         if let path = UserDefaults.standard.string(forKey: Keys.vaultRootPath) {
             self.vaultRootPath = path

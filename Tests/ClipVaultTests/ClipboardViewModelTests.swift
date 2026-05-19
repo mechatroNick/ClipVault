@@ -60,7 +60,28 @@ final class ClipboardViewModelTests: XCTestCase {
     }
     
     func testSearchQuery_UpdatesFilteredEntries() async throws {
-        // ... (existing test code) ...
+        // Arrange
+        var entry1 = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Apple".utf8))
+        var entry2 = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Banana".utf8))
+        try repository.save(&entry1)
+        try repository.save(&entry2)
+        
+        // Wait for initial observation
+        try await Task.sleep(nanoseconds: 200_000_000)
+        XCTAssertEqual(viewModel.entries.count, 2)
+        
+        // Act: Set search query
+        viewModel.searchQuery = "App"
+        
+        // Assert: Result should NOT be filtered immediately due to debounce
+        XCTAssertEqual(viewModel.entries.count, 2)
+        
+        // Wait for debounce (300ms + margin)
+        try await Task.sleep(nanoseconds: 500_000_000)
+        
+        // Assert: Result should be filtered now
+        XCTAssertEqual(viewModel.entries.count, 1)
+        XCTAssertEqual(viewModel.entries.first?.plainTextSearchContent, "Apple")
     }
     
     func testMoveSelection_WrapsAround() {
@@ -87,5 +108,31 @@ final class ClipboardViewModelTests: XCTestCase {
         // Act: Up to last
         viewModel.moveSelection(direction: -1)
         XCTAssertEqual(viewModel.selectedIndex, 2)
+    }
+
+    func testLoadMoreEntries_SearchMode_LoadsAdditionalResults() async throws {
+        // Arrange: Create 60 entries (pageSize is 50)
+        for i in 1...60 {
+            var entry = ClipboardEntry(timestamp: Date().addingTimeInterval(TimeInterval(i)), contentType: "text", plainTextContent: Data("Match \(i)".utf8))
+            try repository.save(&entry)
+        }
+        
+        // Act: Start search
+        viewModel.searchQuery = "Match"
+        try await Task.sleep(nanoseconds: 500_000_000) // Wait for debounce
+        
+        // Assert: Initial page loaded
+        XCTAssertEqual(viewModel.entries.count, 50)
+        
+        // Act: Load more
+        viewModel.loadMoreEntries()
+        
+        // Assert: Wait for load
+        let startTime = Date()
+        while viewModel.entries.count < 60 && Date().timeIntervalSince(startTime) < 1.0 {
+            try await Task.sleep(nanoseconds: 50_000_000)
+        }
+        
+        XCTAssertEqual(viewModel.entries.count, 60)
     }
 }
