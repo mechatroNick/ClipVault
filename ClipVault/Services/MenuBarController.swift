@@ -100,6 +100,7 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         }
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .keyDown]) { [weak self] event in
+            // COVERAGE: Event monitor closures are difficult to trigger in unit tests without complex NSEvent simulation.
             if event.type == .keyDown {
                 return self?.handleKeyDown(event) ?? event
             }
@@ -119,6 +120,7 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         if modifiers == .command, let characters = event.charactersIgnoringModifiers {
             switch characters {
             case "1"..."9":
+                // COVERAGE: Digit key shortcuts are tested for one case, but exhaustively testing all 1-9 is redundant.
                 if let digit = Int(characters), digit <= viewModel.entries.count {
                     let entry = viewModel.entries[digit - 1]
                     pastingTask?.cancel()
@@ -246,9 +248,9 @@ final class MenuBarController: NSObject, NSWindowDelegate {
     // MARK: - NSWindowDelegate
 
     func windowDidResize(_ notification: Notification) {
-        guard let panel = panel else { return }
-        settings.panelWidth = panel.frame.width
-        settings.panelHeight = panel.frame.height
+        guard let window = notification.object as? NSWindow else { return }
+        settings.panelWidth = window.frame.width
+        settings.panelHeight = window.frame.height
     }
     
     func showContextMenu() {
@@ -265,6 +267,7 @@ final class MenuBarController: NSObject, NSWindowDelegate {
     }
     
     @objc private func quitApp() {
+        // COVERAGE: NSApplication.terminate terminates the test runner process.
         NSApplication.shared.terminate(nil)
     }
 }

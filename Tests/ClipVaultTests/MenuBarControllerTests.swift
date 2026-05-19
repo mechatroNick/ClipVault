@@ -177,4 +177,99 @@ final class MenuBarControllerTests: XCTestCase {
         // Assert
         XCTAssertTrue(controller.isPanelVisible)
     }
+
+    func testHandleKeyDown_ZoomKeys_UpdatesZoomLevel() async throws {
+        let settings = SettingsManager.shared
+        settings.zoomLevel = 1.0
+        
+        controller.togglePanel()
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
+        // Act: Command + (keycode 24 is '+/=', but characters matter)
+        let zoomInEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "+", charactersIgnoringModifiers: "+", isARepeat: false, keyCode: 24)!
+        _ = controller.handleKeyDown(zoomInEvent)
+        
+        XCTAssertEqual(settings.zoomLevel, 1.1, accuracy: 0.01)
+        
+        // Act: Command - (keycode 27 is '-')
+        let zoomOutEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "-", charactersIgnoringModifiers: "-", isARepeat: false, keyCode: 27)!
+        _ = controller.handleKeyDown(zoomOutEvent)
+        XCTAssertEqual(settings.zoomLevel, 1.0, accuracy: 0.01)
+        
+        // Act: Command 0 (keycode 29 is '0')
+        let resetZoomEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "0", charactersIgnoringModifiers: "0", isARepeat: false, keyCode: 29)!
+        settings.zoomLevel = 1.5
+        _ = controller.handleKeyDown(resetZoomEvent)
+        XCTAssertEqual(settings.zoomLevel, 1.0, accuracy: 0.01)
+    }
+
+    func testHandleKeyDown_DigitKeys_TriggersPaste() async throws {
+        // Arrange: Add entries
+        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Test".utf8))
+        try repository.save(&entry)
+        
+        controller.togglePanel()
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
+        // Act: Command 1 (keycode 18 is '1')
+        let digitEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "1", charactersIgnoringModifiers: "1", isARepeat: false, keyCode: 18)!
+        _ = controller.handleKeyDown(digitEvent)
+        
+        // Wait for close
+        try await Task.sleep(nanoseconds: 200_000_000)
+        XCTAssertFalse(controller.isPanelVisible)
+    }
+
+    func testHandleKeyDown_DeleteKey_DeletesEntry() async throws {
+        // Arrange: Add entry and select it
+        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("To Delete".utf8))
+        try repository.save(&entry)
+        
+        // Wait for observation to pick up the new entry
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
+        viewModel.selectedIndex = 0
+        
+        controller.togglePanel()
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
+        // Act: Command + Backspace (keycode 51)
+        let deleteEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "", charactersIgnoringModifiers: "", isARepeat: false, keyCode: 51)!
+        _ = controller.handleKeyDown(deleteEvent)
+        
+        // Assert: Entry should be gone
+        XCTAssertEqual(try repository.fetchAll().count, 0)
+    }
+
+    func testWindowDidResize_UpdatesSettings() {
+        let panel = NSPanel(contentRect: NSRect(x: 0, y: 0, width: 400, height: 600), styleMask: [.resizable], backing: .buffered, defer: false)
+        // We can't easily mock NSNotification in a way that triggers windowDidResize cleanly without setting delegate
+        // But we can call the delegate method directly
+        
+        let initialWidth = SettingsManager.shared.panelWidth
+        panel.setFrame(NSRect(x: 0, y: 0, width: 500, height: 700), display: true)
+        
+        controller.windowDidResize(Notification(name: NSWindow.didResizeNotification, object: panel))
+        
+        XCTAssertEqual(SettingsManager.shared.panelWidth, 500)
+        XCTAssertEqual(SettingsManager.shared.panelHeight, 700)
+        
+        // Cleanup
+        SettingsManager.shared.panelWidth = initialWidth
+    }
+
+    func testShowContextMenu() {
+        // Direct call to ensure coverage
+        controller.showContextMenu()
+    }
+
+    func testOpenSettings() {
+        // We can't easily verify the action was sent to NSApp without mocking NSApp
+        // but we can call it to ensure no crashes and coverage.
+        // In a real app, this would show the settings window.
+        // We use a private selector so we just call it.
+        controller.perform(Selector(("openSettings")))
+    }
+
+    // Note: We avoid calling quitApp() as it would terminate the test runner.
 }

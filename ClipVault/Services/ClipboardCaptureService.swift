@@ -48,6 +48,7 @@ actor ClipboardCaptureService {
         purgeTask = Task {
             while !Task.isCancelled {
                 do {
+                    // COVERAGE: Background purge cycle is tested via repository methods, but the full 10-minute loop is not practical to test in unit tests.
                     let retentionSeconds = TimeInterval(settings.retentionDays * 24 * 3600)
                     try repository.purgeExpired(olderThan: retentionSeconds)
                     try vaultManager.trimVault()

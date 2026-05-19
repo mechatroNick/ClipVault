@@ -216,4 +216,93 @@ final class ClipboardRepositoryTests: XCTestCase {
         XCTAssertTrue(resultIds.contains(newUnpinned.id!))
         XCTAssertFalse(resultIds.contains(oldUnpinned.id!))
     }
+
+    func testPurgeExpired_RemovesSensitiveExpiredEntries() throws {
+        // Arrange
+        let now = Date()
+        let expiredDate = now.addingTimeInterval(-10)
+        let futureDate = now.addingTimeInterval(3600)
+        
+        var expiredSensitive = ClipboardEntry(timestamp: now, contentType: "text", expiryDate: expiredDate)
+        var futureSensitive = ClipboardEntry(timestamp: now, contentType: "text", expiryDate: futureDate)
+        var pinnedExpiredSensitive = ClipboardEntry(timestamp: now, contentType: "text", expiryDate: expiredDate, isPinned: true)
+        
+        try repository.save(&expiredSensitive)
+        try repository.save(&futureSensitive)
+        try repository.save(&pinnedExpiredSensitive)
+        
+        // Act
+        try repository.purgeExpired(olderThan: 3600 * 24) // General retention is long
+        
+        // Assert
+        let results = try repository.fetchAll()
+        let resultIds = results.compactMap { $0.id }
+        XCTAssertEqual(results.count, 2)
+        XCTAssertFalse(resultIds.contains(expiredSensitive.id!))
+        XCTAssertTrue(resultIds.contains(futureSensitive.id!))
+        XCTAssertTrue(resultIds.contains(pinnedExpiredSensitive.id!))
+    }
+
+    func testErrorDescription() {
+        let error = ClipboardRepositoryError.entryNotFound
+        XCTAssertEqual(error.errorDescription, "Clipboard entry not found in the database.")
+    }
+
+    func testSave_SensitiveContentDetection() throws {
+        // Arrange
+        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("My card is 4111 1111 1111 1111".utf8))
+        
+        // Act
+        try repository.save(&entry)
+        
+        // Assert
+        XCTAssertTrue(entry.isSensitive, "Entry should be marked as sensitive")
+        XCTAssertNotNil(entry.expiryDate, "Expiry date should be set for sensitive items")
+    }
+
+    func testSave_LargeFileVaulting_PlainText() throws {
+        // Arrange: Threshold is default 5MB, we set it to 1MB for test
+        let settings = SettingsManager.shared
+        let originalThreshold = settings.largeFileThresholdMB
+        settings.largeFileThresholdMB = 1
+        
+        let largeString = String(repeating: "A", count: 1_100_000)
+        let largeData = Data(largeString.utf8)
+        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: largeData)
+        
+        // Act
+        try repository.save(&entry)
+        
+        // Assert
+        XCTAssertTrue(entry.isVaultStored)
+        XCTAssertNil(entry.plainTextContent)
+        XCTAssertNotNil(entry.fileURL)
+        
+        let decrypted = try repository.decryptContent(for: entry)
+        XCTAssertEqual(decrypted.plainTextContent, largeData)
+        
+        // Cleanup
+        settings.largeFileThresholdMB = originalThreshold
+    }
+
+    func testSave_LargeFileVaulting_Image() throws {
+        let settings = SettingsManager.shared
+        let originalThreshold = settings.largeFileThresholdMB
+        settings.largeFileThresholdMB = 1
+        
+        let largeData = Data(repeating: 0xFF, count: 1_100_000)
+        var entry = ClipboardEntry(timestamp: Date(), contentType: "image", imageData: largeData)
+        
+        // Act
+        try repository.save(&entry)
+        
+        // Assert
+        XCTAssertTrue(entry.isVaultStored)
+        XCTAssertNil(entry.imageData)
+        
+        let decrypted = try repository.decryptContent(for: entry)
+        XCTAssertEqual(decrypted.imageData, largeData)
+        
+        settings.largeFileThresholdMB = originalThreshold
+    }
 }

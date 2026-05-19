@@ -140,4 +140,106 @@ final class ClipboardCaptureServiceTests: XCTestCase {
         
         await service.stop()
     }
+
+    func testCapture_ConsecutiveDeduplication() async throws {
+        let service = ClipboardCaptureService(
+            monitor: monitor,
+            repository: repository,
+            pasteboard: mockPasteboard,
+            workspaceAppIdentifier: { "com.apple.Terminal" }
+        )
+        await service.start()
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        // Act: Copy same content twice
+        mockPasteboard.simulateCopy(string: "Same Content")
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
+        mockPasteboard.simulateCopy(string: "Same Content")
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
+        // Assert: Only 1 entry should be saved
+        let entries = try repository.fetchAll()
+        XCTAssertEqual(entries.count, 1)
+        
+        await service.stop()
+    }
+
+    func testCapture_RemoteItem_SetsIsRemoteFlag() async throws {
+        let service = ClipboardCaptureService(
+            monitor: monitor,
+            repository: repository,
+            pasteboard: mockPasteboard,
+            workspaceAppIdentifier: { "com.apple.Terminal" }
+        )
+        await service.start()
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        // Act: Simulate remote copy
+        mockPasteboard.simulateCopy(string: "From iPhone", isRemote: true)
+        
+        let startTime = Date()
+        var entries = try repository.fetchAll()
+        while entries.isEmpty && Date().timeIntervalSince(startTime) < 1.0 {
+            try await Task.sleep(nanoseconds: 50_000_000)
+            entries = try repository.fetchAll()
+        }
+        
+        XCTAssertEqual(entries.count, 1)
+        XCTAssertTrue(entries.first?.isRemote ?? false)
+        
+        await service.stop()
+    }
+
+    func testCapture_RichText_StoresRichTextContent() async throws {
+        let service = ClipboardCaptureService(
+            monitor: monitor,
+            repository: repository,
+            pasteboard: mockPasteboard,
+            workspaceAppIdentifier: { "com.apple.TextEdit" }
+        )
+        await service.start()
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        // Act: Simulate RTF copy
+        let rtfData = "{\\rtf1\\ansi\\deff0 {\\fonttbl {\\f0 Courier;}} \\f0\\fs24 Hello World}".data(using: .utf8)!
+        mockPasteboard.simulateCopy(data: rtfData, type: .rtf)
+        
+        let startTime = Date()
+        var entries = try repository.fetchAll()
+        while (entries.isEmpty || entries.first?.contentType != "rtf") && Date().timeIntervalSince(startTime) < 1.0 {
+            try await Task.sleep(nanoseconds: 50_000_000)
+            entries = try repository.fetchAll()
+        }
+        
+        XCTAssertEqual(entries.count, 1)
+        let captured = try repository.decryptContent(for: entries.first!)
+        XCTAssertEqual(captured.contentType, "rtf")
+        XCTAssertNotNil(captured.richTextContent)
+        
+        await service.stop()
+    }
+
+    func testCapture_UnknownType_DoesNotStore() async throws {
+        let service = ClipboardCaptureService(
+            monitor: monitor,
+            repository: repository,
+            pasteboard: mockPasteboard
+        )
+        await service.start()
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        // Act: Simulate copy with unknown type (no types on pasteboard)
+        mockPasteboard.clearContents()
+        mockPasteboard.types = []
+        mockPasteboard.changeCount += 1
+        
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
+        // Assert: No entries should be saved
+        let entries = try repository.fetchAll()
+        XCTAssertEqual(entries.count, 0)
+        
+        await service.stop()
+    }
 }

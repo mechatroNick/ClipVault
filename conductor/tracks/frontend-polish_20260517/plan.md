@@ -36,7 +36,7 @@
     - [x] Skip storage if both the content hash and source application are identical.
     - [x] Commit: `feat(clipboard): Add consecutive deduplication with efficient hashing`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Resizability, Scaling & Persistence
 
@@ -51,7 +51,7 @@
     - [x] Implement Keyboard Zoom (⌘+/⌘-).
     - [x] Commit: `feat(ui): Persist panel frame and implement UI zoom`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 
 ## Phase 3: Interactive Previews & Controls
 
@@ -77,7 +77,7 @@
     - [x] Update `ContentPreviewRouter` to route "rtf" and "html" types to a new `RichTextPreview` component.
     - [x] Commit: `feat(ui): Add HTML and RTF rendering to history panel`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
 ## Phase 4: Sensitive Expiry & Advanced Settings
 

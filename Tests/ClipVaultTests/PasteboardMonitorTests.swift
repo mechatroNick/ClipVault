@@ -63,10 +63,16 @@ final class MockPasteboard: PasteboardProtocol {
     }
     
     // Test helpers
-    func simulateCopy(string: String, type: NSPasteboard.PasteboardType = .string) {
+    func simulateCopy(string: String, type: NSPasteboard.PasteboardType = .string, isRemote: Bool = false) {
         strings[type] = string
         if types?.contains(type) == false {
             types?.append(type)
+        }
+        if isRemote {
+            let remoteType = NSPasteboard.PasteboardType("com.apple.is-remote-pasteboard-item")
+            if types?.contains(remoteType) == false {
+                types?.append(remoteType)
+            }
         }
         changeCount += 1
     }
