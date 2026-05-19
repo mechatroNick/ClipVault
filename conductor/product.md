@@ -47,13 +47,13 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 ### 5. Comprehensive User Settings
 - **General**: Launch at Login toggle, configurable retention period, and max entry count.
 - **Visuals**: UI Zoom/Scaling (80% - 150%) for the history panel.
-- **Security**: Configurable auto-purge for sensitive items and custom search redaction rules.
+- **Security**: Configurable auto-purge for sensitive items, custom search redaction rules, and optional Accessibility permissions for automated pasting.
 - **Persistence**: All changes applied and saved immediately via a dedicated "Save" button.
 
 ## Security Model
 
 ### Principles
-1. **Least Privilege by Default** — macOS App Sandbox with only explicitly required entitlements
+1. **Least Privilege by Default** — macOS App Sandbox with only explicitly required entitlements. Accessibility permissions for automated pasting are optional and disabled by default.
 2. **Data at Rest Protection** — All clipboard history encrypted on disk; decrypted in memory only when displayed
 3. **User-Controlled Filtering** — Configurable exclusion rules for sensitive content types and custom regex redaction.
 4. **No Network by Default** — Zero network access required; handoff uses system-level iCloud infrastructure

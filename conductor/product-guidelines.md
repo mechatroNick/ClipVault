@@ -18,7 +18,7 @@
 The app adheres strictly to Apple's Human Interface Guidelines while being optimized for dark mode as the primary viewing experience.
 
 ### Color Palette
-- **Primary Background**: NSVisualEffectView with `.hudWindow` material — translucent dark with blur
+- **Primary Background**: NSVisualEffectView with `.menu` material — translucent dark with refined blur and frosted glass effect
 - **Accent Color**: System accent color (user-configurable) for selection highlights and active states
 - **Syntax Highlighting**: Monokai-inspired palette for code blocks — high contrast against dark backgrounds, optimized for readability
 - **Text Hierarchy**: `.primary`, `.secondary`, `.tertiary` label colors from the system color palette

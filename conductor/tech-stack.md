@@ -27,13 +27,15 @@ Certain features require AppKit interop via `NSViewRepresentable` / `NSViewContr
 - **Global Hotkey Registration**: `NSEvent.addGlobalMonitorForEvents` or Carbon `RegisterEventHotKey`
 - **Custom Floating Panel**: `NSPanel` with `.nonactivatingPanel` style mask
 - **Clipboard Monitoring**: `NSPasteboard` change count polling
+- **Haptic Feedback**: `NSHapticFeedbackManager` for interaction confirmation
+- **In-Memory Caching**: `NSCache` for decrypted thumbnail storage
 
 ## Data Storage
 
 ### GRDB.swift (SQLite)
 **GRDB** is a mature, performant Swift SQLite toolkit providing:
 - Type-safe query interface with Swift's `Codable`
-- Full-Text Search (FTS5) for instant clipboard content search
+- Full-Text Search (FTS5) with prefix matching and diacritics removal for instant, optimized clipboard content search
 - Database observation via `ValueObservation` — SwiftUI views reactively update on database changes
 - WAL mode for concurrent reads during writes
 - Migration support for schema evolution
