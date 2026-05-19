@@ -16,90 +16,100 @@ struct EntryRowView: View {
     @State private var isHovered = false
     @State private var fileExists = true
     @State private var decryptedEntry: ClipboardEntry? = nil
+    @State private var showCopiedCheckmark = false
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
-            // Content Preview
+            // Icon / Type indicator
+            Image(systemName: iconName)
+                .font(.system(size: 14))
+                .foregroundColor(isSelected ? .white : .accentColor)
+                .frame(width: 24, height: 24)
+                .background(isSelected ? Color.white.opacity(0.2) : Color.accentColor.opacity(0.1))
+                .cornerRadius(6)
+            
             VStack(alignment: .leading, spacing: 4) {
-                ContentPreviewRouter(entry: entry)
-                    .foregroundColor(isSelected ? .white : .primary)
-                
-                if let windowTitle = entry.windowTitle {
-                    Text(windowTitle)
-                        .font(.system(size: 11, weight: .medium))
-                        .foregroundColor(isSelected ? .white.opacity(0.9) : .primary.opacity(0.8))
-                        .lineLimit(1)
-                }
-
-                HStack(spacing: 8) {
-                    Text(entry.contentType.uppercased())
-                        .font(.system(size: 10, weight: .bold))
-                        .padding(.horizontal, 4)
-                        .padding(.vertical, 1)
-                        .background(Color.secondary.opacity(0.2))
-                        .cornerRadius(3)
-                    
-                    Text(relativeTimestamp(for: entry.timestamp))
-                        .font(.system(size: 10))
-                        .foregroundColor(isSelected ? .white.opacity(0.8) : .secondary)
-                    
+                HStack {
                     if let app = entry.sourceApplication {
-                        Text(app)
-                            .font(.system(size: 10))
-                            .foregroundColor(isSelected ? .white.opacity(0.8) : .secondary)
+                        Text(app.components(separatedBy: ".").last?.capitalized ?? app)
+                            .font(.system(size: 11, weight: .bold))
+                            .foregroundColor(isSelected ? .white.opacity(0.9) : .primary.opacity(0.7))
+                    }
+                    
+                    if let window = entry.windowTitle, !window.isEmpty {
+                        Text("•")
+                            .foregroundColor(isSelected ? .white.opacity(0.5) : .secondary.opacity(0.5))
+                        Text(window)
+                            .font(.system(size: 11))
+                            .foregroundColor(isSelected ? .white.opacity(0.7) : .secondary)
                             .lineLimit(1)
                     }
                     
                     if entry.isRemote {
-                        HStack(spacing: 2) {
-                            Image(systemName: "iphone")
-                            Text("iPhone")
-                        }
-                        .font(.system(size: 10))
-                        .foregroundColor(isSelected ? .white.opacity(0.8) : .secondary)
-                    } else {
-                        HStack(spacing: 2) {
-                            Image(systemName: "desktopcomputer")
-                            Text("This Mac")
-                        }
-                        .font(.system(size: 10))
-                        .foregroundColor(isSelected ? .white.opacity(0.8) : .secondary)
+                        Image(systemName: "icloud")
+                            .font(.system(size: 10))
+                            .foregroundColor(isSelected ? .white.opacity(0.7) : .secondary)
                     }
-
-                    if entry.contentType == "file" && !fileExists {
-                        HStack(spacing: 2) {
-                            Image(systemName: "exclamationmark.triangle.fill")
-                            Text("Missing")
-                        }
-                        .font(.system(size: 10, weight: .bold))
+                    
+                    Spacer()
+                    
+                    Text(entry.timestamp, style: .time)
+                        .font(.system(size: 10))
+                        .foregroundColor(isSelected ? .white.opacity(0.6) : .secondary.opacity(0.6))
+                }
+                
+                ContentPreviewRouter(entry: entry, decryptedEntry: decryptedEntry)
+                    .foregroundColor(isSelected ? .white : .primary)
+                    .lineLimit(3)
+                
+                if entry.contentType == "file" && !fileExists {
+                    Label("File moved or deleted", systemImage: "exclamationmark.triangle")
+                        .font(.caption2)
                         .foregroundColor(.red)
-                    }
                 }
             }
             
-            Spacer()
-            
             HStack(spacing: 8) {
                 if isSelected || isHovered || entry.isPinned {
-                    Button(action: { onCopy?() }) {
-                        Image(systemName: "doc.on.doc")
+                    Button(action: { 
+                        onCopy?()
+                        triggerHapticFeedback()
+                        withAnimation(.spring()) {
+                            showCopiedCheckmark = true
+                        }
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                            withAnimation {
+                                showCopiedCheckmark = false
+                            }
+                        }
+                    }) {
+                        Image(systemName: showCopiedCheckmark ? "checkmark.circle.fill" : "doc.on.doc")
                             .font(.system(size: 10))
+                            .foregroundColor(showCopiedCheckmark ? .green : (isSelected ? .white : .secondary))
+                            .scaleEffect(isHovered ? 1.1 : 1.0)
                     }
                     .buttonStyle(.plain)
-                    .foregroundColor(isSelected ? .white : .secondary)
                     .accessibilityLabel("Copy")
 
-                    Button(action: { onTogglePin?() }) {
+                    Button(action: { 
+                        onTogglePin?()
+                        triggerHapticFeedback()
+                    }) {
                         Image(systemName: entry.isPinned ? "pin.fill" : "pin")
                             .font(.system(size: 10))
+                            .scaleEffect(isHovered ? 1.1 : 1.0)
                     }
                     .buttonStyle(.plain)
                     .foregroundColor(isSelected ? .white : .secondary)
                     .accessibilityLabel(entry.isPinned ? "Unpin" : "Pin")
                     
-                    Button(action: { onDelete?() }) {
+                    Button(action: { 
+                        onDelete?()
+                        triggerHapticFeedback()
+                    }) {
                         Image(systemName: "trash")
                             .font(.system(size: 10))
+                            .scaleEffect(isHovered ? 1.1 : 1.0)
                     }
                     .buttonStyle(.plain)
                     .foregroundColor(isSelected ? .white : .secondary)
@@ -109,42 +119,40 @@ struct EntryRowView: View {
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
-        .background(isSelected ? Color.accentColor : Color.clear)
-        .cornerRadius(6)
+        .background(isSelected ? Color.accentColor : Color.primary.opacity(isHovered ? 0.05 : 0))
+        .cornerRadius(8)
+        .shadow(color: .black.opacity(isSelected ? 0.2 : 0), radius: 4, x: 0, y: 2)
         .overlay(
-            RoundedRectangle(cornerRadius: 6)
-                .stroke(Color.accentColor, lineWidth: isSelected ? 2 : 0)
+            RoundedRectangle(cornerRadius: 8)
+                .stroke(Color.accentColor.opacity(isSelected ? 1 : 0), lineWidth: 1)
         )
         .onHover { hovering in
-            isHovered = hovering
+            withAnimation(.easeInOut(duration: 0.15)) {
+                isHovered = hovering
+            }
             if hovering && decryptedEntry == nil {
                 Task {
-                    do {
-                        decryptedEntry = try repository.decryptContent(for: entry)
-                    } catch {
-                        print("Failed to decrypt for hover: \(error)")
-                    }
+                    decryptedEntry = try? repository.decryptContent(for: entry)
                 }
-            }
-        }
-        .popover(isPresented: $isHovered, arrowEdge: .trailing) {
-            VStack {
-                ContentPreviewRouter(entry: entry, decryptedEntry: decryptedEntry)
-                    .padding()
-                    .frame(maxWidth: 400, maxHeight: 400)
             }
         }
         .onAppear {
             validateFile()
         }
     }
-
-    private func relativeTimestamp(for date: Date) -> String {
-        let formatter = RelativeDateTimeFormatter()
-        formatter.unitsStyle = .abbreviated
-        return formatter.localizedString(for: date, relativeTo: Date())
+    
+    private var iconName: String {
+        switch entry.contentType {
+        case "text": return "text.alignleft"
+        case "image": return "photo"
+        case "file": return "doc"
+        case "url": return "link"
+        case "html": return "chevron.left.forwardslash.chevron.right"
+        case "rtf": return "doc.richtext"
+        default: return "doc.on.clipboard"
+        }
     }
-
+    
     private func validateFile() {
         guard entry.contentType == "file", let path = entry.fileURL else { return }
         let paths = path.components(separatedBy: "\n")
@@ -155,5 +163,9 @@ struct EntryRowView: View {
             }
         }
         fileExists = true
+    }
+
+    private func triggerHapticFeedback() {
+        NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .now)
     }
 }

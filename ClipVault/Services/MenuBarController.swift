@@ -90,12 +90,18 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         guard let panel = panel else { return }
         positionPanel()
         
+        let finalFrame = panel.frame
+        let startFrame = finalFrame.offsetBy(dx: 0, dy: 20)
+        
+        panel.setFrame(startFrame, display: true)
         panel.alphaValue = 0
         panel.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
         
         NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.15
+            context.duration = 0.2
+            context.timingFunction = CAMediaTimingFunction(name: .easeOut)
+            panel.animator().setFrame(finalFrame, display: true)
             panel.animator().alphaValue = 1
         }
         
@@ -189,9 +195,16 @@ final class MenuBarController: NSObject, NSWindowDelegate {
     }
     
     func closePanel() {
+        guard let panel = panel, panel.isVisible else { return }
+        
+        let startFrame = panel.frame
+        let endFrame = startFrame.offsetBy(dx: 0, dy: 20)
+        
         NSAnimationContext.runAnimationGroup({ context in
-            context.duration = 0.1
-            panel?.animator().alphaValue = 0
+            context.duration = 0.15
+            context.timingFunction = CAMediaTimingFunction(name: .easeIn)
+            panel.animator().setFrame(endFrame, display: true)
+            panel.animator().alphaValue = 0
         }, completionHandler: { [weak self] in
             Task { @MainActor in
                 self?.panel?.orderOut(nil)

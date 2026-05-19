@@ -130,20 +130,20 @@
 
 ## Phase 6: Visual Delight & Eye Candy
 
-- [ ] Task: Implement Fluid UI Animations
-    - [ ] Add slide-down/fade-in transitions for the history panel.
-    - [ ] Implement spring animations for entry removal.
-    - [ ] Commit: `feat(ui): Add fluid animations for panel and list items`
+- [x] Task: Implement Fluid UI Animations
+    - [x] Add slide-down/fade-in transitions for the history panel.
+    - [x] Implement spring animations for entry removal.
+    - [x] Commit: `feat(ui): Add fluid animations for panel and list items`
 
-- [ ] Task: Enhance Button Feedback & Haptics
-    - [ ] Implement hover scaling for row action icons.
-    - [ ] Integrate `NSHapticFeedbackManager` for copy/paste actions.
-    - [ ] Add temporary "Copied!" checkmark feedback.
-    - [ ] Commit: `feat(ui): Add hover effects and haptic feedback`
+- [x] Task: Enhance Button Feedback & Haptics
+    - [x] Implement hover scaling for row action icons.
+    - [x] Integrate `NSHapticFeedbackManager` for copy/paste actions.
+    - [x] Add temporary "Copied!" checkmark feedback.
+    - [x] Commit: `feat(ui): Add hover effects and haptic feedback`
 
-- [ ] Task: Apply macOS Aesthetic Polish
-    - [ ] Implement `NSVisualEffectView` background for the frosted glass effect.
-    - [ ] Refine borders, shadows, and spacing for a premium native look.
-    - [ ] Commit: `feat(ui): Apply final aesthetic polish and frosted glass effect`
+- [x] Task: Apply macOS Aesthetic Polish
+    - [x] Implement `NSVisualEffectView` background for the frosted glass effect.
+    - [x] Refine borders, shadows, and spacing for a premium native look.
+    - [x] Commit: `feat(ui): Apply final aesthetic polish and frosted glass effect`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 6' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 6' (Protocol in workflow.md)

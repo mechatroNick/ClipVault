@@ -14,7 +14,15 @@ import GRDB
 /// necessary for full clipboard history search and restoration. Encrypted fields
 /// (plain text, rich text, image data, metadata) are stored as opaque `Data` blobs
 /// and decrypted at the service layer before presentation.
-struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord {
+struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord, Identifiable, Equatable {
+
+    static func == (lhs: ClipboardEntry, rhs: ClipboardEntry) -> Bool {
+        lhs.id == rhs.id &&
+        lhs.timestamp == rhs.timestamp &&
+        lhs.isPinned == rhs.isPinned &&
+        lhs.isSensitive == rhs.isSensitive &&
+        lhs.isRemote == rhs.isRemote
+    }
 
     // MARK: - Table Metadata
 

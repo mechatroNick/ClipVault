@@ -4,6 +4,6 @@ This file tracks active tracks for the project. Archived tracks can be found in 
 
 ---
 
-- [ ] **Track: Frontend Polish & Accessibility: Right-click status menu, resizable panel, hover previews, manual copy with validation, and sensitive item auto-expiry.**
+- [x] **Track: Frontend Polish & Accessibility: Right-click status menu, resizable panel, hover previews, manual copy with validation, and sensitive item auto-expiry.**
 *Link: [./tracks/frontend-polish_20260517/](./tracks/frontend-polish_20260517/)*
 

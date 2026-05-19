@@ -49,7 +49,7 @@ struct HistoryPanelView: View {
             
             Divider()
             
-            if viewModel.entries.isEmpty {
+            if viewModel.entries.isEmpty && !viewModel.isLoading {
                 VStack(spacing: 12) {
                     Image(systemName: "clipboard")
                         .font(.system(size: 48))
@@ -66,19 +66,40 @@ struct HistoryPanelView: View {
                             isSelected: viewModel.selectedIndex == index,
                             repository: viewModel.repository,
                             onTogglePin: { viewModel.togglePin(at: index) },
-                            onDelete: { viewModel.deleteEntry(at: index) },
+                            onDelete: { 
+                                withAnimation(.spring()) {
+                                    viewModel.deleteEntry(at: index)
+                                }
+                            },
                             onCopy: { viewModel.copyEntry(at: index) }
                         )
                         .onTapGesture {
                             viewModel.selectedIndex = index
                         }
+                        .onAppear {
+                            if index == viewModel.entries.count - 1 {
+                                viewModel.loadMoreEntries()
+                            }
+                        }
+                        .transition(.asymmetric(insertion: .move(edge: .top).combined(with: .opacity), removal: .move(edge: .leading).combined(with: .opacity)))
+                    }
+
+                    if viewModel.isLoading {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                                .scaleEffect(0.5)
+                            Spacer()
+                        }
+                        .listRowSeparator(.hidden)
                     }
                 }
                 .listStyle(.plain)
+                .animation(.spring(), value: viewModel.entries)
             }
         }
         .frame(minWidth: 300, minHeight: 400)
-        .background(VisualEffectView(material: .hudWindow, blendingMode: .behindWindow))
+        .background(VisualEffectView(material: .menu, blendingMode: .behindWindow))
     }
 }
 
