@@ -86,6 +86,10 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.3.1 (UI Polish & Workflow)
+- **Auto-Selection**: Pressing the copy button on an entry now automatically selects that entry in the history list.
+- **Workflow Formalization**: Documented the full release protocol (test, version, commit, tag, push, deploy) in `workflow.md`.
+
 ### v1.3.0 (Stability & PDF Fixes)
 - **PDF Preview Fixed**: Resolved an issue where PDF files copied from Finder were not correctly captured for preview.
 - **Copy Shortcut**: Added support for `⌘C` in the history panel to copy the currently selected entry.

@@ -113,14 +113,20 @@ After all phases in a track implementation plan are completed, and before the tr
 
 When a track implementation is complete and verified, the following release steps MUST be performed:
 
-1. **Up Version**: Increment the version number in `ClipVault/Views/SettingsView.swift` (About view).
-2. **Update Metadata**: Update `README.md` with the new version and release notes.
-3. **Commit**: Make a final commit for the release with message `feat: Release vX.Y.Z - <Summary>`.
-4. **Tag**: Create an annotated git tag for the release.
+1. **Verify Stability**: Run the full test suite and ensure all tests pass.
+   `xcodebuild test -scheme ClipVault -destination 'platform=macOS'`
+2. **Improve Coverage**: Verify coverage remains ≥95% for core logic.
+3. **Up Version**: Increment the version number in `ClipVault/Views/SettingsView.swift` (About view). Follow semantic versioning (Major.Minor.Patch).
+4. **Update Metadata**: Update `README.md` with the new version and comprehensive release notes.
+5. **Final Commit**: Make a final commit for the release with message `feat: Release vX.Y.Z - <Summary>`.
+6. **Git Tag**: Create an annotated git tag for the release.
    `git tag -a vX.Y.Z -m "Release version X.Y.Z"`
-5. **Push**: Push changes and tags to the remote repository.
+7. **Git Push**: Push the commit and the new tag to the remote repository.
    `git push origin main --tags`
-6. **Local Release**: Follow the "Track Completion and Local Release Protocol" to deploy the final version locally.
+8. **Production Build**: Perform a clean Release build.
+   `xcodebuild -scheme ClipVault -destination 'platform=macOS' clean build -configuration Release`
+9. **Local Deployment**: Deploy the final build to the local `/Applications` folder.
+   `rm -rf /Applications/ClipVault.app && cp -R <BUILT_PRODUCTS_DIR>/ClipVault.app /Applications/`
 
 ## Development Cadence
 

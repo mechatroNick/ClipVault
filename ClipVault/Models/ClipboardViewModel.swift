@@ -86,6 +86,7 @@ final class ClipboardViewModel {
     func copyEntry(at index: Int) {
         guard index >= 0 && index < entries.count else { return }
         let entry = entries[index]
+        selectedIndex = index
         Task {
             do {
                 let decrypted = try repository.decryptContent(for: entry)
