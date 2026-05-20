@@ -1,0 +1,8 @@
+{
+  "track_id": "advanced-previews-windowing_20260520",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-05-20T15:30:00Z",
+  "updated_at": "2026-05-20T15:30:00Z",
+  "description": "Enforce Z-Order for Settings, detect cropped images, and implement native PDF previews with full functionality."
+}
