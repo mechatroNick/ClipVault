@@ -75,6 +75,7 @@ Every function in the app must be reachable and usable without a mouse.
 - **Auto-Dismiss**: Closes on Escape, click-outside, or after pasting an entry
 - **Position**: Anchored below the menu bar status item; remembers last position
 - **Resize**: Panel height adjusts to show configurable number of entries; width fixed
+- **Interaction**: Single-click to select; Enter or double-click to copy; Double-click to open Detailed View for full inspection.
 
 ### Search
 - **Real-Time Filter**: Type to filter history entries immediately — no "press Enter to search"
@@ -82,9 +83,11 @@ Every function in the app must be reachable and usable without a mouse.
 - **Clear on Escape**: Pressing Escape clears the search query; second Escape dismisses the panel
 
 ### Content Preview
-- **Text**: Show first 3 lines with ellipsis overflow
+- **Text / Code / Markdown / HTML**: Show first 3 lines with ellipsis overflow.
 - **Images**: 48px thumbnail with filename overlay
-- **Code**: Syntax-highlighted first lines with language badge
-- **Markdown**: Rendered inline preview (not raw source)
 - **Files**: Icon + filename + size + path
 - **URLs**: Domain + page title if available
+
+### Detailed Entry View
+- **Behavior**: Opened via double-click on a list entry.
+- **File Content**: For `.file` types representing folders or multiple selections, the detailed view lists the contained file names instead of just the path.

@@ -29,9 +29,11 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 ### 2. Rich Content Rendering & Preview
 - **Markdown**: Detect markdown content and render it inline with proper formatting (bold, italics, headers) using native `AttributedString`.
 - **HTML & RTF**: Support rendering of Rich Text (RTF) and HTML clipboard content, preserving basic styling (colors, fonts, layout) in the history preview.
-- No separate \"preview pane\" — content is visible immediately and styled natively.
+- No separate "preview pane" — content is visible immediately and styled natively.
+- **Detailed Entry View**: Double-clicking an entry opens a full-screen or large popover view for inspecting the entire content (renders full Markdown/HTML, or lists file contents for folders).
 
 ### 3. Vault File Storage
+
 - Configurable "Vault" root location (default: `~/Documents/VaultClip`)
 - Automatic date-based organization: files saved into `YYYY-MM` subfolders within the Vault
 - Large content (images, large text > 5MB) is saved as organized files instead of DB blobs
@@ -73,7 +75,7 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 2. **Keyboard-First** — Global hotkey to show/hide (default: ⌘⇧V). Full keyboard navigation within the history panel. Arrow keys to browse, Enter to paste, ⌘+number for quick select.
 3. **Rich Previews** — Inline previews for images (thumbnails), code (syntax highlighted), markdown (rendered), files (metadata card). No separate "preview pane" — content is visible immediately.
 4. **Visual Delight & Eye Candy** — Subtle animations for panel transitions, hover-responsive icons, haptic feedback on success/failure, and a polished, semi-transparent frosted glass aesthetic (Vibrancy).
-5. **macOS Native** — SwiftUI interface following Apple HIG. Native context menus, dark mode support, and VoiceOver accessibility.
+5. **Detailed Inspection** — Double-click any entry to open a detailed inspection view, providing an immersive experience for long documents, code, or complex file listings.
 
 ### Interaction Flow
 1. User copies content anywhere (⌘C or right-click → Copy)
