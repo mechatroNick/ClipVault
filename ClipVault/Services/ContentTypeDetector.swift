@@ -15,6 +15,11 @@ struct ContentTypeDetector {
         let types = pasteboard.types ?? []
         
         if types.contains(.fileURL) {
+            if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL],
+               urls.count == 1,
+               urls.first?.pathExtension.lowercased() == "pdf" {
+                return .pdf
+            }
             return .file
         }
         

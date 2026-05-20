@@ -108,8 +108,16 @@ actor ClipboardCaptureService {
                     let paths = urls.map { $0.path }
                     fileURL = paths.joined(separator: "\n")
                 }
-            case .rtf, .html, .pdf:
-                richText = pasteboard.data(forType: .rtf) ?? pasteboard.data(forType: .html) ?? pasteboard.data(forType: .pdf)
+            case .pdf:
+                if let data = pasteboard.data(forType: .pdf) {
+                    richText = data
+                } else if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL],
+                          let first = urls.first {
+                    richText = try? Data(contentsOf: first)
+                    fileURL = first.path
+                }
+            case .rtf, .html:
+                richText = pasteboard.data(forType: .rtf) ?? pasteboard.data(forType: .html)
             default:
                 break
             }

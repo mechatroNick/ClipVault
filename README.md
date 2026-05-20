@@ -86,6 +86,11 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.3.0 (Stability & PDF Fixes)
+- **PDF Preview Fixed**: Resolved an issue where PDF files copied from Finder were not correctly captured for preview.
+- **Copy Shortcut**: Added support for `⌘C` in the history panel to copy the currently selected entry.
+- **Workflow Improvements**: Formalized the release process and local deployment protocol in the project documentation.
+
 ### v1.2.0 (Advanced Media Previews & Window Management)
 - **Native PDF Integration**: View PDFs directly in the detailed entry view with full scroll, zoom, and text selection capabilities. First-page thumbnails are automatically generated for the history list.
 - **Enhanced Image Detection**: Added specific detection and labeling for cropped image data (screenshots/crops) across PNG, JPG, and TIFF formats.

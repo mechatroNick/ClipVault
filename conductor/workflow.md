@@ -109,6 +109,19 @@ After all phases in a track implementation plan are completed, and before the tr
    `rm -rf /Applications/ClipVault.app && cp -R <BUILT_PRODUCTS_DIR>/ClipVault.app /Applications/`
 3. **Smoke Test**: Launch the application from `/Applications` to verify successful deployment and basic functionality.
 
+## Release Process (Versioning & Tagging)
+
+When a track implementation is complete and verified, the following release steps MUST be performed:
+
+1. **Up Version**: Increment the version number in `ClipVault/Views/SettingsView.swift` (About view).
+2. **Update Metadata**: Update `README.md` with the new version and release notes.
+3. **Commit**: Make a final commit for the release with message `feat: Release vX.Y.Z - <Summary>`.
+4. **Tag**: Create an annotated git tag for the release.
+   `git tag -a vX.Y.Z -m "Release version X.Y.Z"`
+5. **Push**: Push changes and tags to the remote repository.
+   `git push origin main --tags`
+6. **Local Release**: Follow the "Track Completion and Local Release Protocol" to deploy the final version locally.
+
 ## Development Cadence
 
 1. **Select Task**: Pick the next `[ ]` task from `plan.md`

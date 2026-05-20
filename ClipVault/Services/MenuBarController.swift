@@ -179,6 +179,11 @@ final class MenuBarController: NSObject, NSWindowDelegate {
                 settings.zoomLevel = 1.0
                 refreshPanelContent()
                 return nil
+            case "c":
+                if let index = viewModel.selectedIndex, index < viewModel.entries.count {
+                    viewModel.copyEntry(at: index)
+                }
+                return nil
             default:
                 break
             }
