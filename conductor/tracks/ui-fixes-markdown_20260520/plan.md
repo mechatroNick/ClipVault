@@ -39,26 +39,26 @@
 
 ## Phase 4: UI Polish & Settings
 
-- [ ] Task: Fix Settings and Quit Button Interaction
-    - [ ] Debug and fix the interaction issue where clicking the Settings (Gear) icon or the Quit button fails to respond.
-    - [ ] Adjust the layout and size of the Settings and Quit buttons to ensure they are accessible and not too close to the search bar.
-    - [ ] Ensure `SettingsView` is brought to the foreground correctly when the Settings button is clicked.
-    - [ ] Ensure the app terminates cleanly when the Quit button is clicked.
-    - [ ] Commit: `fix(ui): Polish Settings/Quit buttons layout and functionality`
+- [x] Task: Fix Settings and Quit Button Interaction
+    - [x] Debug and fix the interaction issue where clicking the Settings (Gear) icon or the Quit button fails to respond.
+    - [x] Adjust the layout and size of the Settings and Quit buttons to ensure they are accessible and not too close to the search bar.
+    - [x] Ensure `SettingsView` is brought to the foreground correctly when the Settings button is clicked.
+    - [x] Ensure the app terminates cleanly when the Quit button is clicked.
+    - [x] Commit: `fix(ui): Polish Settings/Quit buttons layout and functionality`
 
-- [ ] Task: Prevent Duplication when Copying from History
-    - [ ] Update `ClipboardCaptureService` or `PasteboardMonitor` to ignore captures originating from ClipVault's own copy action.
-    - [ ] Add an "Active Clipboard" marker in the UI for the currently active item instead of duplicating it.
-    - [ ] Commit: `fix(clipboard): Prevent duplication when copying from history and add active marker`
+- [x] Task: Prevent Duplication when Copying from History
+    - [x] Update `ClipboardCaptureService` or `PasteboardMonitor` to ignore captures originating from ClipVault's own copy action.
+    - [x] Add an "Active Clipboard" marker in the UI for the currently active item instead of duplicating it.
+    - [x] Commit: `fix(clipboard): Prevent duplication when copying from history and add active marker`
 
-- [ ] Task: Resolve Text Clipping Issues
-    - [ ] Audit `EntryRowView` padding and frame constraints.
-    - [ ] Ensure font leading and line spacing do not cause descender clipping.
-    - [ ] Commit: `fix(ui): Resolve vertical text clipping in list view`
+- [x] Task: Resolve Text Clipping Issues
+    - [x] Audit `EntryRowView` padding and frame constraints.
+    - [x] Ensure font leading and line spacing do not cause descender clipping.
+    - [x] Commit: `fix(ui): Resolve vertical text clipping in list view`
 
-- [ ] Task: Display Build Time in About View
-    - [ ] Add a build phase script or macro to inject the build timestamp into Info.plist or a generated Swift file.
-    - [ ] Update `AboutSettingsView` to display this timestamp.
-    - [ ] Commit: `feat(ui): Display build time in About view`
+- [x] Task: Display Build Time in About View
+    - [x] Add a build phase script or macro to inject the build timestamp into Info.plist or a generated Swift file.
+    - [x] Update `AboutSettingsView` to display this timestamp.
+    - [x] Commit: `feat(ui): Display build time in About view`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)

@@ -7,6 +7,7 @@
 
 import Foundation
 import GRDB
+import CryptoKit
 
 /// Represents the type of content captured from the clipboard.
 enum ClipboardContentType: String, Codable {
@@ -100,6 +101,12 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord, Ident
 
     /// Whether the entry originated from a remote device via Universal Clipboard.
     var isRemote: Bool = false
+
+    /// Calculates a SHA-256 hash for the given components.
+    static func calculateHash(plainText: Data?, richText: Data?, imageData: Data?) -> String {
+        let contentToHash = (plainText ?? Data()) + (richText ?? Data()) + (imageData ?? Data())
+        return SHA256.hash(data: contentToHash).map { String(format: "%02x", $0) }.joined()
+    }
 
     // MARK: - CodingKeys
 

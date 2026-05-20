@@ -8,6 +8,7 @@ import SwiftUI
 struct EntryRowView: View {
     let entry: ClipboardEntry
     let isSelected: Bool
+    let isActive: Bool
     let repository: ClipboardRepository
     var onTogglePin: (() -> Void)? = nil
     var onDelete: (() -> Void)? = nil
@@ -52,6 +53,16 @@ struct EntryRowView: View {
                             .foregroundColor(isSelected ? .white.opacity(0.7) : .secondary)
                     }
                     
+                    if isActive {
+                        Text("Active")
+                            .font(.system(size: 9, weight: .bold))
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 1)
+                            .background(Color.green.opacity(isSelected ? 0.3 : 0.2))
+                            .foregroundColor(isSelected ? .white : .green)
+                            .cornerRadius(4)
+                    }
+                    
                     Spacer()
                     
                     Text(entry.timestamp, style: .time)
@@ -62,6 +73,7 @@ struct EntryRowView: View {
                 ContentPreviewRouter(entry: entry, decryptedEntry: decryptedEntry)
                     .foregroundColor(isSelected ? .white : .primary)
                     .lineLimit(3)
+                    .padding(.bottom, 2)
                 
                 if entry.contentType == .file && !fileExists {
                     Label("File moved or deleted", systemImage: "exclamationmark.triangle")

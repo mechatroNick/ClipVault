@@ -200,6 +200,18 @@ struct SecuritySettingsView: View {
 }
 
 struct AboutSettingsView: View {
+    private var buildDate: String {
+        if let path = Bundle.main.executablePath,
+           let attributes = try? FileManager.default.attributesOfItem(atPath: path),
+           let date = attributes[.creationDate] as? Date {
+            let formatter = DateFormatter()
+            formatter.dateStyle = .medium
+            formatter.timeStyle = .short
+            return formatter.string(from: date)
+        }
+        return "Unknown"
+    }
+
     var body: some View {
         VStack(spacing: 10) {
             Image(systemName: "clipboard")
@@ -211,6 +223,10 @@ struct AboutSettingsView: View {
             
             Text("Version 1.1.0")
                 .font(.subheadline)
+                .foregroundColor(.secondary)
+            
+            Text("Build Time: \(buildDate)")
+                .font(.caption)
                 .foregroundColor(.secondary)
             
             Spacer()

@@ -8,9 +8,11 @@ import AppKit
 /// Handles writing clipboard entries back to the system pasteboard and triggering paste actions.
 final class PasteService {
     private let pasteboard: PasteboardProtocol
+    private let monitor: PasteboardMonitor?
     
-    init(pasteboard: PasteboardProtocol = NSPasteboard.general) {
+    init(pasteboard: PasteboardProtocol = NSPasteboard.general, monitor: PasteboardMonitor? = nil) {
         self.pasteboard = pasteboard
+        self.monitor = monitor
     }
     
     /// Prepares the pasteboard with the content of the given entry.
@@ -19,6 +21,7 @@ final class PasteService {
     ///   - entry: The entry to write to the pasteboard.
     ///   - asPlainText: If true, only plain text content will be written even for rich text entries.
     func preparePasteboard(for entry: ClipboardEntry, asPlainText: Bool = false) async throws {
+        monitor?.ignoreNextCopy()
         pasteboard.clearContents()
         
         if asPlainText {

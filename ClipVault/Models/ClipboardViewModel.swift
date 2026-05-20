@@ -7,6 +7,7 @@ import Foundation
 import Observation
 import GRDB
 import Combine
+import AppKit
 
 @Observable
 @MainActor
@@ -21,6 +22,7 @@ final class ClipboardViewModel {
         }
     }
     var selectedIndex: Int? = nil
+    var activeHash: String? = nil
     var isLoading = false
     
     private var hasMoreEntries = true
@@ -88,10 +90,21 @@ final class ClipboardViewModel {
             do {
                 let decrypted = try repository.decryptContent(for: entry)
                 try await pasteService.preparePasteboard(for: decrypted)
+                activeHash = entry.contentHash
             } catch {
                 print("Failed to copy entry: \(error)")
             }
         }
+    }
+
+    func refreshActiveHash() {
+        let pb = NSPasteboard.general
+        var plainText: Data? = nil
+        if let s = pb.string(forType: .string) { plainText = Data(s.utf8) }
+        let richText = pb.data(forType: .rtf) ?? pb.data(forType: .html)
+        let imageData = pb.data(forType: .tiff) ?? pb.data(forType: .png)
+        
+        activeHash = ClipboardEntry.calculateHash(plainText: plainText, richText: richText, imageData: imageData)
     }
 
     func loadMoreEntries() {

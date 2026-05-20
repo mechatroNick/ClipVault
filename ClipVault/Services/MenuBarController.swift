@@ -57,6 +57,9 @@ final class MenuBarController: NSObject, NSWindowDelegate {
             },
             onOpenSettings: { [weak self] in
                 self?.openSettings()
+            },
+            onQuit: { [weak self] in
+                self?.quitApp()
             }
         )
         .scaleEffect(settings.zoomLevel)
@@ -255,6 +258,9 @@ final class MenuBarController: NSObject, NSWindowDelegate {
             },
             onOpenSettings: { [weak self] in
                 self?.openSettings()
+            },
+            onQuit: { [weak self] in
+                self?.quitApp()
             }
         )
         .scaleEffect(settings.zoomLevel)

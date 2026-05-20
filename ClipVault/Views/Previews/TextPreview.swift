@@ -27,5 +27,6 @@ struct TextPreview: View {
         .font(isCode ? .system(.body, design: .monospaced) : .body)
         .lineLimit(3)
         .truncationMode(.tail)
+        .fixedSize(horizontal: false, vertical: true)
     }
 }

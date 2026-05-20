@@ -12,17 +12,21 @@ struct HistoryPanelView: View {
     var onClose: (() -> Void)? = nil
     /// Called when the gear (settings) button is tapped.
     var onOpenSettings: (() -> Void)? = nil
+    /// Called when the quit button is tapped.
+    var onQuit: (() -> Void)? = nil
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header bar with gear (left) and close (right)
-            HStack {
+            // Header bar with gear (left) and close/quit (right)
+            HStack(spacing: 12) {
                 Button(action: {
                     onOpenSettings?()
                 }) {
-                    Image(systemName: "gearshape")
-                        .font(.system(size: 14))
-                        .foregroundColor(.secondary)
+                    Image(systemName: "gearshape.fill")
+                        .font(.system(size: 16))
+                        .padding(8)
+                        .background(Color.secondary.opacity(0.1))
+                        .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Settings")
@@ -33,15 +37,30 @@ struct HistoryPanelView: View {
                     onClose?()
                 }) {
                     Image(systemName: "xmark")
-                        .font(.system(size: 12, weight: .bold))
-                        .foregroundColor(.secondary)
+                        .font(.system(size: 14, weight: .bold))
+                        .padding(8)
+                        .background(Color.secondary.opacity(0.1))
+                        .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Close")
+                
+                Button(action: {
+                    onQuit?()
+                }) {
+                    Image(systemName: "power")
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.red)
+                        .padding(8)
+                        .background(Color.red.opacity(0.1))
+                        .clipShape(Circle())
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Quit")
             }
-            .padding(.horizontal, 12)
-            .padding(.top, 10)
-            .padding(.bottom, 4)
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
+            .padding(.bottom, 12)
             
             SearchBarView(text: $viewModel.searchQuery)
                 .padding(.horizontal)
@@ -64,6 +83,7 @@ struct HistoryPanelView: View {
                         EntryRowView(
                             entry: entry,
                             isSelected: viewModel.selectedIndex == index,
+                            isActive: entry.contentHash == viewModel.activeHash,
                             repository: viewModel.repository,
                             onTogglePin: { viewModel.togglePin(at: index) },
                             onDelete: { 
@@ -97,6 +117,9 @@ struct HistoryPanelView: View {
                 .listStyle(.plain)
                 .animation(.spring(), value: viewModel.entries)
             }
+        }
+        .onAppear {
+            viewModel.refreshActiveHash()
         }
         .frame(minWidth: 300, minHeight: 400)
         .background(VisualEffectView(material: .menu, blendingMode: .behindWindow))
