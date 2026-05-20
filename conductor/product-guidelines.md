@@ -84,10 +84,11 @@ Every function in the app must be reachable and usable without a mouse.
 
 ### Content Preview
 - **Text / Code / Markdown / HTML**: Show first 3 lines with ellipsis overflow.
-- **Images**: 48px thumbnail with filename overlay
+- **Images**: 48px thumbnail with filename overlay. Includes support for cropped image data.
 - **Files**: Icon + filename + size + path
 - **URLs**: Domain + page title if available
 
 ### Detailed Entry View
 - **Behavior**: Opened via double-click on a list entry.
 - **File Content**: For `.file` types representing folders or multiple selections, the detailed view lists the contained file names instead of just the path.
+- **PDF Preview**: Provides a full scrollable and zoomable interface using native PDFKit.

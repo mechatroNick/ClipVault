@@ -29,6 +29,8 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 ### 2. Rich Content Rendering & Preview
 - **Markdown**: Detect markdown content and render it inline with proper formatting (bold, italics, headers) using native `AttributedString`.
 - **HTML & RTF**: Support rendering of Rich Text (RTF) and HTML clipboard content, preserving basic styling (colors, fonts, layout) in the history preview.
+- **PDF Support**: Detect and render PDF content in the history preview and Detailed Entry View, supporting multi-page scrolling and zooming.
+- **Cropped Image Support**: Ensure that images cropped and copied from JPG/PNG sources are detected and previewed correctly in both the list and detailed views.
 - No separate "preview pane" — content is visible immediately and styled natively.
 - **Detailed Entry View**: Double-clicking an entry opens a full-screen or large popover view for inspecting the entire content (renders full Markdown/HTML, or lists file contents for folders).
 
@@ -50,6 +52,7 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 - **General**: Launch at Login toggle, configurable retention period, and max entry count.
 - **Visuals**: UI Zoom/Scaling (80% - 150%) for the history panel.
 - **Security**: Configurable auto-purge for sensitive items, custom search redaction rules, and optional Accessibility permissions for automated pasting.
+- **Z-Order**: The Settings window must always appear on top of the ClipVault history panel when both are open.
 - **Persistence**: All changes applied and saved immediately via a dedicated "Save" button.
 
 ## Security Model
