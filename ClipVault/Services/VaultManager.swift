@@ -13,7 +13,9 @@ final class VaultManager {
     private let settings = SettingsManager.shared
     private let encryptionService = EncryptionService()
     
-    private init() {}
+    private init() {
+        try? ensureVaultExists()
+    }
     
     /// Saves data to the vault, organized by year and month, encrypted using AES-GCM.
     /// - Returns: The relative path within the vault (e.g., "2024-05/UUID.png").

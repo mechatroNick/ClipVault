@@ -2,11 +2,11 @@
 
 ## Phase 1: Vault Management & Infrastructure
 
-- [ ] Task: Implement Safe Vault Directory Auto-Creation
-    - [ ] Update `VaultManager` initialization to check for the existence of the root path.
-    - [ ] Implement safe creation logic using `FileManager` that does not overwrite existing data.
-    - [ ] Write unit tests verifying creation and non-destructive behavior.
-    - [ ] Commit: `fix(storage): Safely auto-create Vault directory on launch`
+- [x] Task: Implement Safe Vault Directory Auto-Creation
+    - [x] Update `VaultManager` initialization to check for the existence of the root path.
+    - [x] Implement safe creation logic using `FileManager` that does not overwrite existing data.
+    - [x] Write unit tests verifying creation and non-destructive behavior.
+    - [x] Commit: `fix(storage): Safely auto-create Vault directory on launch`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 

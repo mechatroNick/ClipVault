@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BV9F2FAA687AA44CF212207B /* VaultManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */; };
 		BK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */; };
 		BFC2607578B331DAF7EAAE16 /* ThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */; };
 		01154DFD8E4780DCA8525C8D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA4CF2B61D7268629049C3 /* KeychainManager.swift */; };
@@ -70,6 +71,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultManagerTests.swift; sourceTree = "<group>"; };
 		MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockKeychainManager.swift; sourceTree = "<group>"; };
 		TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailCache.swift; sourceTree = "<group>"; };
 		0F484042A9D8EA0790AA55A2 /* ClipboardCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClipboardCaptureService.swift; path = ClipVault/Services/ClipboardCaptureService.swift; sourceTree = SOURCE_ROOT; };
@@ -264,6 +266,7 @@
 				ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */,
 				T3_LAUNCHATLOGINTESTS_SWIFT_REF /* LaunchAtLoginTests.swift */,
 							MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */,
+				VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				ST_STRESSTESTS_SWIFT_BUILD /* StressTests.swift in Sources */,
 				T3_LAUNCHATLOGINTESTS_SWIFT_BUILD /* LaunchAtLoginTests.swift in Sources */,
 							BK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift in Sources */,
+				BV9F2FAA687AA44CF212207B /* VaultManagerTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
