@@ -37,13 +37,13 @@
     - [x] Write UI tests for PDF interaction (scrolling, zooming).
     - [x] Commit: `feat(ui): Implement full PDFKit viewer in detailed view`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
 ## Phase 4: Final Polish & Optimization
 
-- [ ] Task: Performance and UX Optimization
-    - [ ] Audit memory usage during PDF/Image-heavy history browsing.
-    - [ ] Ensure smooth scrolling in the history panel with PDF thumbnails.
-    - [ ] Commit: `perf(ui): Optimize PDF/Image rendering and memory usage`
+- [x] Task: Performance and UX Optimization
+    - [x] Audit memory usage during PDF/Image-heavy history browsing.
+    - [x] Ensure smooth scrolling in the history panel with PDF thumbnails.
+    - [x] Commit: `perf(ui): Optimize PDF/Image rendering and memory usage`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
