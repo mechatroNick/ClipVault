@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BVEE5E544E7F49E0F07976F4 /* PDFPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = PPEE5E544E7F49E0F07976F4 /* PDFPreview.swift */; };
+		BV9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = HP9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift */; };
+		BV92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = IP92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift */; };
+		BV95E082710BCF588E2B9FFF /* SettingsViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = SV95E082710BCF588E2B9FFF /* SettingsViewTests.swift */; };
+		BV2E10082A52F3F3075E4F84 /* URLPreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = UP2E10082A52F3F3075E4F84 /* URLPreviewTests.swift */; };
+		BV71F9B07C9D08C545F95394 /* MarkdownRendererTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = MR71F9B07C9D08C545F95394 /* MarkdownRendererTests.swift */; };
 		BVD096657BA5C06A5541D724 /* DetailedEntryViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED096657BA5C06A5541D724 /* DetailedEntryViewTests.swift */; };
 		BVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift */; };
 		BV9F2FAA687AA44CF212207B /* VaultManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */; };
@@ -73,6 +79,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		PPEE5E544E7F49E0F07976F4 /* PDFPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipVault/Views/Previews/PDFPreview.swift; sourceTree = "<group>"; };
+
+		HP9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryPanelViewTests.swift; sourceTree = "<group>"; };
+		IP92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImagePreviewTests.swift; sourceTree = "<group>"; };
+		SV95E082710BCF588E2B9FFF /* SettingsViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewTests.swift; sourceTree = "<group>"; };
+		UP2E10082A52F3F3075E4F84 /* URLPreviewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLPreviewTests.swift; sourceTree = "<group>"; };
+		MR71F9B07C9D08C545F95394 /* MarkdownRendererTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownRendererTests.swift; sourceTree = "<group>"; };
 		DED096657BA5C06A5541D724 /* DetailedEntryViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEntryViewTests.swift; sourceTree = "<group>"; };
 		DVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEntryView.swift; sourceTree = "<group>"; };
 		VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultManagerTests.swift; sourceTree = "<group>"; };
@@ -273,6 +286,11 @@
 							MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */,
 				VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */,
 				DED096657BA5C06A5541D724 /* DetailedEntryViewTests.swift */,
+				MR71F9B07C9D08C545F95394 /* MarkdownRendererTests.swift */,
+				UP2E10082A52F3F3075E4F84 /* URLPreviewTests.swift */,
+				SV95E082710BCF588E2B9FFF /* SettingsViewTests.swift */,
+				IP92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift */,
+				HP9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -406,6 +424,7 @@
 				PM_MARKDOWNRENDERER_SWIFT_BUILD /* MarkdownRenderer.swift in Sources */,
 							BFC2607578B331DAF7EAAE16 /* ThumbnailCache.swift in Sources */,
 				BVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift in Sources */,
+				BVEE5E544E7F49E0F07976F4 /* PDFPreview.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -434,6 +453,11 @@
 							BK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift in Sources */,
 				BV9F2FAA687AA44CF212207B /* VaultManagerTests.swift in Sources */,
 				BVD096657BA5C06A5541D724 /* DetailedEntryViewTests.swift in Sources */,
+				BV71F9B07C9D08C545F95394 /* MarkdownRendererTests.swift in Sources */,
+				BV2E10082A52F3F3075E4F84 /* URLPreviewTests.swift in Sources */,
+				BV95E082710BCF588E2B9FFF /* SettingsViewTests.swift in Sources */,
+				BV92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift in Sources */,
+				BV9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

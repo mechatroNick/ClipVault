@@ -60,6 +60,13 @@ struct DetailedEntryView: View {
             } else {
                 Text("No file path available.")
             }
+        case .pdf:
+            if let data = decEntry.richTextContent {
+                PDFKitView(data: data)
+                    .frame(minHeight: 500)
+            } else {
+                Text("PDF data missing")
+            }
         case .url:
             Text(decEntry.plainTextSearchContent ?? "No URL")
                 .textSelection(.enabled)

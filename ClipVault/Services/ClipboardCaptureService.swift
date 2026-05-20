@@ -98,7 +98,7 @@ actor ClipboardCaptureService {
             }
             
             switch type {
-            case .image:
+            case .image, .croppedImage:
                 if let tiff = pasteboard.data(forType: .tiff) ?? pasteboard.data(forType: .png) {
                     imageData = tiff 
                 }
@@ -108,8 +108,8 @@ actor ClipboardCaptureService {
                     let paths = urls.map { $0.path }
                     fileURL = paths.joined(separator: "\n")
                 }
-            case .rtf, .html:
-                richText = pasteboard.data(forType: .rtf) ?? pasteboard.data(forType: .html)
+            case .rtf, .html, .pdf:
+                richText = pasteboard.data(forType: .rtf) ?? pasteboard.data(forType: .html) ?? pasteboard.data(forType: .pdf)
             default:
                 break
             }

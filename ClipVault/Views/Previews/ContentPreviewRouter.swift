@@ -25,6 +25,12 @@ struct ContentPreviewRouter: View {
             } else {
                 Text("File path missing")
             }
+        case .pdf:
+            if let data = currentEntry.richTextContent {
+                PDFThumbnailView(data: data, id: currentEntry.id)
+            } else {
+                Text("PDF data missing")
+            }
         case .url:
             URLPreview(urlString: currentEntry.plainTextSearchContent ?? "No URL")
         case .code:

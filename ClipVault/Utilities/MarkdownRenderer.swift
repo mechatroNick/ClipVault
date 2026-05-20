@@ -43,6 +43,24 @@ struct MarkdownRenderer {
     }
 }
 
+import PDFKit
+
+struct PDFThumbnailRenderer {
+    static func generateThumbnail(from data: Data, width: CGFloat = 200) -> NSImage? {
+        guard let document = PDFDocument(data: data),
+              let firstPage = document.page(at: 0) else {
+            return nil
+        }
+        
+        let pageRect = firstPage.bounds(for: .mediaBox)
+        let aspectRatio = pageRect.height / pageRect.width
+        let height = width * aspectRatio
+        let targetSize = NSSize(width: width, height: height)
+        
+        return firstPage.thumbnail(of: targetSize, for: .mediaBox)
+    }
+}
+
 struct RichTextRenderer {
     static func renderRTF(_ data: Data) -> NSAttributedString? {
         return NSAttributedString(rtf: data, documentAttributes: nil)

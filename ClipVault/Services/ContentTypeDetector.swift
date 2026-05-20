@@ -22,6 +22,10 @@ struct ContentTypeDetector {
             return .url
         }
         
+        if types.contains(.pdf) {
+            return .pdf
+        }
+        
         if types.contains(.png) || types.contains(.tiff) {
             return .croppedImage
         }
