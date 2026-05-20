@@ -63,3 +63,6 @@
     - [x] Commit: `chore(build): Finalize repo files and verify notarization`
 
 - [x] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+
+## Phase: Review Fixes
+- [x] Task: Apply review suggestions f66ed67
