@@ -86,6 +86,21 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.2.0 (Advanced Media Previews & Window Management)
+- **Native PDF Integration**: View PDFs directly in the detailed entry view with full scroll, zoom, and text selection capabilities. First-page thumbnails are automatically generated for the history list.
+- **Enhanced Image Detection**: Added specific detection and labeling for cropped image data (screenshots/crops) across PNG, JPG, and TIFF formats.
+- **Improved Window Management**: Enforced a child-window relationship for Settings and Detailed views, ensuring they always stay on top of the main panel.
+- **UI Expansion**: Increased the default history panel width by 20% (to 420pt) for better preview visibility.
+- **Bug Fixes**: Resolved issues with Settings interaction and history duplication during self-copy.
+
+### v1.1.0 (UI Fixes & Markdown Rendering)
+- **Rich Text Previews**: The history list now displays up to 3 lines of preview text for Markdown, HTML, and code entries.
+- **Detailed Entry View**: Double-click any entry to open a full-content inspector. For folders, this view lists all contained file names.
+- **Strict Syntax Validation**: Implemented safe rendering for Markdown and HTML with automatic fallback to plain text if syntax is broken.
+- **Auto-Preview**: Image thumbnails are now decrypted and displayed automatically in the list without requiring a hover action.
+- **Vault Auto-Creation**: The `~/Documents/VaultClip` directory is now safely created on first launch if it doesn't exist.
+- **Build Info**: Added build timestamp to the About section in Settings.
+
 ### v1.0.0 (Initial Release)
 - Safely store your clipboard history with AES-256 encryption.
 - Instantly search past clips with lightning-fast prefix matching and debouncing.
