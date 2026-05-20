@@ -46,4 +46,4 @@
     - [x] Ensure smooth scrolling in the history panel with PDF thumbnails.
     - [x] Commit: `perf(ui): Optimize PDF/Image rendering and memory usage`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)

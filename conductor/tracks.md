@@ -9,5 +9,5 @@ This file tracks active tracks for the project. Archived tracks can be found in 
 
 ---
 
-- [ ] **Track: Advanced Media Previews & Window Management: Enforce Z-Order for Settings, detect cropped images, and implement native PDF previews with full functionality.**
+- [x] **Track: Advanced Media Previews & Window Management: Enforce Z-Order for Settings, detect cropped images, and implement native PDF previews with full functionality.**
 *Link: [./tracks/advanced-previews-windowing_20260520/](./tracks/advanced-previews-windowing_20260520/)*
