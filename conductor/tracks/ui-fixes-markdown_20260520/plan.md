@@ -61,4 +61,4 @@
     - [x] Update `AboutSettingsView` to display this timestamp.
     - [x] Commit: `feat(ui): Display build time in About view`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
