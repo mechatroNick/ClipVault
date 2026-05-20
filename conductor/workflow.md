@@ -99,6 +99,16 @@ Security Review: ✅ (<link>)
 Co-authored-by: Conductor <conductor@local>
 ```
 
+## Track Completion and Local Release Protocol
+
+After all phases in a track implementation plan are completed, and before the track is marked as `[x]` in `tracks.md`, the following local release procedure MUST be followed:
+
+1. **Final Release Build**: Perform a clean Release build to ensure maximum performance and stripped debug symbols.
+   `xcodebuild -scheme ClipVault -destination 'platform=macOS' clean build -configuration Release`
+2. **Local Deployment**: Copy the built `.app` bundle to the local `/Applications` folder, replacing any previous version.
+   `rm -rf /Applications/ClipVault.app && cp -R <BUILT_PRODUCTS_DIR>/ClipVault.app /Applications/`
+3. **Smoke Test**: Launch the application from `/Applications` to verify successful deployment and basic functionality.
+
 ## Development Cadence
 
 1. **Select Task**: Pick the next `[ ]` task from `plan.md`
