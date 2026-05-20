@@ -12,17 +12,17 @@
 
 ## Phase 2: Content Previews & Detailed View
 
-- [ ] Task: Multi-line Text Previews in List View
-    - [ ] Update `ContentPreviewRouter` and `TextPreview` to ensure a maximum of 3 lines are shown.
-    - [ ] Apply appropriate truncation (`.truncationMode(.tail)`) and line limits.
-    - [ ] Commit: `feat(ui): Enable multi-line text previews in history list`
+- [x] Task: Multi-line Text Previews in List View
+    - [x] Update `ContentPreviewRouter` and `TextPreview` to ensure a maximum of 3 lines are shown.
+    - [x] Apply appropriate truncation (`.truncationMode(.tail)`) and line limits.
+    - [x] Commit: `feat(ui): Enable multi-line text previews in history list`
 
-- [ ] Task: Implement Detailed Entry View
-    - [ ] Create a new SwiftUI View `DetailedEntryView` to display full content.
-    - [ ] Add logic in `DetailedEntryView` to list file contents for `.file` types.
-    - [ ] Update `EntryRowView` to handle double-click (`onTapGesture(count: 2)`) to open the detailed view (via a popover or new window).
-    - [ ] Write UI/Integration tests for double-click interaction and detailed view rendering.
-    - [ ] Commit: `feat(ui): Implement detailed entry view on double-click`
+- [x] Task: Implement Detailed Entry View
+    - [x] Create a new SwiftUI View `DetailedEntryView` to display full content.
+    - [x] Add logic in `DetailedEntryView` to list file contents for `.file` types.
+    - [x] Update `EntryRowView` to handle double-click (`onTapGesture(count: 2)`) to open the detailed view (via a popover or new window).
+    - [x] Write UI/Integration tests for double-click interaction and detailed view rendering.
+    - [x] Commit: `feat(ui): Implement detailed entry view on double-click`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 

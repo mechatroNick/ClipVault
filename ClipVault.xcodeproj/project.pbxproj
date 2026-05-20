@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BVD096657BA5C06A5541D724 /* DetailedEntryViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED096657BA5C06A5541D724 /* DetailedEntryViewTests.swift */; };
+		BVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift */; };
 		BV9F2FAA687AA44CF212207B /* VaultManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */; };
 		BK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */; };
 		BFC2607578B331DAF7EAAE16 /* ThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */; };
@@ -71,6 +73,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		DED096657BA5C06A5541D724 /* DetailedEntryViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEntryViewTests.swift; sourceTree = "<group>"; };
+		DVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEntryView.swift; sourceTree = "<group>"; };
 		VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultManagerTests.swift; sourceTree = "<group>"; };
 		MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockKeychainManager.swift; sourceTree = "<group>"; };
 		TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailCache.swift; sourceTree = "<group>"; };
@@ -217,7 +221,8 @@
 				P4_PREVIEW_URLPREVIEW_SWIFT_REF /* URLPreview.swift */,
 				P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */,
 				P5F_SETTINGSVIEW_SWIFT_REF /* SettingsView.swift */,
-			);
+							DVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift */,
+);
 			path = Views;
 			sourceTree = "<group>";
 		};
@@ -267,6 +272,7 @@
 				T3_LAUNCHATLOGINTESTS_SWIFT_REF /* LaunchAtLoginTests.swift */,
 							MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */,
 				VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */,
+				DED096657BA5C06A5541D724 /* DetailedEntryViewTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -399,6 +405,7 @@
 				P5F_SETTINGSVIEW_SWIFT_BUILD /* SettingsView.swift in Sources */,
 				PM_MARKDOWNRENDERER_SWIFT_BUILD /* MarkdownRenderer.swift in Sources */,
 							BFC2607578B331DAF7EAAE16 /* ThumbnailCache.swift in Sources */,
+				BVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +433,7 @@
 				T3_LAUNCHATLOGINTESTS_SWIFT_BUILD /* LaunchAtLoginTests.swift in Sources */,
 							BK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift in Sources */,
 				BV9F2FAA687AA44CF212207B /* VaultManagerTests.swift in Sources */,
+				BVD096657BA5C06A5541D724 /* DetailedEntryViewTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

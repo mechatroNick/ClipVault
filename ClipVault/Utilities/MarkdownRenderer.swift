@@ -29,28 +29,18 @@ struct RichTextRenderer {
     }
 }
 
-struct RichTextPreview: NSViewRepresentable {
+struct RichTextPreview: View {
     let attributedString: NSAttributedString
     
-    func makeNSView(context: Context) -> NSScrollView {
-        let scrollView = NSScrollView()
-        scrollView.hasVerticalScroller = true
-        scrollView.hasHorizontalScroller = false
-        scrollView.autohidesScrollers = true
-        
-        let textView = NSTextView()
-        textView.isEditable = false
-        textView.isSelectable = true
-        textView.drawsBackground = false
-        textView.textStorage?.setAttributedString(attributedString)
-        
-        scrollView.documentView = textView
-        return scrollView
-    }
-    
-    func updateNSView(_ nsView: NSScrollView, context: Context) {
-        if let textView = nsView.documentView as? NSTextView {
-            textView.textStorage?.setAttributedString(attributedString)
+    var body: some View {
+        if let attrStr = try? AttributedString(attributedString, including: \.appKit) {
+            Text(attrStr)
+                .lineLimit(3)
+                .truncationMode(.tail)
+        } else {
+            Text(attributedString.string)
+                .lineLimit(3)
+                .truncationMode(.tail)
         }
     }
 }

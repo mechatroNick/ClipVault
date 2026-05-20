@@ -17,6 +17,7 @@ struct EntryRowView: View {
     @State private var fileExists = true
     @State private var decryptedEntry: ClipboardEntry? = nil
     @State private var showCopiedCheckmark = false
+    @State private var showDetailedView = false
     
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
@@ -138,6 +139,12 @@ struct EntryRowView: View {
         }
         .onAppear {
             validateFile()
+        }
+        .onTapGesture(count: 2) {
+            showDetailedView = true
+        }
+        .popover(isPresented: $showDetailedView, arrowEdge: .trailing) {
+            DetailedEntryView(entry: entry, repository: repository)
         }
     }
     
