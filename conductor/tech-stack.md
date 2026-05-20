@@ -6,7 +6,7 @@
 
 ### Rationale
 - Native performance with automatic memory management (ARC)
-- First-class support for all Apple frameworks (AppKit, SwiftUI, CryptoKit, Combine)
+- First-class support for all Apple frameworks (AppKit, SwiftUI, CryptoKit, Combine, PDFKit)
 - Strong type safety reduces entire categories of bugs
 - Swift Concurrency simplifies clipboard monitoring and background tasks
 
