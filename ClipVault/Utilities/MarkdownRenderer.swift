@@ -11,11 +11,35 @@ struct MarkdownRenderer {
     
     /// Parses a string with markdown and returns an AttributedString.
     static func render(_ text: String) -> AttributedString {
+        guard isValidMarkdown(text) else {
+            return AttributedString(text)
+        }
         do {
             return try AttributedString(markdown: text, options: AttributedString.MarkdownParsingOptions(interpretedSyntax: .full))
         } catch {
             return AttributedString(text)
         }
+    }
+    
+    static func isValidMarkdown(_ text: String) -> Bool {
+        // Strict check: count code block markers
+        let codeBlockCount = text.components(separatedBy: "```").count - 1
+        if codeBlockCount % 2 != 0 { return false }
+        
+        // Simple check for unclosed inline code
+        let inlineCodeCount = text.components(separatedBy: "`").count - 1
+        if inlineCodeCount % 2 != 0 { return false }
+        
+        // Check for unbalanced brackets/parentheses for links
+        let openBracket = text.components(separatedBy: "[").count - 1
+        let closeBracket = text.components(separatedBy: "]").count - 1
+        if openBracket != closeBracket { return false }
+        
+        let openParen = text.components(separatedBy: "(").count - 1
+        let closeParen = text.components(separatedBy: ")").count - 1
+        if openParen != closeParen { return false }
+        
+        return true
     }
 }
 
@@ -25,7 +49,48 @@ struct RichTextRenderer {
     }
     
     static func renderHTML(_ data: Data) -> NSAttributedString? {
+        guard isValidHTML(data) else { return nil }
         return NSAttributedString(html: data, options: [.documentType: NSAttributedString.DocumentType.html], documentAttributes: nil)
+    }
+    
+    static func isValidHTML(_ data: Data) -> Bool {
+        guard let htmlString = String(data: data, encoding: .utf8) else { return false }
+        
+        // Use a simple tag-balancing check for strictness
+        var tags: [String] = []
+        let scanner = Scanner(string: htmlString)
+        
+        while !scanner.isAtEnd {
+            _ = scanner.scanUpToString("<")
+            if scanner.isAtEnd { break }
+            _ = scanner.scanString("<")
+            
+            if scanner.scanString("/") != nil {
+                // Closing tag
+                if let tagName = scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "> ")) {
+                    if tags.last == tagName {
+                        tags.removeLast()
+                    } else {
+                        return false // Mismatched or out of order
+                    }
+                }
+                _ = scanner.scanUpToString(">")
+                _ = scanner.scanString(">")
+            } else {
+                // Opening tag
+                if let tagName = scanner.scanUpToCharacters(from: CharacterSet(charactersIn: "> ")) {
+                    // Ignore self-closing tags
+                    let isSelfClosing = ["br", "hr", "img", "input", "link", "meta"].contains(tagName.lowercased())
+                    if !isSelfClosing {
+                        tags.append(tagName)
+                    }
+                }
+                _ = scanner.scanUpToString(">")
+                _ = scanner.scanString(">")
+            }
+        }
+        
+        return tags.isEmpty
     }
 }
 

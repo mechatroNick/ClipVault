@@ -28,12 +28,12 @@
 
 ## Phase 3: Markdown Validation & Error Handling
 
-- [ ] Task: Strict Markdown and HTML Validation
-    - [ ] Implement validation logic in `MarkdownRenderer` and/or `ContentTypeDetector` to verify syntax before rendering.
-    - [ ] Update `RichTextRenderer` to handle rendering errors gracefully and return nil.
-    - [ ] Update `ContentPreviewRouter` to fall back to `TextPreview` if rendering fails.
-    - [ ] Write unit tests for valid and invalid Markdown/HTML scenarios.
-    - [ ] Commit: `fix(ui): Implement strict markdown validation and graceful fallback`
+- [x] Task: Strict Markdown and HTML Validation
+    - [x] Implement validation logic in `MarkdownRenderer` and/or `ContentTypeDetector` to verify syntax before rendering.
+    - [x] Update `RichTextRenderer` to handle rendering errors gracefully and return nil.
+    - [x] Update `ContentPreviewRouter` to fall back to `TextPreview` if rendering fails.
+    - [x] Write unit tests for valid and invalid Markdown/HTML scenarios.
+    - [x] Commit: `fix(ui): Implement strict markdown validation and graceful fallback`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
