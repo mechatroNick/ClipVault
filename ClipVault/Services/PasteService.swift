@@ -32,7 +32,7 @@ final class PasteService {
         }
         
         switch entry.contentType {
-        case .image:
+        case .image, .croppedImage:
             if let data = entry.imageData {
                 pasteboard.setData(data, forType: .tiff)
             }

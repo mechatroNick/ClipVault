@@ -124,13 +124,23 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         
         eventMonitor = NSEvent.addLocalMonitorForEvents(matching: [.leftMouseDown, .rightMouseDown, .keyDown]) { [weak self] event in
             // COVERAGE: Event monitor closures are difficult to trigger in unit tests without complex NSEvent simulation.
+            guard let self = self else { return event }
+            
             if event.type == .keyDown {
-                return self?.handleKeyDown(event) ?? event
+                return self.handleKeyDown(event)
             }
             
-            if event.window != panel && event.window != self?.statusItem?.button?.window {
-                self?.closePanel()
+            // Check if the click is outside the panel and its children (like Settings or Detailed view)
+            if let clickedWindow = event.window {
+                if clickedWindow == panel || 
+                   clickedWindow == self.settingsWindow || 
+                   panel.childWindows?.contains(clickedWindow) == true ||
+                   clickedWindow == self.statusItem?.button?.window {
+                    return event
+                }
             }
+            
+            self.closePanel()
             return event
         }
     }

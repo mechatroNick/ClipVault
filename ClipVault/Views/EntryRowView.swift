@@ -162,6 +162,11 @@ struct EntryRowView: View {
         }
         .onAppear {
             validateFile()
+            if entry.contentType == .image || entry.contentType == .croppedImage {
+                Task {
+                    decryptedEntry = try? repository.decryptContent(for: entry)
+                }
+            }
         }
         .onTapGesture(count: 2) {
             showDetailedView = true

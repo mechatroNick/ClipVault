@@ -9,7 +9,7 @@ import SwiftUI
 final class HistoryPanel: NSPanel {
     init(contentView: NSView) {
         super.init(
-            contentRect: NSRect(x: 0, y: 0, width: 350, height: 500),
+            contentRect: NSRect(x: 0, y: 0, width: 420, height: 500),
             styleMask: [.nonactivatingPanel, .titled, .fullSizeContentView, .resizable],
             backing: .buffered,
             defer: false

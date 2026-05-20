@@ -111,7 +111,7 @@ final class SettingsManager: ObservableObject {
         
         self.customPatterns = UserDefaults.standard.dictionary(forKey: Keys.customPatterns) as? [String: String] ?? [:]
         
-        self.panelWidth = UserDefaults.standard.double(forKey: Keys.panelWidth) == 0 ? 350 : CGFloat(UserDefaults.standard.double(forKey: Keys.panelWidth))
+        self.panelWidth = UserDefaults.standard.double(forKey: Keys.panelWidth) == 0 ? 420 : CGFloat(UserDefaults.standard.double(forKey: Keys.panelWidth))
         self.panelHeight = UserDefaults.standard.double(forKey: Keys.panelHeight) == 0 ? 500 : CGFloat(UserDefaults.standard.double(forKey: Keys.panelHeight))
         self.zoomLevel = UserDefaults.standard.double(forKey: Keys.zoomLevel) == 0 ? 1.0 : UserDefaults.standard.double(forKey: Keys.zoomLevel)
 
