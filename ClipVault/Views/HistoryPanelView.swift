@@ -91,7 +91,8 @@ struct HistoryPanelView: View {
                                     viewModel.deleteEntry(at: index)
                                 }
                             },
-                            onCopy: { viewModel.copyEntry(at: index) }
+                            onCopy: { viewModel.copyEntry(at: index) },
+                            onSelect: { viewModel.selectedIndex = index }
                         )
                         .onTapGesture {
                             viewModel.selectedIndex = index

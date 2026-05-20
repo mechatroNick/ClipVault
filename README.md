@@ -86,6 +86,11 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.3.2 (Selection & PDF Polish)
+- **Selection on Double-Click**: Double-clicking an entry now automatically selects it in the history list before opening the detailed view.
+- **Robust PDF Detection**: Improved PDF detection logic to use both file extensions and Uniform Type Identifiers (UTIs) for more reliable previews.
+- **Improved PDF Capture**: Added additional logging and verification to the PDF capture pipeline.
+
 ### v1.3.1 (UI Polish & Workflow)
 - **Auto-Selection**: Pressing the copy button on an entry now automatically selects that entry in the history list.
 - **Workflow Formalization**: Documented the full release protocol (test, version, commit, tag, push, deploy) in `workflow.md`.

@@ -17,8 +17,18 @@ struct ContentTypeDetector {
         if types.contains(.fileURL) {
             if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL],
                urls.count == 1,
-               urls.first?.pathExtension.lowercased() == "pdf" {
-                return .pdf
+               let first = urls.first {
+                let path = first.path
+                let ext = first.pathExtension.lowercased()
+                if ext == "pdf" {
+                    return .pdf
+                }
+                
+                // Fallback: check UTI if extension is missing or weird
+                if let uti = try? first.resourceValues(forKeys: [.typeIdentifierKey]).typeIdentifier,
+                   uti == "com.adobe.pdf" {
+                    return .pdf
+                }
             }
             return .file
         }

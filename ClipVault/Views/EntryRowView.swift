@@ -13,6 +13,7 @@ struct EntryRowView: View {
     var onTogglePin: (() -> Void)? = nil
     var onDelete: (() -> Void)? = nil
     var onCopy: (() -> Void)? = nil
+    var onSelect: (() -> Void)? = nil
     
     @State private var isHovered = false
     @State private var fileExists = true
@@ -169,6 +170,7 @@ struct EntryRowView: View {
             }
         }
         .onTapGesture(count: 2) {
+            onSelect?()
             showDetailedView = true
         }
         .popover(isPresented: $showDetailedView, arrowEdge: .trailing) {
