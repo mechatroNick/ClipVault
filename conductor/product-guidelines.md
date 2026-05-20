@@ -74,8 +74,9 @@ Every function in the app must be reachable and usable without a mouse.
 - **Floating Panel**: Non-activating NSPanel — doesn't steal focus from the active application
 - **Auto-Dismiss**: Closes on Escape, click-outside, or after pasting an entry
 - **Position**: Anchored below the menu bar status item; remembers last position
-- **Resize**: Panel height adjusts to show configurable number of entries; width fixed
+- **Size**: Default width of **420pt**; panel height adjusts to show configurable number of entries
 - **Interaction**: Single-click to select; Enter or double-click to copy; Double-click to open Detailed View for full inspection.
+- **Window Management**: Settings and Detailed View are managed as standard macOS windows (child windows of the panel) to ensure reliable foreground behavior and Z-order enforcement.
 
 ### Search
 - **Real-Time Filter**: Type to filter history entries immediately — no "press Enter to search"
