@@ -13,24 +13,24 @@ final class HistoryPanelControlTests: XCTestCase {
     private var repository: ClipboardRepository!
     private var dbManager: DatabaseManager!
     private var encryptionService: EncryptionService!
-    private var keychainManager: KeychainManager!
+    private var keychainManager: MockKeychainManager!
     private var viewModel: ClipboardViewModel!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         dbManager = try DatabaseManager(path: ":memory:")
         encryptionService = try EncryptionService()
-        keychainManager = KeychainManager(service: "com.clipvault.test.controls.\(UUID().uuidString)")
+        keychainManager = MockKeychainManager()
         repository = ClipboardRepository(
             dbManager: dbManager,
             encryptionService: encryptionService,
             keychainManager: keychainManager
         )
-        viewModel = ClipboardViewModel(repository: repository)
+        viewModel = ClipboardViewModel(repository: repository, pasteService: PasteService())
     }
     
     override func tearDownWithError() throws {
-        try? keychainManager.deleteKey()
+        
         viewModel = nil
         repository = nil
         dbManager = nil

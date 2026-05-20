@@ -14,16 +14,14 @@ final class ClipboardRepositoryTests: XCTestCase {
     
     private var repository: ClipboardRepository!
     private var dbManager: DatabaseManager!
-    private var keychainManager: KeychainManager!
+    private var keychainManager: MockKeychainManager!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         
         // Use in-memory DB for tests
         dbManager = try DatabaseManager(path: ":memory:")
-        
-        let serviceName = "com.clipvault.test.repo.\(UUID().uuidString)"
-        keychainManager = KeychainManager(service: serviceName)
+        keychainManager = MockKeychainManager()
         
         repository = ClipboardRepository(
             dbManager: dbManager,
@@ -33,7 +31,7 @@ final class ClipboardRepositoryTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        try? keychainManager.deleteKey()
+        
         repository = nil
         keychainManager = nil
         dbManager = nil
@@ -50,7 +48,7 @@ final class ClipboardRepositoryTests: XCTestCase {
         
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "text",
+            contentType: .text,
             plainTextContent: plainText,
             richTextContent: richText,
             metadata: metadata
@@ -80,7 +78,7 @@ final class ClipboardRepositoryTests: XCTestCase {
         let plainText = Data("highly confidential data".utf8)
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "text",
+            contentType: .text,
             plainTextContent: plainText
         )
         
@@ -106,8 +104,8 @@ final class ClipboardRepositoryTests: XCTestCase {
     
     func testSearch_FindsMatchingEntries() throws {
         // Arrange
-        var entry1 = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("apple banana cherry".utf8))
-        var entry2 = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("date elderberry fig".utf8))
+        var entry1 = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("apple banana cherry".utf8))
+        var entry2 = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("date elderberry fig".utf8))
         
         try repository.save(&entry1)
         try repository.save(&entry2)
@@ -126,8 +124,8 @@ final class ClipboardRepositoryTests: XCTestCase {
     
     func testFetchAll_ReturnsAllEntriesOrderedByTimestamp() throws {
         // Arrange
-        var entry1 = ClipboardEntry(timestamp: Date(timeIntervalSince1970: 100), contentType: "text")
-        var entry2 = ClipboardEntry(timestamp: Date(timeIntervalSince1970: 200), contentType: "text") // Newer
+        var entry1 = ClipboardEntry(timestamp: Date(timeIntervalSince1970: 100), contentType: .text)
+        var entry2 = ClipboardEntry(timestamp: Date(timeIntervalSince1970: 200), contentType: .text) // Newer
         
         try repository.save(&entry1)
         try repository.save(&entry2)
@@ -145,7 +143,7 @@ final class ClipboardRepositoryTests: XCTestCase {
     
     func testDelete_RemovesEntry() throws {
         // Arrange
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "text")
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text)
         try repository.save(&entry)
         let id = try XCTUnwrap(entry.id)
         
@@ -168,7 +166,7 @@ final class ClipboardRepositoryTests: XCTestCase {
     
     func testPinAndUnpin_UpdatesStatus() throws {
         // Arrange
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "text")
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text)
         try repository.save(&entry)
         let id = try XCTUnwrap(entry.id)
         
@@ -196,9 +194,9 @@ final class ClipboardRepositoryTests: XCTestCase {
         let oldDate = now.addingTimeInterval(-1000)
         let newDate = now.addingTimeInterval(-100)
         
-        var oldUnpinned = ClipboardEntry(timestamp: oldDate, contentType: "text")
-        var oldPinned = ClipboardEntry(timestamp: oldDate, contentType: "text", isPinned: true)
-        var newUnpinned = ClipboardEntry(timestamp: newDate, contentType: "text")
+        var oldUnpinned = ClipboardEntry(timestamp: oldDate, contentType: .text)
+        var oldPinned = ClipboardEntry(timestamp: oldDate, contentType: .text, isPinned: true)
+        var newUnpinned = ClipboardEntry(timestamp: newDate, contentType: .text)
         
         try repository.save(&oldUnpinned)
         try repository.save(&oldPinned)
@@ -223,9 +221,9 @@ final class ClipboardRepositoryTests: XCTestCase {
         let expiredDate = now.addingTimeInterval(-10)
         let futureDate = now.addingTimeInterval(3600)
         
-        var expiredSensitive = ClipboardEntry(timestamp: now, contentType: "text", expiryDate: expiredDate)
-        var futureSensitive = ClipboardEntry(timestamp: now, contentType: "text", expiryDate: futureDate)
-        var pinnedExpiredSensitive = ClipboardEntry(timestamp: now, contentType: "text", expiryDate: expiredDate, isPinned: true)
+        var expiredSensitive = ClipboardEntry(timestamp: now, contentType: .text, expiryDate: expiredDate)
+        var futureSensitive = ClipboardEntry(timestamp: now, contentType: .text, expiryDate: futureDate)
+        var pinnedExpiredSensitive = ClipboardEntry(timestamp: now, contentType: .text, expiryDate: expiredDate, isPinned: true)
         
         try repository.save(&expiredSensitive)
         try repository.save(&futureSensitive)
@@ -250,7 +248,7 @@ final class ClipboardRepositoryTests: XCTestCase {
 
     func testSave_SensitiveContentDetection() throws {
         // Arrange
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("My card is 4111 1111 1111 1111".utf8))
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("My card is 4111 1111 1111 1111".utf8))
         
         // Act
         try repository.save(&entry)
@@ -268,7 +266,7 @@ final class ClipboardRepositoryTests: XCTestCase {
         
         let largeString = String(repeating: "A", count: 1_100_000)
         let largeData = Data(largeString.utf8)
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: largeData)
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: largeData)
         
         // Act
         try repository.save(&entry)
@@ -291,7 +289,7 @@ final class ClipboardRepositoryTests: XCTestCase {
         settings.largeFileThresholdMB = 1
         
         let largeData = Data(repeating: 0xFF, count: 1_100_000)
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "image", imageData: largeData)
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .image, imageData: largeData)
         
         // Act
         try repository.save(&entry)

@@ -13,32 +13,32 @@ struct ContentPreviewRouter: View {
         let currentEntry = decryptedEntry ?? entry
         
         switch currentEntry.contentType {
-        case "image":
+        case .image:
             if let imageData = currentEntry.imageData {
                 ImagePreview(imageData: imageData, id: currentEntry.id)
             } else {
                 Text("Image data missing")
             }
-        case "file":
+        case .file:
             if let filePath = currentEntry.fileURL {
                 FilePreview(filePath: filePath)
             } else {
                 Text("File path missing")
             }
-        case "url":
+        case .url:
             URLPreview(urlString: currentEntry.plainTextSearchContent ?? "No URL")
-        case "code":
+        case .code:
             TextPreview(text: currentEntry.plainTextSearchContent ?? "", isCode: true)
-        case "markdown":
+        case .markdown:
             TextPreview(text: currentEntry.plainTextSearchContent ?? "", isMarkdown: true)
-        case "rtf":
+        case .rtf:
             if let data = currentEntry.richTextContent,
                let attrString = RichTextRenderer.renderRTF(data) {
                 RichTextPreview(attributedString: attrString)
             } else {
                 TextPreview(text: currentEntry.plainTextSearchContent ?? "")
             }
-        case "html":
+        case .html:
             if let data = currentEntry.richTextContent,
                let attrString = RichTextRenderer.renderHTML(data) {
                 RichTextPreview(attributedString: attrString)

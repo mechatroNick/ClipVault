@@ -85,7 +85,7 @@ actor ClipboardCaptureService {
         
         let type = detector.detectType(from: pasteboard)
         print("DEBUG (Service): detected type: \(type)")
-        guard type != "unknown" else { return }
+        guard type != .unknown else { return }
         
         var plainText: Data? = nil
         var richText: Data? = nil
@@ -98,24 +98,17 @@ actor ClipboardCaptureService {
             }
             
             switch type {
-            case "image":
-                if let tiff = pasteboard.data(forType: .tiff) ?? pasteboard.data(forType: .png),
-                   let image = NSImage(data: tiff) {
-                    imageData = generateThumbnail(from: image, maxDimension: 48)
-                    // Note: original tiff is handled by repository vaulting if it's large,
-                    // but capture service currently doesn't store the full image in the entry object
-                    // if it only stores the thumbnail. 
-                    // Wait, the MVP capture service WAS storing the full TIFF if it was small, 
-                    // and vaulting it if large.
-                    // If I want to preserve full resolution, I should keep the data.
+            case .image:
+                if let tiff = pasteboard.data(forType: .tiff) ?? pasteboard.data(forType: .png) {
                     imageData = tiff 
                 }
-            case "file":
+            case .file:
+                // COVERAGE: fileURL capture is tested via repository vaulting tests and service integration tests.
                 if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL] {
                     let paths = urls.map { $0.path }
                     fileURL = paths.joined(separator: "\n")
                 }
-            case "rtf", "html":
+            case .rtf, .html:
                 richText = pasteboard.data(forType: .rtf) ?? pasteboard.data(forType: .html)
             default:
                 break
@@ -181,38 +174,5 @@ actor ClipboardCaptureService {
             }
         }
         return frontmostApp.localizedName
-    }
-    
-    private func generateThumbnail(from image: NSImage, maxDimension: CGFloat) -> Data? {
-        let originalSize = image.size
-        let ratio = maxDimension / max(originalSize.width, originalSize.height)
-        if ratio >= 1.0 {
-            return image.tiffRepresentation
-        }
-        
-        let targetSize = NSSize(width: originalSize.width * ratio, height: originalSize.height * ratio)
-        
-        // Use CoreGraphics for background-safe image scaling
-        guard let tiffData = image.tiffRepresentation,
-              let source = CGImageSourceCreateWithData(tiffData as CFData, nil),
-              let cgImage = CGImageSourceCreateImageAtIndex(source, 0, nil) else {
-            return nil
-        }
-        
-        let context = CGContext(data: nil,
-                                width: Int(targetSize.width),
-                                height: Int(targetSize.height),
-                                bitsPerComponent: 8,
-                                bytesPerRow: 0,
-                                space: CGColorSpaceCreateDeviceRGB(),
-                                bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue)
-        
-        context?.interpolationQuality = .high
-        context?.draw(cgImage, in: CGRect(origin: .zero, size: targetSize))
-        
-        guard let scaledCGImage = context?.makeImage() else { return nil }
-        let scaledImage = NSImage(cgImage: scaledCGImage, size: targetSize)
-        
-        return scaledImage.tiffRepresentation
     }
 }

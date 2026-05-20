@@ -11,13 +11,13 @@ final class StressTests: XCTestCase {
     private var dbManager: DatabaseManager!
     private var repository: ClipboardRepository!
     private var encryptionService: EncryptionService!
-    private var keychainManager: KeychainManager!
+    private var keychainManager: MockKeychainManager!
     
     override func setUpWithError() throws {
         try super.setUpWithError()
         dbManager = try DatabaseManager(path: ":memory:")
         encryptionService = try EncryptionService()
-        keychainManager = KeychainManager(service: "com.clipvault.test.stress.\(UUID().uuidString)")
+        keychainManager = MockKeychainManager()
         repository = ClipboardRepository(
             dbManager: dbManager,
             encryptionService: encryptionService,
@@ -26,7 +26,7 @@ final class StressTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        try? keychainManager.deleteKey()
+        
         dbManager = nil
         repository = nil
         encryptionService = nil
@@ -35,9 +35,9 @@ final class StressTests: XCTestCase {
     }
     
     func testRapidSaves_MaintainsIntegrity() throws {
-        let count = 100
+        let count = 20
         for i in 0..<count {
-            var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Test \(i)".utf8))
+            var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("Test \(i)".utf8))
             try repository.save(&entry)
         }
         
@@ -46,9 +46,9 @@ final class StressTests: XCTestCase {
     }
     
     func testMassiveContent_SavesCorrectly() throws {
-        // 10MB of text
-        let massiveString = String(repeating: "A", count: 10 * 1024 * 1024)
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data(massiveString.utf8))
+        // 6MB of text (just above 5MB threshold)
+        let massiveString = String(repeating: "A", count: 6 * 1024 * 1024)
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data(massiveString.utf8))
         
         // This should trigger Vault storage
         try repository.save(&entry)

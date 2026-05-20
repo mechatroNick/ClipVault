@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */; };
 		BFC2607578B331DAF7EAAE16 /* ThumbnailCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */; };
 		01154DFD8E4780DCA8525C8D /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0EA4CF2B61D7268629049C3 /* KeychainManager.swift */; };
 		30224799A6997F5892A3112F /* ClipboardRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12245DEA1025927C80F8AB4 /* ClipboardRepository.swift */; };
@@ -69,6 +70,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MockKeychainManager.swift; sourceTree = "<group>"; };
 		TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThumbnailCache.swift; sourceTree = "<group>"; };
 		0F484042A9D8EA0790AA55A2 /* ClipboardCaptureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ClipboardCaptureService.swift; path = ClipVault/Services/ClipboardCaptureService.swift; sourceTree = SOURCE_ROOT; };
 		16A440328B2A14115F05ED6B /* PasteboardMonitorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasteboardMonitorTests.swift; path = Tests/ClipVaultTests/PasteboardMonitorTests.swift; sourceTree = SOURCE_ROOT; };
@@ -261,7 +263,8 @@
 				PMT_MARKDOWNRENDERERTESTS_SWIFT_REF /* MarkdownRendererTests.swift */,
 				ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */,
 				T3_LAUNCHATLOGINTESTS_SWIFT_REF /* LaunchAtLoginTests.swift */,
-			);
+							MK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift */,
+);
 			path = ClipVaultTests;
 			sourceTree = "<group>";
 		};
@@ -418,7 +421,8 @@
 				PMT_MARKDOWNRENDERERTESTS_SWIFT_BUILD /* MarkdownRendererTests.swift in Sources */,
 				ST_STRESSTESTS_SWIFT_BUILD /* StressTests.swift in Sources */,
 				T3_LAUNCHATLOGINTESTS_SWIFT_BUILD /* LaunchAtLoginTests.swift in Sources */,
-			);
+							BK6ECED601BC342F6CF0DB4E /* MockKeychainManager.swift in Sources */,
+);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */

@@ -25,11 +25,11 @@ final class ClipboardViewModelTests: XCTestCase {
             encryptionService: encryptionService,
             keychainManager: keychainManager
         )
-        viewModel = ClipboardViewModel(repository: repository)
+        viewModel = ClipboardViewModel(repository: repository, pasteService: PasteService())
     }
     
     override func tearDownWithError() throws {
-        try? keychainManager.deleteKey()
+        
         viewModel = nil
         repository = nil
         dbManager = nil
@@ -46,7 +46,7 @@ final class ClipboardViewModelTests: XCTestCase {
     
     func testObservation_UpdatesEntriesAutomatically() async throws {
         // Act
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Secret".utf8))
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("Secret".utf8))
         try repository.save(&entry)
         
         // Assert: Wait for observation
@@ -61,8 +61,8 @@ final class ClipboardViewModelTests: XCTestCase {
     
     func testSearchQuery_UpdatesFilteredEntries() async throws {
         // Arrange
-        var entry1 = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Apple".utf8))
-        var entry2 = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Banana".utf8))
+        var entry1 = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("Apple".utf8))
+        var entry2 = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("Banana".utf8))
         try repository.save(&entry1)
         try repository.save(&entry2)
         
@@ -87,9 +87,9 @@ final class ClipboardViewModelTests: XCTestCase {
     func testMoveSelection_WrapsAround() {
         // Arrange
         viewModel.entries = [
-            ClipboardEntry(timestamp: Date(), contentType: "text"),
-            ClipboardEntry(timestamp: Date(), contentType: "text"),
-            ClipboardEntry(timestamp: Date(), contentType: "text")
+            ClipboardEntry(timestamp: Date(), contentType: .text),
+            ClipboardEntry(timestamp: Date(), contentType: .text),
+            ClipboardEntry(timestamp: Date(), contentType: .text)
         ]
         
         // Act: Down from nil
@@ -113,7 +113,7 @@ final class ClipboardViewModelTests: XCTestCase {
     func testLoadMoreEntries_SearchMode_LoadsAdditionalResults() async throws {
         // Arrange: Create 60 entries (pageSize is 50)
         for i in 1...60 {
-            var entry = ClipboardEntry(timestamp: Date().addingTimeInterval(TimeInterval(i)), contentType: "text", plainTextContent: Data("Match \(i)".utf8))
+            var entry = ClipboardEntry(timestamp: Date().addingTimeInterval(TimeInterval(i)), contentType: .text, plainTextContent: Data("Match \(i)".utf8))
             try repository.save(&entry)
         }
         
@@ -134,5 +134,58 @@ final class ClipboardViewModelTests: XCTestCase {
         }
         
         XCTAssertEqual(viewModel.entries.count, 60)
+    }
+
+    func testDeleteEntry_RemovesFromDatabaseAndList() async throws {
+        // Arrange
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("To Delete".utf8))
+        try repository.save(&entry)
+        try await Task.sleep(nanoseconds: 200_000_000)
+        XCTAssertEqual(viewModel.entries.count, 1)
+        
+        // Act
+        viewModel.deleteEntry(at: 0)
+        
+        // Assert
+        let startTime = Date()
+        while !viewModel.entries.isEmpty && Date().timeIntervalSince(startTime) < 1.0 {
+            try await Task.sleep(nanoseconds: 50_000_000)
+        }
+        XCTAssertTrue(viewModel.entries.isEmpty)
+        XCTAssertEqual(try repository.fetchAll().count, 0)
+    }
+
+    func testTogglePin_UpdatesDatabaseAndEntry() async throws {
+        // Arrange
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("To Pin".utf8))
+        try repository.save(&entry)
+        try await Task.sleep(nanoseconds: 200_000_000)
+        XCTAssertFalse(viewModel.entries[0].isPinned)
+        
+        // Act
+        viewModel.togglePin(at: 0)
+        
+        // Assert: wait for update
+        try await Task.sleep(nanoseconds: 200_000_000)
+        XCTAssertTrue(viewModel.entries[0].isPinned)
+        XCTAssertTrue(try repository.fetchAll()[0].isPinned)
+    }
+
+    func testCopyEntry_PreparesPasteboard() async throws {
+        // Arrange
+        let mockPasteboard = MockPasteboard()
+        let pasteService = PasteService(pasteboard: mockPasteboard)
+        let vm = ClipboardViewModel(repository: repository, pasteService: pasteService)
+        
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("To Copy".utf8))
+        try repository.save(&entry)
+        try await Task.sleep(nanoseconds: 200_000_000)
+        
+        // Act
+        vm.copyEntry(at: 0)
+        
+        // Assert: PreparePasteboard is async, but copyEntry launches it in a Task.
+        try await Task.sleep(nanoseconds: 200_000_000)
+        XCTAssertEqual(mockPasteboard.string(forType: .string), "To Copy")
     }
 }

@@ -19,7 +19,7 @@ final class PasteServiceTests: XCTestCase {
     
     func testPasteText_WritesToPasteboard() async throws {
         // Arrange
-        let entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Hello Paste".utf8))
+        let entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("Hello Paste".utf8))
         
         // Act
         try await pasteService.preparePasteboard(for: entry)
@@ -31,7 +31,7 @@ final class PasteServiceTests: XCTestCase {
     func testPasteImage_WritesToPasteboard() async throws {
         // Arrange
         let tiffData = Data([0x01, 0x02]) // Mock TIFF data
-        let entry = ClipboardEntry(timestamp: Date(), contentType: "image", imageData: tiffData)
+        let entry = ClipboardEntry(timestamp: Date(), contentType: .image, imageData: tiffData)
         
         // Act
         try await pasteService.preparePasteboard(for: entry)
@@ -43,7 +43,7 @@ final class PasteServiceTests: XCTestCase {
     func testPasteFile_WritesToPasteboard() async throws {
         // Arrange
         let filePath = "/tmp/test.txt"
-        let entry = ClipboardEntry(timestamp: Date(), contentType: "file", fileURL: filePath)
+        let entry = ClipboardEntry(timestamp: Date(), contentType: .file, fileURL: filePath)
         
         // Act
         try await pasteService.preparePasteboard(for: entry)

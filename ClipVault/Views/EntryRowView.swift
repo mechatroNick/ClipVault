@@ -62,7 +62,7 @@ struct EntryRowView: View {
                     .foregroundColor(isSelected ? .white : .primary)
                     .lineLimit(3)
                 
-                if entry.contentType == "file" && !fileExists {
+                if entry.contentType == .file && !fileExists {
                     Label("File moved or deleted", systemImage: "exclamationmark.triangle")
                         .font(.caption2)
                         .foregroundColor(.red)
@@ -143,18 +143,20 @@ struct EntryRowView: View {
     
     private var iconName: String {
         switch entry.contentType {
-        case "text": return "text.alignleft"
-        case "image": return "photo"
-        case "file": return "doc"
-        case "url": return "link"
-        case "html": return "chevron.left.forwardslash.chevron.right"
-        case "rtf": return "doc.richtext"
+        case .text: return "text.alignleft"
+        case .image: return "photo"
+        case .file: return "doc"
+        case .url: return "link"
+        case .html: return "chevron.left.forwardslash.chevron.right"
+        case .rtf: return "doc.richtext"
+        case .markdown: return "text.badge.checkmark"
+        case .code: return "chevron.left.forwardslash.chevron.right"
         default: return "doc.on.clipboard"
         }
     }
     
     private func validateFile() {
-        guard entry.contentType == "file", let path = entry.fileURL else { return }
+        guard entry.contentType == .file, let path = entry.fileURL else { return }
         let paths = path.components(separatedBy: "\n")
         for p in paths {
             if !FileManager.default.fileExists(atPath: p) {

@@ -29,21 +29,21 @@ final class PasteService {
         }
         
         switch entry.contentType {
-        case "image":
+        case .image:
             if let data = entry.imageData {
                 pasteboard.setData(data, forType: .tiff)
             }
-        case "file":
+        case .file:
             if let path = entry.fileURL {
                 let url = URL(fileURLWithPath: path)
                 pasteboard.setString(url.absoluteString, forType: .fileURL)
             }
-        case "url":
+        case .url:
             if let data = entry.plainTextContent, let string = String(data: data, encoding: .utf8) {
                 pasteboard.setString(string, forType: .URL)
                 pasteboard.setString(string, forType: .string)
             }
-        case "rtf":
+        case .rtf:
             if let data = entry.richTextContent {
                 pasteboard.setData(data, forType: .rtf)
             }

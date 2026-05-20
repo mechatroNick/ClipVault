@@ -14,24 +14,21 @@ final class MenuBarControllerTests: XCTestCase {
     private var repository: ClipboardRepository!
     private var dbManager: DatabaseManager!
     private var encryptionService: EncryptionService!
-    private var keychainManager: KeychainManager!
-    
+    private var keychainManager: MockKeychainManager!
+
     override func setUpWithError() throws {
         try super.setUpWithError()
         dbManager = try DatabaseManager(path: ":memory:")
         encryptionService = try EncryptionService()
-        keychainManager = KeychainManager(service: "com.clipvault.test.menubar.\(UUID().uuidString)")
-        repository = ClipboardRepository(
-            dbManager: dbManager,
-            encryptionService: encryptionService,
-            keychainManager: keychainManager
-        )
-        viewModel = ClipboardViewModel(repository: repository)
+        keychainManager = MockKeychainManager()
+        repository = ClipboardRepository(dbManager: dbManager, encryptionService: encryptionService, keychainManager: keychainManager)
+
+        viewModel = ClipboardViewModel(repository: repository, pasteService: PasteService())
         controller = MenuBarController(viewModel: viewModel)
     }
     
     override func tearDownWithError() throws {
-        try? keychainManager.deleteKey()
+        
         controller = nil
         viewModel = nil
         repository = nil
@@ -49,7 +46,7 @@ final class MenuBarControllerTests: XCTestCase {
         controller.togglePanel()
         
         // Wait for open animation
-        try await Task.sleep(nanoseconds: 300_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         // Assert: Panel should be visible
         XCTAssertTrue(controller.isPanelVisible)
@@ -58,7 +55,7 @@ final class MenuBarControllerTests: XCTestCase {
         controller.togglePanel()
         
         // Wait for close animation
-        try await Task.sleep(nanoseconds: 300_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         // Assert: Panel should be hidden
         XCTAssertFalse(controller.isPanelVisible)
@@ -66,14 +63,14 @@ final class MenuBarControllerTests: XCTestCase {
     
     func testArrowNavigation_UpdatesViewModelSelection() async throws {
         // Arrange: Add some entries
-        var entry1 = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("1".utf8))
-        var entry2 = ClipboardEntry(timestamp: Date().addingTimeInterval(1), contentType: "text", plainTextContent: Data("2".utf8))
+        var entry1 = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("1".utf8))
+        var entry2 = ClipboardEntry(timestamp: Date().addingTimeInterval(1), contentType: .text, plainTextContent: Data("2".utf8))
         try repository.save(&entry1)
         try repository.save(&entry2)
         
         // Open panel
         controller.togglePanel()
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         // Act: Down Arrow (keycode 125)
         let downEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: [], timestamp: 0, windowNumber: 0, context: nil, characters: "", charactersIgnoringModifiers: "", isARepeat: false, keyCode: 125)!
@@ -90,7 +87,7 @@ final class MenuBarControllerTests: XCTestCase {
     func testEscapeKey_DismissesPanel() async throws {
         // Arrange
         controller.togglePanel()
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         XCTAssertTrue(controller.isPanelVisible)
         
         // Act: Escape (keycode 53)
@@ -98,7 +95,7 @@ final class MenuBarControllerTests: XCTestCase {
         _ = controller.handleKeyDown(escapeEvent)
         
         // Wait for close animation
-        try await Task.sleep(nanoseconds: 300_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         // Assert
         XCTAssertFalse(controller.isPanelVisible)
@@ -172,7 +169,7 @@ final class MenuBarControllerTests: XCTestCase {
         
         // Act
         controller.handleAction(event: leftClickEvent)
-        try await Task.sleep(nanoseconds: 300_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         // Assert
         XCTAssertTrue(controller.isPanelVisible)
@@ -183,7 +180,7 @@ final class MenuBarControllerTests: XCTestCase {
         settings.zoomLevel = 1.0
         
         controller.togglePanel()
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         // Act: Command + (keycode 24 is '+/=', but characters matter)
         let zoomInEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "+", charactersIgnoringModifiers: "+", isARepeat: false, keyCode: 24)!
@@ -205,33 +202,33 @@ final class MenuBarControllerTests: XCTestCase {
 
     func testHandleKeyDown_DigitKeys_TriggersPaste() async throws {
         // Arrange: Add entries
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("Test".utf8))
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("Test".utf8))
         try repository.save(&entry)
         
         controller.togglePanel()
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         // Act: Command 1 (keycode 18 is '1')
         let digitEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "1", charactersIgnoringModifiers: "1", isARepeat: false, keyCode: 18)!
         _ = controller.handleKeyDown(digitEvent)
         
         // Wait for close
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         XCTAssertFalse(controller.isPanelVisible)
     }
 
     func testHandleKeyDown_DeleteKey_DeletesEntry() async throws {
         // Arrange: Add entry and select it
-        var entry = ClipboardEntry(timestamp: Date(), contentType: "text", plainTextContent: Data("To Delete".utf8))
+        var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("To Delete".utf8))
         try repository.save(&entry)
         
         // Wait for observation to pick up the new entry
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         viewModel.selectedIndex = 0
         
         controller.togglePanel()
-        try await Task.sleep(nanoseconds: 200_000_000)
+        try await Task.sleep(nanoseconds: 100_000_000)
         
         // Act: Command + Backspace (keycode 51)
         let deleteEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "", charactersIgnoringModifiers: "", isARepeat: false, keyCode: 51)!
@@ -268,7 +265,7 @@ final class MenuBarControllerTests: XCTestCase {
         // but we can call it to ensure no crashes and coverage.
         // In a real app, this would show the settings window.
         // We use a private selector so we just call it.
-        controller.perform(Selector(("openSettings")))
+        controller.openSettings()
     }
 
     // Note: We avoid calling quitApp() as it would terminate the test runner.

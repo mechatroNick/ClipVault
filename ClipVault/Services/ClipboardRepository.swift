@@ -24,14 +24,14 @@ enum ClipboardRepositoryError: LocalizedError {
 final class ClipboardRepository {
     let dbManager: DatabaseManager
     private let encryptionService: EncryptionService
-    private let keychainManager: KeychainManager
+    private let keychainManager: KeychainProtocol
     private let contentFilter: SensitiveContentFilter
     private let vaultManager: VaultManager
     private let settings: SettingsManager
     
     init(dbManager: DatabaseManager = .shared,
          encryptionService: EncryptionService = EncryptionService(),
-         keychainManager: KeychainManager = KeychainManager(service: "com.clipvault.encryption"),
+         keychainManager: KeychainProtocol = KeychainManager(service: "com.clipvault.encryption"),
          contentFilter: SensitiveContentFilter = SensitiveContentFilter(),
          vaultManager: VaultManager = .shared,
          settings: SettingsManager = .shared) {
@@ -62,13 +62,15 @@ final class ClipboardRepository {
         let thresholdBytes = settings.largeFileThresholdMB * 1024 * 1024
         
         // Handle Large File Vaulting automatically
-        func processLargeData(_ data: Data?, extension ext: String) throws -> (Data?, String?, Bool) {
-            guard let data = data else { return (nil, nil, false) }
+        func vaultIfLarge(_ data: Data?, extension ext: String) throws -> Data? {
+            guard let data = data else { return nil }
             if data.count > thresholdBytes {
                 let path = try vaultManager.saveToVault(data: data, extension: ext, using: key)
-                return (nil, path, true)
+                entry.fileURL = path
+                entry.isVaultStored = true
+                return nil
             }
-            return (data, nil, false)
+            return data
         }
         
         // Extract FTS preview before encryption or vaulting
@@ -85,27 +87,15 @@ final class ClipboardRepository {
             }
         }
         
-        if entry.contentType == "image", let data = entry.imageData {
-            let (_, path, vaulted) = try processLargeData(data, extension: "tiff")
-            if vaulted {
-                entry.imageData = nil
-                entry.fileURL = path
-                entry.isVaultStored = true
-            }
-        } else if (entry.contentType == "rtf" || entry.contentType == "html"), let data = entry.richTextContent {
-            let (_, path, vaulted) = try processLargeData(data, extension: entry.contentType)
-            if vaulted {
-                entry.richTextContent = nil
-                entry.fileURL = path
-                entry.isVaultStored = true
-            }
-        } else if let data = entry.plainTextContent {
-            let (_, path, vaulted) = try processLargeData(data, extension: "txt")
-            if vaulted {
-                entry.plainTextContent = nil
-                entry.fileURL = path
-                entry.isVaultStored = true
-            }
+        switch entry.contentType {
+        case .image:
+            entry.imageData = try vaultIfLarge(entry.imageData, extension: "tiff")
+        case .rtf:
+            entry.richTextContent = try vaultIfLarge(entry.richTextContent, extension: "rtf")
+        case .html:
+            entry.richTextContent = try vaultIfLarge(entry.richTextContent, extension: "html")
+        default:
+            entry.plainTextContent = try vaultIfLarge(entry.plainTextContent, extension: "txt")
         }
 
         func encryptData(_ data: Data?) throws -> Data? {
@@ -138,8 +128,8 @@ final class ClipboardRepository {
         if entry.isVaultStored, let path = entry.fileURL {
             let data = try VaultManager.shared.loadFromVault(at: path, using: key)
             switch entry.contentType {
-            case "image": decryptedEntry.imageData = data
-            case "rtf", "html": decryptedEntry.richTextContent = data
+            case .image: decryptedEntry.imageData = data
+            case .rtf, .html: decryptedEntry.richTextContent = data
             default: decryptedEntry.plainTextContent = data
             }
         } else {

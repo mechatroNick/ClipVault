@@ -8,12 +8,21 @@
 import Foundation
 import GRDB
 
+/// Represents the type of content captured from the clipboard.
+enum ClipboardContentType: String, Codable {
+    case text
+    case image
+    case file
+    case url
+    case html
+    case rtf
+    case markdown
+    case code
+    case other
+    case unknown
+}
+
 /// Represents a single clipboard history entry stored in the local GRDB database.
-///
-/// Each entry captures the content type, encrypted content blobs, and metadata
-/// necessary for full clipboard history search and restoration. Encrypted fields
-/// (plain text, rich text, image data, metadata) are stored as opaque `Data` blobs
-/// and decrypted at the service layer before presentation.
 struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord, Identifiable, Equatable {
 
     static func == (lhs: ClipboardEntry, rhs: ClipboardEntry) -> Bool {
@@ -34,9 +43,7 @@ struct ClipboardEntry: Codable, FetchableRecord, MutablePersistableRecord, Ident
     let timestamp: Date
 
     /// The type of clipboard content. Indexed, not `NULL`.
-    ///
-    /// Values: `"text"`, `"image"`, `"file"`, `"url"`, `"html"`, `"rtf"`, `"other"`.
-    let contentType: String
+    let contentType: ClipboardContentType
 
     /// Auto-incremented primary key. `nil` before first insert;
     /// populated by `didInsert(_:)` after a successful database write.

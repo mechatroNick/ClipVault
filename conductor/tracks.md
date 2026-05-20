@@ -9,6 +9,6 @@ This file tracks active tracks for the project. Archived tracks can be found in 
 
 ---
 
-- [ ] **Track: Maintenance & Release Prep: Code cleanup, deep security review, documentation, and public release preparation.**
+- [~] **Track: Maintenance & Release Prep: Code cleanup, deep security review, documentation, and public release preparation.**
 *Link: [./tracks/maintenance-release-prep_20260520/](./tracks/maintenance-release-prep_20260520/)*
 

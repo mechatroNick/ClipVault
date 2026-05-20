@@ -10,43 +10,43 @@ import AppKit
 /// Inspects the pasteboard to determine the best semantic content type string.
 struct ContentTypeDetector {
     
-    /// Returns one of: "file", "url", "image", "html", "rtf", "markdown", "code", "text", "unknown"
-    func detectType(from pasteboard: PasteboardProtocol) -> String {
+    /// Returns the semantic content type detected from the pasteboard.
+    func detectType(from pasteboard: PasteboardProtocol) -> ClipboardContentType {
         let types = pasteboard.types ?? []
         
         if types.contains(.fileURL) {
-            return "file"
+            return .file
         }
         
         if types.contains(.URL) {
-            return "url"
+            return .url
         }
         
         if types.contains(.png) || types.contains(.tiff) {
-            return "image"
+            return .image
         }
         
         if types.contains(.html) {
-            return "html"
+            return .html
         }
         
         if types.contains(.rtf) || types.contains(.rtfd) {
-            return "rtf"
+            return .rtf
         }
         
         if types.contains(.string) {
             if let text = pasteboard.string(forType: .string) {
                 if isMarkdown(text) {
-                    return "markdown"
+                    return .markdown
                 }
                 if isCode(text) {
-                    return "code"
+                    return .code
                 }
-                return "text"
+                return .text
             }
         }
         
-        return "unknown"
+        return .unknown
     }
     
     private func isMarkdown(_ text: String) -> Bool {

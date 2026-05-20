@@ -31,7 +31,7 @@ final class DatabaseManagerTests: XCTestCase {
     private func insertTextEntry(text: String, plainTextSearchContent: String? = nil) throws -> ClipboardEntry {
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "text",
+            contentType: .text,
             plainTextContent: text.data(using: .utf8),
             richTextContent: nil,
             imageData: nil,
@@ -51,7 +51,7 @@ final class DatabaseManagerTests: XCTestCase {
     func testInsertEntry() throws {
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "text",
+            contentType: .text,
             plainTextContent: "Hello".data(using: .utf8),
             richTextContent: nil,
             imageData: nil,
@@ -71,13 +71,13 @@ final class DatabaseManagerTests: XCTestCase {
         }
         let unwrapped = try XCTUnwrap(fetched, "Entry should be fetchable after insert")
         XCTAssertEqual(unwrapped.id, entry.id)
-        XCTAssertEqual(unwrapped.contentType, "text")
+        XCTAssertEqual(unwrapped.contentType, .text)
     }
 
     func testInsertEntryViaConvenienceMethod() throws {
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "text",
+            contentType: .text,
             plainTextContent: "Convenience".data(using: .utf8),
             richTextContent: nil,
             imageData: nil,
@@ -96,7 +96,7 @@ final class DatabaseManagerTests: XCTestCase {
         }
         let unwrapped = try XCTUnwrap(fetched, "Entry should be fetchable after convenience insert")
         XCTAssertEqual(unwrapped.id, entry.id)
-        XCTAssertEqual(unwrapped.contentType, "text")
+        XCTAssertEqual(unwrapped.contentType, .text)
     }
 
     func testFetchAllEntries() throws {
@@ -117,7 +117,7 @@ final class DatabaseManagerTests: XCTestCase {
         let t3 = Date(timeIntervalSinceNow: -100)
 
         var e1 = ClipboardEntry(
-            timestamp: t1, contentType: "text",
+            timestamp: t1, contentType: .text,
             plainTextContent: "A".data(using: .utf8),
             richTextContent: nil, imageData: nil,
             plainTextSearchContent: "A",
@@ -125,7 +125,7 @@ final class DatabaseManagerTests: XCTestCase {
             sourceApplication: nil, metadata: nil
         )
         var e2 = ClipboardEntry(
-            timestamp: t2, contentType: "text",
+            timestamp: t2, contentType: .text,
             plainTextContent: "B".data(using: .utf8),
             richTextContent: nil, imageData: nil,
             plainTextSearchContent: "B",
@@ -133,7 +133,7 @@ final class DatabaseManagerTests: XCTestCase {
             sourceApplication: nil, metadata: nil
         )
         var e3 = ClipboardEntry(
-            timestamp: t3, contentType: "text",
+            timestamp: t3, contentType: .text,
             plainTextContent: "C".data(using: .utf8),
             richTextContent: nil, imageData: nil,
             plainTextSearchContent: "C",
@@ -171,7 +171,7 @@ final class DatabaseManagerTests: XCTestCase {
         try dbManager.dbQueue.write { db in
             try db.execute(
                 sql: "UPDATE clipboardEntry SET contentType = ? WHERE id = ?",
-                arguments: ["image", entry.id]
+                arguments: [ClipboardContentType.image.rawValue, entry.id]
             )
         }
 
@@ -179,7 +179,7 @@ final class DatabaseManagerTests: XCTestCase {
             try ClipboardEntry.filter(Column("id") == entry.id).fetchOne(db)
         }
         let unwrapped = try XCTUnwrap(fetched)
-        XCTAssertEqual(unwrapped.contentType, "image", "contentType should reflect the update")
+        XCTAssertEqual(unwrapped.contentType, .image, "contentType should reflect the update")
     }
 
     func testDeleteEntry() throws {
@@ -216,7 +216,7 @@ final class DatabaseManagerTests: XCTestCase {
     func testInsertEntryWithAllOptionalsNil() throws {
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "file",
+            contentType: .file,
             plainTextContent: nil,
             richTextContent: nil,
             imageData: nil,
@@ -233,7 +233,7 @@ final class DatabaseManagerTests: XCTestCase {
             try ClipboardEntry.filter(Column("id") == entry.id).fetchOne(db)
         }
         let unwrapped = try XCTUnwrap(fetched)
-        XCTAssertEqual(unwrapped.contentType, "file")
+        XCTAssertEqual(unwrapped.contentType, .file)
         XCTAssertNil(unwrapped.plainTextContent)
         XCTAssertNil(unwrapped.richTextContent)
         XCTAssertNil(unwrapped.imageData)
@@ -255,7 +255,7 @@ final class DatabaseManagerTests: XCTestCase {
 
         var entry = ClipboardEntry(
             timestamp: now,
-            contentType: "html",
+            contentType: .html,
             plainTextContent: plainData,
             richTextContent: richData,
             imageData: imageBytes,
@@ -273,7 +273,7 @@ final class DatabaseManagerTests: XCTestCase {
         }
         let unwrapped = try XCTUnwrap(fetched)
 
-        XCTAssertEqual(unwrapped.contentType, "html")
+        XCTAssertEqual(unwrapped.contentType, .html)
         XCTAssertEqual(unwrapped.plainTextContent, plainData)
         XCTAssertEqual(unwrapped.richTextContent, richData)
         XCTAssertEqual(unwrapped.imageData, imageBytes)
@@ -292,7 +292,7 @@ final class DatabaseManagerTests: XCTestCase {
         let searchText = "Decrypted searchable plaintext"
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "text",
+            contentType: .text,
             plainTextContent: "EncryptedBlob".data(using: .utf8),
             richTextContent: nil,
             imageData: nil,
@@ -314,7 +314,7 @@ final class DatabaseManagerTests: XCTestCase {
     func testPlainTextSearchContentNilRoundtrip() throws {
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "text",
+            contentType: .text,
             plainTextContent: "EncryptedBlob".data(using: .utf8),
             richTextContent: nil,
             imageData: nil,
@@ -435,7 +435,7 @@ final class DatabaseManagerTests: XCTestCase {
 
         var entry = ClipboardEntry(
             timestamp: Date(),
-            contentType: "text",
+            contentType: .text,
             plainTextContent: largeData,
             richTextContent: nil,
             imageData: nil,

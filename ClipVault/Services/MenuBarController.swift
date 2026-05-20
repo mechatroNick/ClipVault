@@ -86,6 +86,10 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         }
     }
     
+    private var animationDuration: TimeInterval {
+        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil ? 0.01 : 0.2
+    }
+    
     private func openPanel() {
         guard let panel = panel else { return }
         positionPanel()
@@ -99,7 +103,7 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)
         
         NSAnimationContext.runAnimationGroup { context in
-            context.duration = 0.2
+            context.duration = animationDuration
             context.timingFunction = CAMediaTimingFunction(name: .easeOut)
             panel.animator().setFrame(finalFrame, display: true)
             panel.animator().alphaValue = 1
@@ -201,7 +205,7 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         let endFrame = startFrame.offsetBy(dx: 0, dy: 20)
         
         NSAnimationContext.runAnimationGroup({ context in
-            context.duration = 0.15
+            context.duration = animationDuration * 0.75
             context.timingFunction = CAMediaTimingFunction(name: .easeIn)
             panel.animator().setFrame(endFrame, display: true)
             panel.animator().alphaValue = 0
@@ -272,14 +276,14 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         menu.addItem(NSMenuItem.separator())
         menu.addItem(NSMenuItem(title: "Quit ClipVault", action: #selector(quitApp), keyEquivalent: "q"))
         
-        statusItem?.popUpMenu(menu)
+        menu.popUp(positioning: nil, at: NSPoint(x: 0, y: (statusItem?.button?.frame.height ?? 0) + 5), in: statusItem?.button)
     }
     
-    @objc private func openSettings() {
+    @objc func openSettings() {
         NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
     }
     
-    @objc private func quitApp() {
+    @objc func quitApp() {
         // COVERAGE: NSApplication.terminate terminates the test runner process.
         NSApplication.shared.terminate(nil)
     }

@@ -38,7 +38,8 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
         }
 
         let repository = ClipboardRepository()
-        let vm = ClipboardViewModel(repository: repository)
+        let pasteService = PasteService()
+        let vm = ClipboardViewModel(repository: repository, pasteService: pasteService)
         self.viewModel = vm
         
         let monitor = PasteboardMonitor()

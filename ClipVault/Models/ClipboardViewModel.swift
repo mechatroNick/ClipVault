@@ -12,6 +12,7 @@ import Combine
 @MainActor
 final class ClipboardViewModel {
     let repository: ClipboardRepository
+    private let pasteService: PasteService
     
     var entries: [ClipboardEntry] = []
     var searchQuery: String = "" {
@@ -28,8 +29,9 @@ final class ClipboardViewModel {
     private var searchCancellable: AnyCancellable?
     private var observationTask: Task<Void, Never>?
 
-    init(repository: ClipboardRepository = ClipboardRepository()) {
+    init(repository: ClipboardRepository = ClipboardRepository(), pasteService: PasteService = PasteService()) {
         self.repository = repository
+        self.pasteService = pasteService
         setupObservation()
         setupSearchDebounce()
     }
@@ -85,7 +87,6 @@ final class ClipboardViewModel {
         Task {
             do {
                 let decrypted = try repository.decryptContent(for: entry)
-                let pasteService = PasteService()
                 try await pasteService.preparePasteboard(for: decrypted)
             } catch {
                 print("Failed to copy entry: \(error)")

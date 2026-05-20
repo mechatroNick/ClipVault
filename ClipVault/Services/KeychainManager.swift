@@ -16,7 +16,14 @@ enum KeychainError: LocalizedError {
     }
 }
 
-final class KeychainManager {
+protocol KeychainProtocol {
+    func generateAndStoreKey() throws -> SymmetricKey
+    func storeKey(_ key: SymmetricKey) throws
+    func retrieveKey() throws -> SymmetricKey?
+    func deleteKey() throws
+}
+
+final class KeychainManager: KeychainProtocol {
     private let service: String
     private let account = "encryption-key"
     
