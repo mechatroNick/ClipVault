@@ -52,14 +52,14 @@
 
 ## Phase 4: Release Asset Finalization
 
-- [ ] Task: Visual Assets Finalization
-    - [ ] Export final App Icon from SF Symbols template.
-    - [ ] Generate 5+ App Store screenshots via Preview tests.
-    - [ ] Commit: `ui(build): Finalize App Icon and Store screenshots`
+- [x] Task: Visual Assets Finalization
+    - [x] Export final App Icon from SF Symbols template.
+    - [x] Generate 5+ App Store screenshots via Preview tests.
+    - [x] Commit: `ui(build): Finalize App Icon and Store screenshots`
 
-- [ ] Task: Repository Standards and Notarization
-    - [ ] Finalize README.md, MIT LICENSE, and CONTRIBUTING.md.
-    - [ ] Run a test build through Apple Notarization tool.
-    - [ ] Commit: `chore(build): Finalize repo files and verify notarization`
+- [x] Task: Repository Standards and Notarization
+    - [x] Finalize README.md, MIT LICENSE, and CONTRIBUTING.md.
+    - [x] Run a test build through Apple Notarization tool.
+    - [x] Commit: `chore(build): Finalize repo files and verify notarization`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
