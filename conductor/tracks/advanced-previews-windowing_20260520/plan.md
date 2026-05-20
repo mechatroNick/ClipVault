@@ -2,11 +2,11 @@
 
 ## Phase 1: Window Management & Infrastructure
 
-- [ ] Task: Implement Child Window Relationship for Settings
-    - [ ] Update `MenuBarController` to set `settingsWindow` as a child of the main `panel`.
-    - [ ] Handle Z-order logic to ensure Settings remains on top.
-    - [ ] Write integration test verifying window hierarchy and visibility.
-    - [ ] Commit: `feat(ui): Enforce Settings window as child of history panel`
+- [x] Task: Implement Child Window Relationship for Settings
+    - [x] Update `MenuBarController` to set `settingsWindow` as a child of the main `panel`.
+    - [x] Handle Z-order logic to ensure Settings remains on top.
+    - [x] Write integration test verifying window hierarchy and visibility.
+    - [x] Commit: `feat(ui): Enforce Settings window as child of history panel`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 

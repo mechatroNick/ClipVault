@@ -10,6 +10,7 @@ import SwiftUI
 final class MenuBarController: NSObject, NSWindowDelegate {
     private var statusItem: NSStatusItem?
     private var panel: HistoryPanel?
+    private var settingsWindow: NSWindow?
     private let viewModel: ClipboardViewModel
     private let pasteService: PasteService
     private let settings: SettingsManager
@@ -18,6 +19,15 @@ final class MenuBarController: NSObject, NSWindowDelegate {
     
     var isPanelVisible: Bool {
         panel?.isVisible ?? false
+    }
+    
+    var isSettingsVisible: Bool {
+        settingsWindow?.isVisible ?? false
+    }
+    
+    var isSettingsChildOfPanel: Bool {
+        guard let panel = panel, let settingsWindow = settingsWindow else { return false }
+        return panel.childWindows?.contains(settingsWindow) ?? false
     }
     
     init(viewModel: ClipboardViewModel, 
@@ -276,20 +286,56 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         settings.panelHeight = window.frame.height
     }
     
-    func showContextMenu() {
+    @objc func showContextMenu() {
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ","))
+        
+        let settingsItem = NSMenuItem(title: "Settings...", action: #selector(openSettings), keyEquivalent: ",")
+        settingsItem.target = self
+        menu.addItem(settingsItem)
+        
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit ClipVault", action: #selector(quitApp), keyEquivalent: "q"))
+        
+        let quitItem = NSMenuItem(title: "Quit ClipVault", action: #selector(quitApp), keyEquivalent: "q")
+        quitItem.target = self
+        menu.addItem(quitItem)
         
         menu.popUp(positioning: nil, at: NSPoint(x: 0, y: (statusItem?.button?.frame.height ?? 0) + 5), in: statusItem?.button)
     }
     
     @objc func openSettings() {
-        NSApp.sendAction(Selector(("showSettingsWindow:")), to: nil, from: nil)
+        print("DEBUG: openSettings triggered manually")
+        
+        if settingsWindow == nil {
+            let view = SettingsView()
+            let hostingView = NSHostingView(rootView: view)
+            
+            let window = NSWindow(
+                contentRect: NSRect(x: 0, y: 0, width: 600, height: 500),
+                styleMask: [.titled, .closable, .miniaturizable],
+                backing: .buffered,
+                defer: false
+            )
+            window.center()
+            window.title = "ClipVault Settings"
+            window.contentView = hostingView
+            window.isReleasedWhenClosed = false
+            self.settingsWindow = window
+        }
+        
+        if let panel = panel, let settingsWindow = settingsWindow {
+            if panel.childWindows?.contains(settingsWindow) != true {
+                panel.addChildWindow(settingsWindow, ordered: .above)
+            }
+        }
+        
+        // Ensure app is frontmost before showing settings
+        NSApp.activate(ignoringOtherApps: true)
+        settingsWindow?.makeKeyAndOrderFront(nil)
+        settingsWindow?.orderFrontRegardless()
     }
     
     @objc func quitApp() {
+        print("DEBUG: quitApp triggered")
         // COVERAGE: NSApplication.terminate terminates the test runner process.
         NSApplication.shared.terminate(nil)
     }

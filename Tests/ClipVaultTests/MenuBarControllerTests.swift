@@ -260,13 +260,35 @@ final class MenuBarControllerTests: XCTestCase {
         controller.showContextMenu()
     }
 
-    func testOpenSettings() {
-        // We can't easily verify the action was sent to NSApp without mocking NSApp
-        // but we can call it to ensure no crashes and coverage.
-        // In a real app, this would show the settings window.
-        // We use a private selector so we just call it.
+    func testOpenSettings_CreatesAndShowsWindow() async throws {
+        // Assert initial state
+        XCTAssertFalse(controller.isSettingsVisible)
+        
+        // Act: Open
         controller.openSettings()
+        
+        // Assert: Window should exist and be visible
+        XCTAssertTrue(controller.isSettingsVisible)
     }
 
-    // Note: We avoid calling quitApp() as it would terminate the test runner.
+    func testOpenSettings_SetsAsChildWindow() async throws {
+        // Arrange
+        controller.togglePanel() // Ensure panel is created and visible
+        try await Task.sleep(nanoseconds: 100_000_000)
+        
+        // Act
+        controller.openSettings()
+        
+        // Assert
+        XCTAssertTrue(controller.isSettingsChildOfPanel, "Settings window should be a child of the history panel")
+    }
+
+    func testQuitApp_IsReachable() {
+        // We can't call terminate, but we can verify the method exists and is @objc
+        XCTAssertTrue(controller.responds(to: #selector(MenuBarController.quitApp)))
+    }
+
+    func testShowContextMenu_IsReachable() {
+        XCTAssertTrue(controller.responds(to: #selector(MenuBarController.showContextMenu)))
+    }
 }
