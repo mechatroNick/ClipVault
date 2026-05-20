@@ -133,7 +133,7 @@ final class ClipboardCaptureServiceTests: XCTestCase {
         let fetchedEntries = try repository.fetchAll()
         let capturedRaw = try XCTUnwrap(fetchedEntries.first)
         let captured = try repository.decryptContent(for: capturedRaw)
-        XCTAssertEqual(captured.contentType, .image)
+        XCTAssertEqual(captured.contentType, .croppedImage)
         XCTAssertNotNil(captured.imageData)
         
         await service.stop()

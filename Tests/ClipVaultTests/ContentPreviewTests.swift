@@ -15,8 +15,13 @@ final class ContentPreviewTests: XCTestCase {
         let fileEntry = ClipboardEntry(timestamp: Date(), contentType: .file, fileURL: "/tmp/test.txt")
         let urlEntry = ClipboardEntry(timestamp: Date(), contentType: .url, plainTextContent: Data("https://google.com".utf8))
         
-        // These are SwiftUI views, testing their exact type is tricky, 
-        // but we can verify the router doesn't crash and returns something.
-        // In a real TDD we might check specific properties if we used a protocol.
+        let entries = [textEntry, imageEntry, fileEntry, urlEntry]
+        
+        for entry in entries {
+            let view = ContentPreviewRouter(entry: entry)
+            let hosting = NSHostingView(rootView: view)
+            hosting.frame = NSRect(x: 0, y: 0, width: 100, height: 100)
+            hosting.layout()
+        }
     }
 }

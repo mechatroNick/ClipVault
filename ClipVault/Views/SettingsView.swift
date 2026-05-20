@@ -11,20 +11,29 @@ struct SettingsView: View {
     var body: some View {
         VStack(spacing: 0) {
             TabView {
-                GeneralSettingsView(settings: settings)
-                    .tabItem {
-                        Label("General", systemImage: "gearshape")
-                    }
+                ScrollView {
+                    GeneralSettingsView(settings: settings)
+                        .padding()
+                }
+                .tabItem {
+                    Label("General", systemImage: "gearshape")
+                }
                 
-                SecuritySettingsView(settings: settings)
-                    .tabItem {
-                        Label("Security", systemImage: "lock.shield")
-                    }
+                ScrollView {
+                    SecuritySettingsView(settings: settings)
+                        .padding()
+                }
+                .tabItem {
+                    Label("Security", systemImage: "lock.shield")
+                }
                 
-                AboutSettingsView()
-                    .tabItem {
-                        Label("About", systemImage: "info.circle")
-                    }
+                ScrollView {
+                    AboutSettingsView()
+                        .padding()
+                }
+                .tabItem {
+                    Label("About", systemImage: "info.circle")
+                }
             }
             
             Divider()
@@ -32,15 +41,15 @@ struct SettingsView: View {
             HStack {
                 Spacer()
                 Button("Save & Close") {
-                    // Settings are already saved via didSet in SettingsManager
                     NSApp.keyWindow?.close()
                 }
                 .keyboardShortcut(.defaultAction)
+                .controlSize(.large)
                 .padding()
             }
             .background(Color(NSColor.windowBackgroundColor))
         }
-        .frame(width: 500, height: 400)
+        .frame(minWidth: 600, minHeight: 500)
     }
 }
 
@@ -48,8 +57,11 @@ struct GeneralSettingsView: View {
     @ObservedObject var settings: SettingsManager
     
     var body: some View {
-        Form {
-            Section(header: Text("History")) {
+        VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("History")
+                    .font(.headline)
+                
                 Picker("Retention Period", selection: $settings.retentionDays) {
                     Text("1 Day").tag(1)
                     Text("3 Days").tag(3)
@@ -67,11 +79,20 @@ struct GeneralSettingsView: View {
                 }
             }
             
-            Section(header: Text("Startup")) {
+            Divider()
+            
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Startup")
+                    .font(.headline)
                 Toggle("Launch at Login", isOn: $settings.launchAtLogin)
             }
             
-            Section(header: Text("Vault & Storage")) {
+            Divider()
+            
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Vault & Storage")
+                    .font(.headline)
+                
                 HStack {
                     Text("Vault Location")
                     Spacer()
@@ -85,24 +106,27 @@ struct GeneralSettingsView: View {
                     }
                 }
                 
-                HStack {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Large File Threshold")
-                    Slider(value: Binding(get: { Double(settings.largeFileThresholdMB) }, set: { settings.largeFileThresholdMB = Int($0) }), in: 1...100, step: 1)
-                    Text("\(settings.largeFileThresholdMB) MB")
-                        .frame(width: 50)
+                    HStack {
+                        Slider(value: Binding(get: { Double(settings.largeFileThresholdMB) }, set: { settings.largeFileThresholdMB = Int($0) }), in: 1...100, step: 1)
+                        Text("\(settings.largeFileThresholdMB) MB")
+                            .frame(width: 50)
+                    }
                 }
 
-                HStack {
+                VStack(alignment: .leading, spacing: 4) {
                     Text("Storage Limit")
-                    Slider(value: Binding(get: { Double(settings.vaultStorageLimitGB) }, set: { settings.vaultStorageLimitGB = Int($0) }), in: 1...100, step: 1)
-                    Text("\(settings.vaultStorageLimitGB) GB")
-                        .frame(width: 50)
+                    HStack {
+                        Slider(value: Binding(get: { Double(settings.vaultStorageLimitGB) }, set: { settings.vaultStorageLimitGB = Int($0) }), in: 1...100, step: 1)
+                        Text("\(settings.vaultStorageLimitGB) GB")
+                            .frame(width: 50)
+                    }
                 }
 
                 Toggle("Auto-trim oldest files when limit reached", isOn: $settings.isAutoTrimEnabled)
             }
         }
-        .padding()
     }
     
     private func changeVaultLocation() {
@@ -125,42 +149,57 @@ struct SecuritySettingsView: View {
     @State private var newPattern = ""
     
     var body: some View {
-        Form {
-            Section(header: Text("Encryption & Privacy")) {
-                HStack(spacing: 12) {
+        VStack(alignment: .leading, spacing: 24) {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Encryption & Privacy")
+                    .font(.headline)
+                
+                HStack(alignment: .top, spacing: 12) {
                     Image(systemName: "lock.shield")
-                        .font(.title)
+                        .font(.largeTitle)
                         .foregroundColor(.accentColor)
-                    VStack(alignment: .leading) {
+                        .frame(width: 44)
+                    
+                    VStack(alignment: .leading, spacing: 4) {
                         Text("AES-256-GCM Active")
                             .font(.headline)
                         Text("All clipboard content is encrypted. Your keys are in the macOS Keychain.")
                             .font(.caption)
                             .foregroundColor(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
-                .padding(.vertical, 4)
+                .padding(.vertical, 8)
 
                 Picker("Sensitive Auto-Purge", selection: $settings.sensitivePurgeTimeHours) {
-                    Text("30 Minutes").tag(0) // Logic for < 1h needed?
+                    Text("30 Minutes").tag(0)
                     Text("1 Hour").tag(1)
                     Text("4 Hours").tag(4)
                     Text("24 Hours").tag(24)
                 }
+                
                 Text("Sensitive content (passwords, cards) is automatically detected and purged.")
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
             }
             
-            Section(header: Text("Redaction Rules (FTS Index)")) {
+            Divider()
+            
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Redaction Rules (FTS Index)")
+                    .font(.headline)
+                    
                 Text("Built-in rules for Credit Cards, SSNs, and Secrets are always active.")
                     .font(.caption)
                     .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
                 
-                List {
+                VStack(spacing: 8) {
                     ForEach(Array(settings.customPatterns.keys).sorted(), id: \.self) { label in
                         HStack {
                             Text(label)
+                                .fontWeight(.medium)
                             Spacer()
                             Text(settings.customPatterns[label] ?? "")
                                 .font(.system(.caption, design: .monospaced))
@@ -171,15 +210,20 @@ struct SecuritySettingsView: View {
                             }
                             .buttonStyle(.plain)
                         }
+                        .padding(8)
+                        .background(Color.secondary.opacity(0.05))
+                        .cornerRadius(6)
                     }
                 }
-                .frame(height: 100)
                 
                 HStack {
                     TextField("Label", text: $newLabel)
+                        .textFieldStyle(.roundedBorder)
                     TextField("Regex Pattern", text: $newPattern)
+                        .textFieldStyle(.roundedBorder)
                     Button(action: addPattern) {
                         Image(systemName: "plus.circle.fill")
+                            .font(.title2)
                             .foregroundColor(.green)
                     }
                     .buttonStyle(.plain)
@@ -187,7 +231,6 @@ struct SecuritySettingsView: View {
                 }
             }
         }
-        .padding()
     }
     
     private func addPattern() {

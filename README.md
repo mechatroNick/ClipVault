@@ -37,6 +37,38 @@ ClipVault is a highly secure, offline-first macOS clipboard manager. It lives in
 
 ClipVault guarantees privacy through an offline-only architecture. Large blobs (like images) are "vaulted" as encrypted files to keep the main SQLite database fast, while the `FTS5` virtual table ensures instant, as-you-type search performance.
 
+## Security Model
+
+```text
++-----------------------------------------------------------+
+|                   LAYERED SECURITY MODEL                  |
++-----------------------------------------------------------+
+| [ USER SPACE ]                                            |
+|       |                                                   |
+|       v  (1) APP SANDBOX                                  |
+| +-------------------------------------------------------+ |
+| | NO NETWORK ACCESS | NO FILESYSTEM ACCESS (Except App) | |
+| +-------------------------------------------------------+ |
+|       |                                                   |
+|       v  (2) ON-DEMAND DECRYPTION                         |
+| +-------------------------------------------------------+ |
+| | Plaintext exists ONLY in RAM while viewing              | |
+| +-------------------------------------------------------+ |
+|       |                                                   |
+|       v  (3) ENCRYPTION AT REST                           |
+| +-------------------------------------------------------+ |
+| | AES-256-GCM | Master Key in macOS Keychain            | |
+| +-------------------------------------------------------+ |
+|       |                                                   |
+|       v  (4) OFFLINE STORAGE                              |
+| +-------------------------------------------------------+ |
+| | Local SQLite DB | Local File Vault                    | |
+| +-------------------------------------------------------+ |
++-----------------------------------------------------------+
+```
+
+ClipVault is built on the Principle of Least Privilege. It requires zero network permissions and uses the macOS Keychain for hardware-backed key security.
+
 ## Features
 - **Zero-Trust Architecture**: Operates entirely offline within the macOS App Sandbox.
 - **Data at Rest Protection**: All clipboard content (text, images, files, rich text) is encrypted on disk.

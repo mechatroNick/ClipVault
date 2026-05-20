@@ -16,6 +16,7 @@ enum ClipboardContentType: String, Codable {
     case croppedImage
     case file
     case url
+    case pdf
     case html
     case rtf
     case markdown

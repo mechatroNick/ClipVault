@@ -17,8 +17,11 @@ struct ClipVaultApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
+        // We manage the status item and windows manually via AppDelegate and MenuBarController.
+        // We use an empty Settings scene here just to satisfy the SwiftUI App requirements
+        // without creating any additional UI or status bar icons.
         Settings {
-            SettingsView()
+            EmptyView()
         }
     }
 }
