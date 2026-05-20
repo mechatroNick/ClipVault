@@ -35,7 +35,7 @@
     - [x] Write unit tests for valid and invalid Markdown/HTML scenarios.
     - [x] Commit: `fix(ui): Implement strict markdown validation and graceful fallback`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 3' (Protocol in workflow.md)
 
 ## Phase 4: UI Polish & Settings
 
