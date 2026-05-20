@@ -23,7 +23,7 @@ struct ContentTypeDetector {
         }
         
         if types.contains(.png) || types.contains(.tiff) {
-            return .image
+            return .croppedImage
         }
         
         if types.contains(.html) {

@@ -34,14 +34,14 @@ final class ContentTypeDetectorTests: XCTestCase {
         XCTAssertEqual(detector.detectType(from: mock), .url)
     }
     
-    func testDetect_Image_ReturnsImage() {
+    func testDetect_Image_ReturnsCroppedImage() {
         let mock1 = MockPasteboard()
         mock1.types = [.png]
-        XCTAssertEqual(detector.detectType(from: mock1), .image)
+        XCTAssertEqual(detector.detectType(from: mock1), .croppedImage)
         
         let mock2 = MockPasteboard()
         mock2.types = [.tiff]
-        XCTAssertEqual(detector.detectType(from: mock2), .image)
+        XCTAssertEqual(detector.detectType(from: mock2), .croppedImage)
     }
     
     func testDetect_HTML_ReturnsHtml() {

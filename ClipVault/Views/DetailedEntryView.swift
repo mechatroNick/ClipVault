@@ -46,7 +46,7 @@ struct DetailedEntryView: View {
     @ViewBuilder
     private func contentView(for decEntry: ClipboardEntry) -> some View {
         switch decEntry.contentType {
-        case .image:
+        case .image, .croppedImage:
             if let imageData = decEntry.imageData, let nsImage = NSImage(data: imageData) {
                 Image(nsImage: nsImage)
                     .resizable()

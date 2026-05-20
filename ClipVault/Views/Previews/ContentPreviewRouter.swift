@@ -13,7 +13,7 @@ struct ContentPreviewRouter: View {
         let currentEntry = decryptedEntry ?? entry
         
         switch currentEntry.contentType {
-        case .image:
+        case .image, .croppedImage:
             if let imageData = currentEntry.imageData {
                 ImagePreview(imageData: imageData, id: currentEntry.id)
             } else {

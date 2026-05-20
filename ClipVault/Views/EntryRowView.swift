@@ -63,6 +63,16 @@ struct EntryRowView: View {
                             .cornerRadius(4)
                     }
                     
+                    if entry.contentType == .croppedImage {
+                        Text("Cropped")
+                            .font(.system(size: 9, weight: .bold))
+                            .padding(.horizontal, 4)
+                            .padding(.vertical, 1)
+                            .background(Color.orange.opacity(isSelected ? 0.3 : 0.2))
+                            .foregroundColor(isSelected ? .white : .orange)
+                            .cornerRadius(4)
+                    }
+                    
                     Spacer()
                     
                     Text(entry.timestamp, style: .time)
@@ -73,6 +83,7 @@ struct EntryRowView: View {
                 ContentPreviewRouter(entry: entry, decryptedEntry: decryptedEntry)
                     .foregroundColor(isSelected ? .white : .primary)
                     .lineLimit(3)
+                    .fixedSize(horizontal: false, vertical: true)
                     .padding(.bottom, 2)
                 
                 if entry.contentType == .file && !fileExists {
@@ -163,7 +174,7 @@ struct EntryRowView: View {
     private var iconName: String {
         switch entry.contentType {
         case .text: return "text.alignleft"
-        case .image: return "photo"
+        case .image, .croppedImage: return "photo"
         case .file: return "doc"
         case .url: return "link"
         case .html: return "chevron.left.forwardslash.chevron.right"

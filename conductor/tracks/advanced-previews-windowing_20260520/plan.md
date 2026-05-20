@@ -8,16 +8,16 @@
     - [x] Write integration test verifying window hierarchy and visibility.
     - [x] Commit: `feat(ui): Enforce Settings window as child of history panel`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Advanced Content Detection & Labeling
 
-- [ ] Task: Enhanced Image & Cropped Data Detection
-    - [ ] Update `ClipboardContentType` enum to include a specific case for `.croppedImage` if necessary, or refine `.image` logic.
-    - [ ] Update `ContentTypeDetector` to distinguish raw image data from file URLs.
-    - [ ] Update `EntryRowView` to display a "Cropped" badge for raw image data.
-    - [ ] Write unit tests for various image formats (PNG, JPG, TIFF) and detection scenarios.
-    - [ ] Commit: `feat(clipboard): Improve cropped image detection and labeling`
+- [x] Task: Enhanced Image & Cropped Data Detection
+    - [x] Update `ClipboardContentType` enum to include a specific case for `.croppedImage` if necessary, or refine `.image` logic.
+    - [x] Update `ContentTypeDetector` to distinguish raw image data from file URLs.
+    - [x] Update `EntryRowView` to display a "Cropped" badge for raw image data.
+    - [x] Write unit tests for various image formats (PNG, JPG, TIFF) and detection scenarios.
+    - [x] Commit: `feat(clipboard): Improve cropped image detection and labeling`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 

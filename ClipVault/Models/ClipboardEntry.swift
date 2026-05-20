@@ -13,6 +13,7 @@ import CryptoKit
 enum ClipboardContentType: String, Codable {
     case text
     case image
+    case croppedImage
     case file
     case url
     case html
