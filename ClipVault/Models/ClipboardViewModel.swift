@@ -147,6 +147,7 @@ final class ClipboardViewModel {
                             }
                         }
                     }
+                    self.refreshActiveHash()
                 }
             }
         }

@@ -29,6 +29,7 @@ extension NSPasteboard: PasteboardProtocol {}
 final class PasteboardMonitor: @unchecked Sendable {
     private let pasteboard: PasteboardProtocol
     private let pollInterval: TimeInterval
+    private let lock = NSLock()
     
     private var timer: Timer?
     private var lastChangeCount: Int
@@ -74,18 +75,24 @@ final class PasteboardMonitor: @unchecked Sendable {
     
     /// Tells the monitor to ignore the immediate next change count increment.
     func ignoreNextCopy() {
-        DispatchQueue.main.async { [weak self] in
-            self?.ignoreNextChange = true
-        }
+        lock.lock()
+        ignoreNextChange = true
+        lock.unlock()
     }
     
     private func checkPasteboard() {
         let currentCount = pasteboard.changeCount
         if currentCount != lastChangeCount {
             lastChangeCount = currentCount
+            
+            lock.lock()
+            let shouldIgnore = ignoreNextChange
             if ignoreNextChange {
                 ignoreNextChange = false
-            } else {
+            }
+            lock.unlock()
+            
+            if !shouldIgnore {
                 continuation?.yield(currentCount)
             }
         }

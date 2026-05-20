@@ -18,14 +18,14 @@ struct HistoryPanelView: View {
     var body: some View {
         VStack(spacing: 0) {
             // Header bar with gear (left) and close/quit (right)
-            HStack(spacing: 12) {
+            HStack(spacing: 16) {
                 Button(action: {
                     onOpenSettings?()
                 }) {
                     Image(systemName: "gearshape.fill")
-                        .font(.system(size: 16))
-                        .padding(8)
-                        .background(Color.secondary.opacity(0.1))
+                        .font(.system(size: 18))
+                        .padding(10)
+                        .background(Color.secondary.opacity(0.12))
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
@@ -37,9 +37,9 @@ struct HistoryPanelView: View {
                     onClose?()
                 }) {
                     Image(systemName: "xmark")
-                        .font(.system(size: 14, weight: .bold))
-                        .padding(8)
-                        .background(Color.secondary.opacity(0.1))
+                        .font(.system(size: 16, weight: .bold))
+                        .padding(10)
+                        .background(Color.secondary.opacity(0.12))
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
@@ -49,22 +49,22 @@ struct HistoryPanelView: View {
                     onQuit?()
                 }) {
                     Image(systemName: "power")
-                        .font(.system(size: 14, weight: .bold))
+                        .font(.system(size: 16, weight: .bold))
                         .foregroundColor(.red)
-                        .padding(8)
-                        .background(Color.red.opacity(0.1))
+                        .padding(10)
+                        .background(Color.red.opacity(0.12))
                         .clipShape(Circle())
                 }
                 .buttonStyle(.plain)
                 .accessibilityLabel("Quit")
             }
-            .padding(.horizontal, 16)
-            .padding(.top, 16)
-            .padding(.bottom, 12)
+            .padding(.horizontal, 20)
+            .padding(.top, 20)
+            .padding(.bottom, 16)
             
             SearchBarView(text: $viewModel.searchQuery)
-                .padding(.horizontal)
-                .padding(.bottom, 8)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 12)
             
             Divider()
             
