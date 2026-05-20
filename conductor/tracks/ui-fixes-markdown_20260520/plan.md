@@ -8,7 +8,7 @@
     - [x] Write unit tests verifying creation and non-destructive behavior.
     - [x] Commit: `fix(storage): Safely auto-create Vault directory on launch`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1' (Protocol in workflow.md)
 
 ## Phase 2: Content Previews & Detailed View
 
@@ -52,6 +52,10 @@
 - [ ] Task: Display Build Time in About View
     - [ ] Add a build phase script or macro to inject the build timestamp into Info.plist or a generated Swift file.
     - [ ] Update `AboutSettingsView` to display this timestamp.
+    - [ ] Commit: `feat(ui): Display build time in About view`
+
+- [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
+imestamp.
     - [ ] Commit: `feat(ui): Display build time in About view`
 
 - [ ] Task: Conductor - User Manual Verification 'Phase 4' (Protocol in workflow.md)
