@@ -24,17 +24,17 @@
 
 ## Phase 2: Deep Security Review
 
-- [ ] Task: Execute Final Manual Security Audit
-    - [ ] Review all storage and clipboard services against Conductor Checklist.
-    - [ ] Produce `SECURITY_REVIEW_FINAL.md`.
-    - [ ] Commit: `security(build): Complete final manual security audit`
+- [x] Task: Execute Final Manual Security Audit
+    - [x] Review all storage and clipboard services against Conductor Checklist.
+    - [x] Produce `SECURITY_REVIEW_FINAL.md`.
+    - [x] Commit: `security(build): Complete final manual security audit`
 
-- [ ] Task: Verify Distribution Security
-    - [ ] Verify Sandbox entitlements are minimal.
-    - [ ] Audit memory hygiene for sensitive content decryption.
-    - [ ] Commit: `security(build): Verify production entitlement and memory hygiene`
+- [x] Task: Verify Distribution Security
+    - [x] Verify Sandbox entitlements are minimal.
+    - [x] Audit memory hygiene for sensitive content decryption.
+    - [x] Commit: `security(build): Verify production entitlement and memory hygiene`
 
-- [ ] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2' (Protocol in workflow.md)
 
 ## Phase 3: Documentation Suite
 
