@@ -102,6 +102,11 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.3.5 (PDF Thumbnail Stability)
+- **PDF Search Thumbnails**: PDF entries in search results now correctly display thumbnails by ensuring on-demand decryption of PDF content.
+- **Improved Vaulting**: Corrected vaulting and decryption logic for PDF and Cropped Image types, ensuring data integrity for large files.
+- **PDF Icon**: Added a distinct icon for PDF entries in the history list.
+
 ### v1.3.4 (Shortcut Stability)
 - **Cmd+F Refocus**: Pressing `⌘F` while the history panel is open now reliably refocuses the search bar, even if it's already visible.
 - **Robust Cmd+W**: Improved `⌘W` logic to ensure it reliably closes the main history panel as well as all child windows (Settings, Details).

@@ -88,12 +88,14 @@ final class ClipboardRepository {
         }
         
         switch entry.contentType {
-        case .image:
+        case .image, .croppedImage:
             entry.imageData = try vaultIfLarge(entry.imageData, extension: "tiff")
         case .rtf:
             entry.richTextContent = try vaultIfLarge(entry.richTextContent, extension: "rtf")
         case .html:
             entry.richTextContent = try vaultIfLarge(entry.richTextContent, extension: "html")
+        case .pdf:
+            entry.richTextContent = try vaultIfLarge(entry.richTextContent, extension: "pdf")
         default:
             entry.plainTextContent = try vaultIfLarge(entry.plainTextContent, extension: "txt")
         }
@@ -128,8 +130,8 @@ final class ClipboardRepository {
         if entry.isVaultStored, let path = entry.fileURL {
             let data = try VaultManager.shared.loadFromVault(at: path, using: key)
             switch entry.contentType {
-            case .image: decryptedEntry.imageData = data
-            case .rtf, .html: decryptedEntry.richTextContent = data
+            case .image, .croppedImage: decryptedEntry.imageData = data
+            case .rtf, .html, .pdf: decryptedEntry.richTextContent = data
             default: decryptedEntry.plainTextContent = data
             }
         } else {

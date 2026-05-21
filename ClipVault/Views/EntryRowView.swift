@@ -163,7 +163,7 @@ struct EntryRowView: View {
         }
         .onAppear {
             validateFile()
-            if entry.contentType == .image || entry.contentType == .croppedImage {
+            if entry.contentType == .image || entry.contentType == .croppedImage || entry.contentType == .pdf {
                 Task {
                     decryptedEntry = try? repository.decryptContent(for: entry)
                 }
@@ -183,6 +183,7 @@ struct EntryRowView: View {
         case .text: return "text.alignleft"
         case .image, .croppedImage: return "photo"
         case .file: return "doc"
+        case .pdf: return "doc.text.fill"
         case .url: return "link"
         case .html: return "chevron.left.forwardslash.chevron.right"
         case .rtf: return "doc.richtext"
