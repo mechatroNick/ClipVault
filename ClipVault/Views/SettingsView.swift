@@ -264,7 +264,8 @@ struct AboutSettingsView: View {
             Text("ClipVault")
                 .font(.title)
             
-            Text("Version 1.3.5")
+            Text("Version 1.3.6")
+
 
                 .font(.subheadline)
                 .foregroundColor(.secondary)

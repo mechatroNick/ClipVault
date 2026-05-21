@@ -102,6 +102,10 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.3.6 (PDF UI Polish)
+- **Resolved Double Scroll Bars**: Fixed a UI issue where PDFs in the detailed view displayed redundant scroll bars by correctly managing nested scroll views.
+- **Improved PDF Layout**: PDFs now correctly utilize the full available window space in the detailed entry view.
+
 ### v1.3.5 (PDF Thumbnail Stability)
 - **PDF Search Thumbnails**: PDF entries in search results now correctly display thumbnails by ensuring on-demand decryption of PDF content.
 - **Improved Vaulting**: Corrected vaulting and decryption logic for PDF and Cropped Image types, ensuring data integrity for large files.

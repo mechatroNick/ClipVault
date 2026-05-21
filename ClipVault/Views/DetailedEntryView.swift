@@ -25,9 +25,14 @@ struct DetailedEntryView: View {
             Divider()
             
             if let decrypted = decryptedEntry {
-                ScrollView {
+                if entry.contentType == .pdf {
                     contentView(for: decrypted)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                } else {
+                    ScrollView {
+                        contentView(for: decrypted)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
                 }
             } else {
                 ProgressView("Decrypting...")
@@ -63,7 +68,6 @@ struct DetailedEntryView: View {
         case .pdf:
             if let data = decEntry.richTextContent {
                 PDFKitView(data: data)
-                    .frame(minHeight: 500)
             } else {
                 Text("PDF data missing")
             }
