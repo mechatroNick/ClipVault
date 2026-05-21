@@ -40,4 +40,4 @@
     - [x] Implement clipboard change rejection logic in `ClipboardMonitor`
     - [x] Run test suite, verify ≥95% coverage
     - [x] Run security review checklist
-- [ ] Task: Conductor - User Manual Verification 'Settings & Privacy Overhaul' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Settings & Privacy Overhaul' (Protocol in workflow.md)

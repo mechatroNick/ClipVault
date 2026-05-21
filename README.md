@@ -102,6 +102,11 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.5.0 (Settings & Privacy Overhaul)
+- **Customizable Global Hotkey**: The shortcut to open ClipVault (`⌘⇧V` by default) is now fully customizable. Click the shortcut in Settings → Appearance to record a new combination.
+- **Settings Window Overhaul**: Settings now features a dedicated **Appearance tab** alongside General, Security, and About. UI Zoom has moved to Appearance, keeping General focused on clipboard behavior.
+- **Privacy Ignore List**: A new user-configurable ignore list in Settings → Security silently blocks clipboard changes originating from nominated apps. Defaults to 1Password, Keychain Access, and Bitwarden — providing a second privacy layer alongside the existing Concealed Type filter.
+
 ### v1.4.3 (UI Refinements)
 - **Rounded UI Corners**: Enhanced the visual polish by applying fully rounded corners to the main history panel, resolving an edge case where macOS rendered sharp top corners near the menu bar.
 - **Timestamp Realignment**: Improved readability by moving the creation timestamp to the far right of the row, anchoring it next to the action buttons.
