@@ -35,6 +35,9 @@ struct HotkeyRecorderView: View {
                     )
             }
             .buttonStyle(.plain)
+            .accessibilityLabel(isRecording
+                ? "Recording shortcut. Press Escape to cancel."
+                : "Current shortcut: \(hotkey.displayString). Click to change.")
 
             if hotkey != .default {
                 Button(action: resetToDefault) {
@@ -61,7 +64,7 @@ struct HotkeyRecorderView: View {
 
     private func startRecording() {
         isRecording = true
-        localMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { [self] event in
+        localMonitor = NSEvent.addLocalMonitorForEvents(matching: .keyDown) { event in
             let mods = event.modifierFlags.intersection(.deviceIndependentFlagsMask)
             // Require at least one modifier key (other than just function key)
             let requiresMod: NSEvent.ModifierFlags = [.command, .control, .option, .shift]
@@ -69,7 +72,7 @@ struct HotkeyRecorderView: View {
 
             // Escape cancels recording without changing hotkey
             if event.keyCode == 53 {
-                stopRecording()
+                self.stopRecording()
                 return nil
             }
 

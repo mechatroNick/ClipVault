@@ -90,4 +90,11 @@ final class GlobalHotkeyTests: XCTestCase {
         hosting.layout()
         XCTAssertNotNil(hosting)
     }
+
+    func testHotkeyDescriptor_DisplayString_UnknownKeyCode() {
+        // Key code 200 is not in the known map — should fall back to "(200)"
+        let hotkey = HotkeyDescriptor(modifiers: [.command], keyCode: 200)
+        XCTAssertTrue(hotkey.displayString.contains("(200)"),
+                      "Unmapped key codes should display as '(keyCode)'")
+    }
 }

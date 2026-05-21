@@ -14,6 +14,8 @@ final class KeyboardHandler {
     static let shared = KeyboardHandler()
 
     private var hotKeyRef: EventHotKeyRef?
+    /// Retained Carbon event handler — installed once; reused across hotkey re-registrations.
+    private var eventHandlerRef: EventHandlerRef?
     var onHotKey: (() -> Void)?
 
     private var settingsCancellable: AnyCancellable?
@@ -38,13 +40,21 @@ final class KeyboardHandler {
             UnregisterEventHotKey(ref)
             hotKeyRef = nil
         }
+        if let ref = eventHandlerRef {
+            RemoveEventHandler(ref)
+            eventHandlerRef = nil
+        }
         settingsCancellable = nil
     }
 
     // MARK: - Private
 
     private func reinstallHotKey() {
-        unregisterHotKey()
+        // Unregister the old Carbon hotkey binding (NOT the event handler — it is shared)
+        if let ref = hotKeyRef {
+            UnregisterEventHotKey(ref)
+            hotKeyRef = nil
+        }
         installCurrentHotKey()
     }
 
@@ -54,8 +64,11 @@ final class KeyboardHandler {
         // Convert NSEvent.ModifierFlags → Carbon modifier mask
         let carbonMods = carbonModifiers(from: descriptor.modifiers)
 
+        // Pack "CVLT" into a FourCharCode correctly (shift ASCII values into a UInt32)
+        let sig: UInt32 = "CVLT".unicodeScalars.reduce(0) { ($0 << 8) | UInt32($1.value) }
+
         var hotKeyID = EventHotKeyID()
-        hotKeyID.signature = FourCharCode(UInt32(bitPattern: Int32(("CVLT" as NSString).intValue)))
+        hotKeyID.signature = FourCharCode(sig)
         hotKeyID.id = 1
 
         var eventType = EventTypeSpec(
@@ -63,20 +76,22 @@ final class KeyboardHandler {
             eventKind: UInt32(kEventHotKeyPressed)
         )
 
-        var eventHandlerRef: EventHandlerRef?
-        InstallEventHandler(
-            GetApplicationEventTarget(),
-            { (_, _, _) -> OSStatus in
-                Task { @MainActor in
-                    KeyboardHandler.shared.onHotKey?()
-                }
-                return noErr
-            },
-            1,
-            &eventType,
-            nil,
-            &eventHandlerRef
-        )
+        // Install the Carbon event handler only once — re-use across re-registrations
+        if eventHandlerRef == nil {
+            InstallEventHandler(
+                GetApplicationEventTarget(),
+                { (_, _, _) -> OSStatus in
+                    Task { @MainActor in
+                        KeyboardHandler.shared.onHotKey?()
+                    }
+                    return noErr
+                },
+                1,
+                &eventType,
+                nil,
+                &eventHandlerRef
+            )
+        }
 
         RegisterEventHotKey(
             UInt32(descriptor.keyCode),

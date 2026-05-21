@@ -157,10 +157,14 @@ final class ClipboardRepository {
     
     /// Returns an AsyncStream of raw entries, updating whenever the database changes.
     /// Metadata visible in the UI (timestamp, type, app, window title, device) is plaintext.
-    func observeEntries(limit: Int = 50) -> AsyncStream<[ClipboardEntry]> {
+    func observeEntries(limit: Int = 50, isPinned: Bool? = nil) -> AsyncStream<[ClipboardEntry]> {
         AsyncStream { continuation in
             let observation = ValueObservation.tracking { db in
-                try ClipboardEntry
+                var request = ClipboardEntry.all()
+                if let isPinned = isPinned {
+                    request = request.filter(ClipboardEntry.Columns.isPinned == isPinned)
+                }
+                return try request
                     .order(ClipboardEntry.Columns.timestamp.desc)
                     .limit(limit)
                     .fetchAll(db)
@@ -186,9 +190,13 @@ final class ClipboardRepository {
         return try dbManager.fetchAll()
     }
 
-    func fetchEntries(limit: Int, offset: Int) throws -> [ClipboardEntry] {
+    func fetchEntries(limit: Int, offset: Int, isPinned: Bool? = nil) throws -> [ClipboardEntry] {
         try dbManager.dbQueue.read { db in
-            try ClipboardEntry
+            var request = ClipboardEntry.all()
+            if let isPinned = isPinned {
+                request = request.filter(ClipboardEntry.Columns.isPinned == isPinned)
+            }
+            return try request
                 .order(ClipboardEntry.Columns.timestamp.desc)
                 .limit(limit, offset: offset)
                 .fetchAll(db)
@@ -205,8 +213,8 @@ final class ClipboardRepository {
         return entry
     }
     
-    func search(_ query: String, limit: Int = 100, offset: Int = 0) throws -> [ClipboardEntry] {
-        return try dbManager.search(query, limit: limit, offset: offset)
+    func search(_ query: String, limit: Int = 100, offset: Int = 0, isPinned: Bool? = nil) throws -> [ClipboardEntry] {
+        return try dbManager.search(query, limit: limit, offset: offset, isPinned: isPinned)
     }
     
     func fetchLastEntry() throws -> ClipboardEntry? {

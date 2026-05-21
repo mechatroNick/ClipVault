@@ -172,19 +172,28 @@ final class DatabaseManager {
     /// - Returns: Matching entries, or an empty array if no matches are found
     ///   or the query is malformed.
     /// - Throws: GRDB errors if the read fails.
-    func search(_ query: String, limit: Int = 100, offset: Int = 0) throws -> [ClipboardEntry] {
+    func search(_ query: String, limit: Int = 100, offset: Int = 0, isPinned: Bool? = nil) throws -> [ClipboardEntry] {
         // Use prefix matching if the query doesn't already have specialized syntax
         guard let pattern = FTS5Pattern(matchingAllPrefixesIn: query) else {
             return []
         }
         return try dbQueue.read { db in
-            try ClipboardEntry.fetchAll(db, sql: """
+            var sql = """
                 SELECT clipboardEntry.* FROM clipboardEntry
                 JOIN clipboardEntry_fts ON clipboardEntry_fts.rowid = clipboardEntry.rowid
                 WHERE clipboardEntry_fts MATCH ?
-                ORDER BY clipboardEntry.timestamp DESC
-                LIMIT ? OFFSET ?
-                """, arguments: [pattern, limit, offset])
+                """
+            var arguments: StatementArguments = [pattern]
+            
+            if let isPinned = isPinned {
+                sql += " AND clipboardEntry.isPinned = ?"
+                arguments.append(contentsOf: [isPinned])
+            }
+            
+            sql += " ORDER BY clipboardEntry.timestamp DESC LIMIT ? OFFSET ?"
+            arguments.append(contentsOf: [limit, offset])
+            
+            return try ClipboardEntry.fetchAll(db, sql: sql, arguments: arguments)
         }
     }
 

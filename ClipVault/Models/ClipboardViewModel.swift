@@ -25,6 +25,11 @@ final class ClipboardViewModel {
     var activeHash: String? = nil
     var isLoading = false
     var isSearchFocused = false
+    var showPinnedOnly = false {
+        didSet {
+            updateObservation()
+        }
+    }
     
     private var hasMoreEntries = true
     private let pageSize = 50
@@ -116,10 +121,11 @@ final class ClipboardViewModel {
         Task {
             do {
                 let newEntries: [ClipboardEntry]
+                let pinnedFilter = showPinnedOnly ? true : nil
                 if searchQuery.isEmpty {
-                    newEntries = try repository.fetchEntries(limit: pageSize, offset: entries.count)
+                    newEntries = try repository.fetchEntries(limit: pageSize, offset: entries.count, isPinned: pinnedFilter)
                 } else {
-                    newEntries = try repository.search(searchQuery, limit: pageSize, offset: entries.count)
+                    newEntries = try repository.search(searchQuery, limit: pageSize, offset: entries.count, isPinned: pinnedFilter)
                 }
                 
                 if newEntries.count < pageSize {
@@ -136,7 +142,8 @@ final class ClipboardViewModel {
     private func setupObservation() {
         observationTask?.cancel()
         observationTask = Task {
-            let stream = repository.observeEntries(limit: pageSize)
+            let pinnedFilter = showPinnedOnly ? true : nil
+            let stream = repository.observeEntries(limit: pageSize, isPinned: pinnedFilter)
             for await rawEntries in stream {
                 if !Task.isCancelled {
                     if self.entries.count <= pageSize {
@@ -163,7 +170,8 @@ final class ClipboardViewModel {
             observationTask?.cancel()
             observationTask = nil
             do {
-                entries = try repository.search(searchQuery, limit: pageSize)
+                let pinnedFilter = showPinnedOnly ? true : nil
+                entries = try repository.search(searchQuery, limit: pageSize, offset: 0, isPinned: pinnedFilter)
                 if entries.count < pageSize {
                     hasMoreEntries = false
                 }

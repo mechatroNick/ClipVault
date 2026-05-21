@@ -69,6 +69,7 @@
 		T3_LAUNCHATLOGINTESTS_SWIFT_BUILD /* LaunchAtLoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T3_LAUNCHATLOGINTESTS_SWIFT_REF /* LaunchAtLoginTests.swift */; };
 		P3_HOTKEYRECORDERVIEW_SWIFT_BUILD /* HotkeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_HOTKEYRECORDERVIEW_SWIFT_REF /* HotkeyRecorderView.swift */; };
 		P3_PRIVACYIGNORELISTVIEW_SWIFT_BUILD /* PrivacyIgnoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_PRIVACYIGNORELISTVIEW_SWIFT_REF /* PrivacyIgnoreListView.swift */; };
+		REVIEW_EMPTYSTATE_SWIFT_BUILD /* EmptyStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = REVIEW_EMPTYSTATE_SWIFT_REF /* EmptyStateView.swift */; };
 		P3_HOTKEYDESCRIPTOR_SWIFT_BUILD /* HotkeyDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_HOTKEYDESCRIPTOR_SWIFT_REF /* HotkeyDescriptor.swift */; };
 		P3_PRIVACYIGNORELIST_SWIFT_BUILD /* PrivacyIgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_PRIVACYIGNORELIST_SWIFT_REF /* PrivacyIgnoreList.swift */; };
 		P3_SETTINGSTABVIEWTESTS_SWIFT_BUILD /* SettingsTabViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_SETTINGSTABVIEWTESTS_SWIFT_REF /* SettingsTabViewTests.swift */; };
@@ -97,6 +98,7 @@
 		MR71F9B07C9D08C545F95394 /* MarkdownRendererTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownRendererTests.swift; sourceTree = "<group>"; };
 		P3_HOTKEYRECORDERVIEW_SWIFT_REF /* HotkeyRecorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HotkeyRecorderView.swift; path = ClipVault/Views/HotkeyRecorderView.swift; sourceTree = SOURCE_ROOT; };
 		P3_PRIVACYIGNORELISTVIEW_SWIFT_REF /* PrivacyIgnoreListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyIgnoreListView.swift; path = ClipVault/Views/PrivacyIgnoreListView.swift; sourceTree = SOURCE_ROOT; };
+		REVIEW_EMPTYSTATE_SWIFT_REF /* EmptyStateView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = EmptyStateView.swift; path = ClipVault/Views/EmptyStateView.swift; sourceTree = SOURCE_ROOT; };
 		P3_HOTKEYDESCRIPTOR_SWIFT_REF /* HotkeyDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HotkeyDescriptor.swift; path = ClipVault/Models/HotkeyDescriptor.swift; sourceTree = SOURCE_ROOT; };
 		P3_PRIVACYIGNORELIST_SWIFT_REF /* PrivacyIgnoreList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyIgnoreList.swift; path = ClipVault/Models/PrivacyIgnoreList.swift; sourceTree = SOURCE_ROOT; };
 		P3_SETTINGSTABVIEWTESTS_SWIFT_REF /* SettingsTabViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTabViewTests.swift; sourceTree = "<group>"; };
@@ -255,6 +257,7 @@
 							DVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift */,
 				P3_HOTKEYRECORDERVIEW_SWIFT_REF /* HotkeyRecorderView.swift */,
 				P3_PRIVACYIGNORELISTVIEW_SWIFT_REF /* PrivacyIgnoreListView.swift */,
+				REVIEW_EMPTYSTATE_SWIFT_REF /* EmptyStateView.swift */,
 );
 			path = Views;
 			sourceTree = "<group>";
@@ -454,6 +457,7 @@
 				P3_PRIVACYIGNORELIST_SWIFT_BUILD /* PrivacyIgnoreList.swift in Sources */,
 				P3_HOTKEYRECORDERVIEW_SWIFT_BUILD /* HotkeyRecorderView.swift in Sources */,
 				P3_PRIVACYIGNORELISTVIEW_SWIFT_BUILD /* PrivacyIgnoreListView.swift in Sources */,
+				REVIEW_EMPTYSTATE_SWIFT_BUILD /* EmptyStateView.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

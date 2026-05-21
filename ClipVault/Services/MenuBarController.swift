@@ -70,6 +70,9 @@ final class MenuBarController: NSObject, NSWindowDelegate {
             },
             onQuit: { [weak self] in
                 self?.quitApp()
+            },
+            onPastePlainText: { [weak self] index in
+                self?.pasteAsPlainText(at: index)
             }
         )
         .scaleEffect(settings.zoomLevel)
@@ -247,6 +250,17 @@ final class MenuBarController: NSObject, NSWindowDelegate {
         }
     }
     
+    func pasteAsPlainText(at index: Int) {
+        guard index >= 0 && index < viewModel.entries.count else { return }
+        let entry = viewModel.entries[index]
+        pastingTask?.cancel()
+        pastingTask = Task {
+            try? await pasteService.preparePasteboard(for: entry, asPlainText: true)
+            await pasteService.simulatePaste()
+        }
+        closePanel()
+    }
+    
     func closePanel() {
         guard let panel = panel, panel.isVisible else { return }
         
@@ -307,6 +321,9 @@ final class MenuBarController: NSObject, NSWindowDelegate {
             },
             onQuit: { [weak self] in
                 self?.quitApp()
+            },
+            onPastePlainText: { [weak self] index in
+                self?.pasteAsPlainText(at: index)
             }
         )
         .scaleEffect(settings.zoomLevel)

@@ -23,21 +23,6 @@ enum ClipboardContentType: String, Codable {
     case code
     case other
     case unknown
-
-    var iconName: String {
-        switch self {
-        case .text: return "t.square"
-        case .image, .croppedImage: return "photo"
-        case .file: return "doc"
-        case .pdf: return "doc.text.fill"
-        case .url: return "link"
-        case .html: return "chevron.left.forwardslash.chevron.right"
-        case .rtf: return "doc.richtext"
-        case .markdown: return "text.badge.checkmark"
-        case .code: return "chevron.left.forwardslash.chevron.right"
-        default: return "doc.on.clipboard"
-        }
-    }
 }
 
 /// Represents a single clipboard history entry stored in the local GRDB database.

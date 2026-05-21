@@ -85,7 +85,8 @@ actor ClipboardCaptureService {
         
         // Privacy Ignore List: Reject clipboard changes from user-configured ignored apps.
         let frontmostApp = workspaceAppIdentifier()
-        if PrivacyIgnoreList.isIgnored(bundleID: frontmostApp, in: settings.ignoredBundleIDs) {
+        let ignoredSet = PrivacyIgnoreList.makeIgnoredSet(from: settings.ignoredBundleIDs)
+        if PrivacyIgnoreList.isIgnored(bundleID: frontmostApp, in: ignoredSet) {
             print("DEBUG (Service): Ignoring clipboard change from ignored app: \(frontmostApp ?? "unknown")")
             return
         }

@@ -54,7 +54,7 @@ struct PrivacyIgnoreListView: View {
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)
                         .background(Color.secondary.opacity(0.05))
-                        .cornerRadius(6)
+                        .clipShape(RoundedRectangle(cornerRadius: 6))
                     }
                 }
             }

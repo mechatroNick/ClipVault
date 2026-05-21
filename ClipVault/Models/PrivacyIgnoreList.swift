@@ -20,9 +20,14 @@ enum PrivacyIgnoreList {
         "com.bitwarden.desktop",            // Bitwarden
     ]
 
-    /// Returns `true` when `bundleID` is in the given `ignoredList` (case-insensitive).
-    static func isIgnored(bundleID: String?, in ignoredList: [String]) -> Bool {
-        guard let bundleID = bundleID else { return false }
-        return ignoredList.contains { $0.lowercased() == bundleID.lowercased() }
+    /// Returns `true` when `bundleID` is in the given `ignoredSet` (case-insensitive O(1) lookup).
+    static func isIgnored(bundleID: String?, in ignoredSet: Set<String>) -> Bool {
+        guard let bundleID else { return false }
+        return ignoredSet.contains(bundleID.lowercased())
+    }
+
+    /// Converts a bundle-ID array into a lowercased `Set` for efficient repeated lookups.
+    static func makeIgnoredSet(from list: [String]) -> Set<String> {
+        Set(list.map { $0.lowercased() })
     }
 }

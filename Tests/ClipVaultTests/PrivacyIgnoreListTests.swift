@@ -22,8 +22,9 @@ final class PrivacyIgnoreListTests: XCTestCase {
     }
 
     override func tearDown() {
-        // Restore defaults
+        // Restore defaults and clear any UserDefaults state mutated during the test
         settings.ignoredBundleIDs = PrivacyIgnoreList.defaultIgnoredBundleIDs
+        UserDefaults.standard.removeObject(forKey: "cv_ignoredBundleIDs")
         super.tearDown()
     }
 
@@ -51,31 +52,38 @@ final class PrivacyIgnoreListTests: XCTestCase {
     // MARK: - PrivacyIgnoreList Matching
 
     func testPrivacyIgnoreList_IsIgnored_ReturnsTrueForKnownApp() {
-        let ignoredIDs = ["com.agilebits.onepassword-osx", "com.apple.keychainaccess", "com.bitwarden.desktop"]
-        XCTAssertTrue(PrivacyIgnoreList.isIgnored(bundleID: "com.agilebits.onepassword-osx", in: ignoredIDs))
-        XCTAssertTrue(PrivacyIgnoreList.isIgnored(bundleID: "com.apple.keychainaccess", in: ignoredIDs))
-        XCTAssertTrue(PrivacyIgnoreList.isIgnored(bundleID: "com.bitwarden.desktop", in: ignoredIDs))
+        let ignoredSet = PrivacyIgnoreList.makeIgnoredSet(from: ["com.agilebits.onepassword-osx", "com.apple.keychainaccess", "com.bitwarden.desktop"])
+        XCTAssertTrue(PrivacyIgnoreList.isIgnored(bundleID: "com.agilebits.onepassword-osx", in: ignoredSet))
+        XCTAssertTrue(PrivacyIgnoreList.isIgnored(bundleID: "com.apple.keychainaccess", in: ignoredSet))
+        XCTAssertTrue(PrivacyIgnoreList.isIgnored(bundleID: "com.bitwarden.desktop", in: ignoredSet))
     }
 
     func testPrivacyIgnoreList_IsIgnored_ReturnsFalseForAllowedApp() {
-        let ignoredIDs = ["com.agilebits.onepassword-osx"]
-        XCTAssertFalse(PrivacyIgnoreList.isIgnored(bundleID: "com.apple.safari", in: ignoredIDs))
-        XCTAssertFalse(PrivacyIgnoreList.isIgnored(bundleID: "com.microsoft.VSCode", in: ignoredIDs))
+        let ignoredSet = PrivacyIgnoreList.makeIgnoredSet(from: ["com.agilebits.onepassword-osx"])
+        XCTAssertFalse(PrivacyIgnoreList.isIgnored(bundleID: "com.apple.safari", in: ignoredSet))
+        XCTAssertFalse(PrivacyIgnoreList.isIgnored(bundleID: "com.microsoft.VSCode", in: ignoredSet))
     }
 
     func testPrivacyIgnoreList_IsIgnored_CaseInsensitive() {
-        let ignoredIDs = ["com.agilebits.onepassword-osx"]
+        let ignoredSet = PrivacyIgnoreList.makeIgnoredSet(from: ["com.agilebits.onepassword-osx"])
         // Bundle IDs should be compared case-insensitively
-        XCTAssertTrue(PrivacyIgnoreList.isIgnored(bundleID: "COM.AGILEBITS.ONEPASSWORD-OSX", in: ignoredIDs))
+        XCTAssertTrue(PrivacyIgnoreList.isIgnored(bundleID: "COM.AGILEBITS.ONEPASSWORD-OSX", in: ignoredSet))
     }
 
     func testPrivacyIgnoreList_IsIgnored_NilBundleID_ReturnsFalse() {
-        let ignoredIDs = ["com.agilebits.onepassword-osx"]
-        XCTAssertFalse(PrivacyIgnoreList.isIgnored(bundleID: nil, in: ignoredIDs))
+        let ignoredSet = PrivacyIgnoreList.makeIgnoredSet(from: ["com.agilebits.onepassword-osx"])
+        XCTAssertFalse(PrivacyIgnoreList.isIgnored(bundleID: nil, in: ignoredSet))
     }
 
-    func testPrivacyIgnoreList_IsIgnored_EmptyList_ReturnsFalse() {
-        XCTAssertFalse(PrivacyIgnoreList.isIgnored(bundleID: "com.agilebits.onepassword-osx", in: []))
+    func testPrivacyIgnoreList_IsIgnored_EmptySet_ReturnsFalse() {
+        XCTAssertFalse(PrivacyIgnoreList.isIgnored(bundleID: "com.agilebits.onepassword-osx", in: Set<String>()))
+    }
+
+    func testPrivacyIgnoreList_MakeIgnoredSet_ProducesLowercasedSet() {
+        let set = PrivacyIgnoreList.makeIgnoredSet(from: ["Com.Example.App", "COM.TEST"])
+        XCTAssertTrue(set.contains("com.example.app"))
+        XCTAssertTrue(set.contains("com.test"))
+        XCTAssertFalse(set.contains("Com.Example.App"), "Set should be fully lowercased")
     }
 
     // MARK: - SettingsManager Persistence

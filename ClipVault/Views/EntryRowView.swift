@@ -13,6 +13,7 @@ struct EntryRowView: View {
     var onTogglePin: (() -> Void)? = nil
     var onDelete: (() -> Void)? = nil
     var onCopy: (() -> Void)? = nil
+    var onPastePlainText: (() -> Void)? = nil
     var onSelect: (() -> Void)? = nil
     
     @State private var isHovered = false
@@ -91,6 +92,20 @@ struct EntryRowView: View {
             }
             
             HStack(spacing: 8) {
+                if [.text, .html, .rtf, .markdown, .code, .url].contains(entry.contentType) {
+                    Button(action: { 
+                        onPastePlainText?()
+                        triggerHapticFeedback()
+                    }) {
+                        Image(systemName: "doc.plaintext")
+                            .font(.system(size: 10))
+                            .foregroundColor(isSelected ? .white : .secondary)
+                            .scaleEffect(isHovered ? 1.1 : 1.0)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityLabel("Paste as Plain Text")
+                }
+                
                 Button(action: { 
                     onCopy?()
                     triggerHapticFeedback()
@@ -193,5 +208,26 @@ struct EntryRowView: View {
 
     private func triggerHapticFeedback() {
         NSHapticFeedbackManager.defaultPerformer.perform(.generic, performanceTime: .now)
+    }
+}
+
+// MARK: - ClipboardContentType UI helpers
+
+/// Maps each content type to the SF Symbol name used in the history list row icon.
+/// Lives in the Views layer to keep the model free of UI/presentation dependencies.
+extension ClipboardContentType {
+    var iconName: String {
+        switch self {
+        case .text:     return "t.square"
+        case .image, .croppedImage: return "photo"
+        case .file:     return "doc"
+        case .pdf:      return "doc.text.fill"
+        case .url:      return "link"
+        case .html:     return "chevron.left.forwardslash.chevron.right"
+        case .rtf:      return "doc.richtext"
+        case .markdown: return "text.badge.checkmark"
+        case .code:     return "chevron.left.forwardslash.chevron.right"
+        default:        return "doc.on.clipboard"
+        }
     }
 }

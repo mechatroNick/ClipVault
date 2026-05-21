@@ -14,6 +14,8 @@ struct HistoryPanelView: View {
     var onOpenSettings: (() -> Void)? = nil
     /// Called when the quit button is tapped.
     var onQuit: (() -> Void)? = nil
+    /// Called when the user clicks Paste as Plain Text.
+    var onPastePlainText: ((Int) -> Void)? = nil
     
     var body: some View {
         VStack(spacing: 0) {
@@ -62,9 +64,26 @@ struct HistoryPanelView: View {
             .padding(.top, 20)
             .padding(.bottom, 16)
             
-            SearchBarView(text: $viewModel.searchQuery, isFocused: $viewModel.isSearchFocused)
-                .padding(.horizontal, 16)
-                .padding(.bottom, 12)
+            HStack {
+                SearchBarView(text: $viewModel.searchQuery, isFocused: $viewModel.isSearchFocused)
+                
+                Button(action: {
+                    withAnimation {
+                        viewModel.showPinnedOnly.toggle()
+                    }
+                }) {
+                    Image(systemName: viewModel.showPinnedOnly ? "star.fill" : "star")
+                        .font(.system(size: 16))
+                        .foregroundColor(viewModel.showPinnedOnly ? .yellow : .secondary)
+                        .padding(8)
+                        .background(Color.secondary.opacity(viewModel.showPinnedOnly ? 0.2 : 0.1))
+                        .clipShape(RoundedRectangle(cornerRadius: 8))
+                }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Show pinned only")
+            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 12)
             
             Divider()
             
@@ -85,6 +104,7 @@ struct HistoryPanelView: View {
                                 }
                             },
                             onCopy: { viewModel.copyEntry(at: index) },
+                            onPastePlainText: { onPastePlainText?(index) },
                             onSelect: { viewModel.selectedIndex = index }
                         )
                         .onTapGesture {
@@ -139,46 +159,5 @@ struct VisualEffectView: NSViewRepresentable {
     func updateNSView(_ nsView: NSVisualEffectView, context: Context) {
         nsView.material = material
         nsView.blendingMode = blendingMode
-    }
-}
-import SwiftUI
-
-struct EmptyStateView: View {
-    @State private var isAnimating = false
-    
-    var body: some View {
-        VStack(spacing: 20) {
-            ZStack {
-                Circle()
-                    .fill(Color.accentColor.opacity(0.1))
-                    .frame(width: 120, height: 120)
-                    .scaleEffect(isAnimating ? 1.1 : 0.9)
-                
-                Image(systemName: "clipboard")
-                    .font(.system(size: 48))
-                    .foregroundColor(.accentColor.opacity(0.8))
-                    .offset(y: isAnimating ? -5 : 5)
-            }
-            .animation(
-                ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil 
-                ? nil 
-                : .easeInOut(duration: 2.0).repeatForever(autoreverses: true), 
-                value: isAnimating
-            )
-            
-            VStack(spacing: 8) {
-                Text("Your Vault is Empty")
-                    .font(.title3)
-                    .fontWeight(.semibold)
-                
-                Text("Copy anything (⌘C) to see it here.")
-                    .font(.subheadline)
-                    .foregroundColor(.secondary)
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .onAppear {
-            isAnimating = true
-        }
     }
 }
