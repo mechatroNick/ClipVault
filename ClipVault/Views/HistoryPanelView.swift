@@ -62,7 +62,7 @@ struct HistoryPanelView: View {
             .padding(.top, 20)
             .padding(.bottom, 16)
             
-            SearchBarView(text: $viewModel.searchQuery)
+            SearchBarView(text: $viewModel.searchQuery, isFocused: $viewModel.isSearchFocused)
                 .padding(.horizontal, 16)
                 .padding(.bottom, 12)
             

@@ -102,6 +102,10 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.3.4 (Shortcut Stability)
+- **Cmd+F Refocus**: Pressing `⌘F` while the history panel is open now reliably refocuses the search bar, even if it's already visible.
+- **Robust Cmd+W**: Improved `⌘W` logic to ensure it reliably closes the main history panel as well as all child windows (Settings, Details).
+
 ### v1.3.3 (Shortcut Improvements)
 - **Cmd+W Support**: Added the `⌘W` keyboard shortcut to close child windows (Settings, Detailed View) or dismiss the history panel without quitting the application.
 

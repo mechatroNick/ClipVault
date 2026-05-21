@@ -165,8 +165,9 @@ final class MenuBarController: NSObject, NSWindowDelegate {
                     return nil
                 }
             case "f":
-                // Focus search logic: just let the event pass to TextField
-                return event
+                // Refocus search bar
+                viewModel.isSearchFocused = true
+                return nil
             case "+", "=":
                 settings.zoomLevel = min(settings.zoomLevel + 0.1, 2.0)
                 refreshPanelContent()
@@ -186,14 +187,20 @@ final class MenuBarController: NSObject, NSWindowDelegate {
                 return nil
             case "w":
                 // If we have a child window (Detailed View or Settings) that is currently frontmost, close it
-                if let keyWindow = NSApp.keyWindow, keyWindow != panel {
-                    if panel.childWindows?.contains(keyWindow) == true {
+                if let keyWindow = NSApp.keyWindow {
+                    if keyWindow == panel {
+                        closePanel()
+                        return nil
+                    } else if panel.childWindows?.contains(keyWindow) == true {
                         keyWindow.close()
                         return nil
                     }
                 }
-                // Otherwise close the main panel
-                closePanel()
+                // Fallback for non-activating panel scenarios
+                if isPanelVisible {
+                    closePanel()
+                    return nil
+                }
                 return nil
             default:
                 break

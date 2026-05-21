@@ -24,6 +24,7 @@ final class ClipboardViewModel {
     var selectedIndex: Int? = nil
     var activeHash: String? = nil
     var isLoading = false
+    var isSearchFocused = false
     
     private var hasMoreEntries = true
     private let pageSize = 50
