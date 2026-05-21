@@ -25,7 +25,9 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 - Full-text search across all text-based entries
 - Browseable, scrollable history with configurable retention
 - Pin/favorite frequently used entries
+- **Filter by Pinned/Favorites**: Toggle filter in the history panel to only show pinned/favorited items
 - **Performance Optimization**: Implemented thread-safe in-memory caching (`ContentCache`) for decrypted content to ensure smooth scrolling and instant retrieval of large text/markdown snippets.
+- **Empty State Delight**: Animated illustration replaces the empty list view for a polished first impression.
 
 ### 2. Rich Content Rendering & Preview
 - **Markdown**: Detect markdown content and render it inline with proper formatting (bold, italics, headers) using native `AttributedString`.
@@ -33,8 +35,10 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 - **PDF Support**: Detect and render PDF content in the history preview and Detailed Entry View, supporting multi-page scrolling and zooming. Uses robust UTI-based detection (`com.adobe.pdf`) to handle files copied from Finder.
 - **Cropped Image Support**: Ensure that images cropped and copied from JPG/PNG sources are detected and previewed correctly in both the list and detailed views.
 - **Automatic Previews**: Image and PDF thumbnails are rendered automatically in the history list for instant visibility.
+- **Visual Content Indicators**: Distinct SF Symbol icons for Code, Text, Images, and Files to aid quick scanning.
 - No separate "preview pane" — content is visible immediately and styled natively.
 - **Detailed Entry View**: Double-clicking an entry selects the item and opens a full-screen or large popover view for inspecting the entire content (renders full Markdown/HTML, or lists file contents for folders).
+- **Quick Actions**: Standard Copy button and a dedicated "Paste as Plain Text" button available directly on each entry row.
 
 ### 3. Vault File Storage
 
@@ -52,8 +56,8 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 
 ### 5. Comprehensive User Settings
 - **General**: Launch at Login toggle, configurable retention period, and max entry count.
-- **Visuals**: UI Zoom/Scaling (80% - 150%) for the history panel.
-- **Security**: Configurable auto-purge for sensitive items, custom search redaction rules, and optional Accessibility permissions for automated pasting.
+- **Appearance**: UI Zoom/Scaling (80% - 150%) for the history panel, and a customizable global hotkey (default: ⌘⇧V) via a dedicated recording UI.
+- **Security**: Configurable auto-purge for sensitive items, custom search redaction rules, optional Accessibility permissions for automated pasting, and a **Privacy Ignore List** to silently block clipboard capture from specific apps (e.g., 1Password, Bitwarden).
 - **Z-Order**: The Settings window must always appear on top of the ClipVault history panel when both are open.
 - **Persistence**: All changes applied and saved immediately via a dedicated "Save" button.
 
@@ -77,9 +81,9 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 
 ### Design Pillars
 1. **Menu Bar Native** — Status item in the macOS menu bar; one click to open, Escape to close. Never occupies dock space.
-2. **Keyboard-First** — Global hotkey to show/hide (default: ⌘⇧V). Full keyboard navigation within the history panel. Arrow keys to browse, Enter to paste, ⌘+number for quick select.
+2. **Keyboard-First** — Configurable global hotkey to show/hide (default: ⌘⇧V). Full keyboard navigation within the history panel. Arrow keys to browse, Enter to paste, ⌥+Enter to paste as plain text, ⌘+number for quick select.
 3. **Rich Previews** — Inline previews for images (thumbnails), code (syntax highlighted), markdown (rendered), files (metadata card). No separate "preview pane" — content is visible immediately.
-4. **Visual Delight & Eye Candy** — Fully rounded application corners (avoiding sharp edges near the menu bar), stable UI layouts that prevent content shifting on hover, subtle animations for panel transitions, hover-responsive icons, haptic feedback on success/failure, and a polished, semi-transparent frosted glass aesthetic (Vibrancy).
+4. **Visual Delight & Eye Candy** — Fully rounded application corners, stable UI layouts that prevent content shifting on hover, smooth slide-down and fade-in animations for new clipboard entries, hover-responsive icons, haptic feedback on success/failure, and a polished, semi-transparent frosted glass aesthetic (Vibrancy).
 5. **Detailed Inspection** — Double-click any entry to open a detailed inspection view, providing an immersive experience for long documents, code, or complex file listings.
 6. **Robust Keyboard Shortcuts** — Deep integration with macOS keyboard event handling ensures that custom shortcuts (e.g., `Cmd+,` for Settings, `Cmd+W` for closing windows) work reliably even when bypassing standard App menu interception.
 

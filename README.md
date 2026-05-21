@@ -102,10 +102,15 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
-### v1.5.0 (Settings & Privacy Overhaul)
-- **Customizable Global Hotkey**: The shortcut to open ClipVault (`⌘⇧V` by default) is now fully customizable. Click the shortcut in Settings → Appearance to record a new combination.
+### v1.5.0 (App Polish & New Features)
 - **Settings Window Overhaul**: Settings now features a dedicated **Appearance tab** alongside General, Security, and About. UI Zoom has moved to Appearance, keeping General focused on clipboard behavior.
+- **Customizable Global Hotkey**: The shortcut to open ClipVault (`⌘⇧V` by default) is now fully customizable. Click the shortcut in Settings → Appearance to record a new combination.
 - **Privacy Ignore List**: A new user-configurable ignore list in Settings → Security silently blocks clipboard changes originating from nominated apps. Defaults to 1Password, Keychain Access, and Bitwarden — providing a second privacy layer alongside the existing Concealed Type filter.
+- **Visual Content Indicators**: Added distinct, beautifully integrated SF Symbol icons for Code Snippets, Plain Text, Images, and Files to the history list for quick scanning.
+- **Empty State Delight**: A new animated illustration welcomes you when your Vault is empty, creating a more polished first impression.
+- **Entry Insertion Animation**: New clipboard entries now appear with a smooth slide-down and fade-in animation in the history panel.
+- **Paste as Plain Text Button**: Added a dedicated quick-action button on each entry row to paste content as plain text, stripping any rich formatting instantly.
+- **Filter by Pinned/Favorites**: A new toggle next to the search bar lets you instantly filter the history list to show only your pinned/favorited entries.
 
 ### v1.4.3 (UI Refinements)
 - **Rounded UI Corners**: Enhanced the visual polish by applying fully rounded corners to the main history panel, resolving an edge case where macOS rendered sharp top corners near the menu bar.
