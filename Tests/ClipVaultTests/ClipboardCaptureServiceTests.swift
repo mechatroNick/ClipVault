@@ -35,7 +35,7 @@ final class ClipboardCaptureServiceTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        
+        ContentCache.shared.clear()
         dbManager = nil
         encryptionService = nil
         repository = nil

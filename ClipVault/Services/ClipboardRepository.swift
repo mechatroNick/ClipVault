@@ -76,7 +76,7 @@ final class ClipboardRepository {
         // Extract FTS preview before encryption or vaulting
         if let ptData = entry.plainTextContent,
            let ptString = String(data: ptData, encoding: .utf8) {
-            let preview = String(ptString.prefix(200))
+            let preview = String(ptString.prefix(500_000))
             entry.plainTextSearchContent = contentFilter.redact(preview)
             
             // Sensitive Detection

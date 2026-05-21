@@ -31,7 +31,7 @@ final class ClipboardRepositoryTests: XCTestCase {
     }
     
     override func tearDownWithError() throws {
-        
+        ContentCache.shared.clear()
         repository = nil
         keychainManager = nil
         dbManager = nil
@@ -118,6 +118,22 @@ final class ClipboardRepositoryTests: XCTestCase {
         XCTAssertEqual(results.first?.id, entry1.id)
         let decryptedResult = try repository.decryptContent(for: results.first!)
         XCTAssertEqual(String(data: decryptedResult.plainTextContent!, encoding: .utf8), "apple banana cherry")
+    }
+
+    func testSearch_FindsMatchingEntriesBeyond200Characters() throws {
+        // Arrange
+        let padding = String(repeating: "A", count: 250)
+        let longText = padding + " keyword " + padding
+        var entry1 = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data(longText.utf8))
+        
+        try repository.save(&entry1)
+        
+        // Act
+        let results = try repository.search("keyword")
+        
+        // Assert
+        XCTAssertEqual(results.count, 1)
+        XCTAssertEqual(results.first?.id, entry1.id)
     }
     
     // MARK: - Fetch All
