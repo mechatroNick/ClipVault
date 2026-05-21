@@ -33,4 +33,9 @@ final class HistoryPanelViewTests: XCTestCase {
         XCTAssertTrue(settingsCalled)
         XCTAssertTrue(quitCalled)
     }
+    
+    func testEmptyStateView_Initializes() {
+        let view = EmptyStateView()
+        XCTAssertNotNil(view.body)
+    }
 }
