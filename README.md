@@ -102,6 +102,9 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.4.2 (UI Polish & Shortcuts)
+- **Settings Shortcut Fix**: Resolved an issue where the `Cmd+,` keyboard shortcut was intercepted by the default App menu, allowing it to correctly open the custom Settings sub-window when the history panel is focused.
+- **Layout Stability**: Fixed a visual bug where hovering over a history item caused the text preview to unexpectedly wrap and change size due to dynamically inserted action buttons.
 ### v1.4.1 (Search & Memory Stability)
 - **FTS Index Stability**: Fixed an issue where very long text snippets could be truncated in the search index, ensuring full-text search works for clips of any size.
 - **Cache Memory Limits**: Enforced a strict maximum memory threshold for the decrypted content cache, preventing unbounded memory growth during heavy usage.

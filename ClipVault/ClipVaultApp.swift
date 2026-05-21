@@ -23,5 +23,10 @@ struct ClipVaultApp: App {
         Settings {
             EmptyView()
         }
+        .commands {
+            // Remove the default Settings command so it doesn't swallow Cmd+,
+            // allowing the MenuBarController's local event monitor to handle it.
+            CommandGroup(replacing: .appSettings) { }
+        }
     }
 }

@@ -95,52 +95,52 @@ struct EntryRowView: View {
             }
             
             HStack(spacing: 8) {
-                if isSelected || isHovered || entry.isPinned {
-                    Button(action: { 
-                        onCopy?()
-                        triggerHapticFeedback()
-                        withAnimation(.spring()) {
-                            showCopiedCheckmark = true
+                Button(action: { 
+                    onCopy?()
+                    triggerHapticFeedback()
+                    withAnimation(.spring()) {
+                        showCopiedCheckmark = true
+                    }
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        withAnimation {
+                            showCopiedCheckmark = false
                         }
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            withAnimation {
-                                showCopiedCheckmark = false
-                            }
-                        }
-                    }) {
-                        Image(systemName: showCopiedCheckmark ? "checkmark.circle.fill" : "doc.on.doc")
-                            .font(.system(size: 10))
-                            .foregroundColor(showCopiedCheckmark ? .green : (isSelected ? .white : .secondary))
-                            .scaleEffect(isHovered ? 1.1 : 1.0)
                     }
-                    .buttonStyle(.plain)
-                    .accessibilityLabel("Copy")
-
-                    Button(action: { 
-                        onTogglePin?()
-                        triggerHapticFeedback()
-                    }) {
-                        Image(systemName: entry.isPinned ? "pin.fill" : "pin")
-                            .font(.system(size: 10))
-                            .scaleEffect(isHovered ? 1.1 : 1.0)
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundColor(isSelected ? .white : .secondary)
-                    .accessibilityLabel(entry.isPinned ? "Unpin" : "Pin")
-                    
-                    Button(action: { 
-                        onDelete?()
-                        triggerHapticFeedback()
-                    }) {
-                        Image(systemName: "trash")
-                            .font(.system(size: 10))
-                            .scaleEffect(isHovered ? 1.1 : 1.0)
-                    }
-                    .buttonStyle(.plain)
-                    .foregroundColor(isSelected ? .white : .secondary)
-                    .accessibilityLabel("Delete")
+                }) {
+                    Image(systemName: showCopiedCheckmark ? "checkmark.circle.fill" : "doc.on.doc")
+                        .font(.system(size: 10))
+                        .foregroundColor(showCopiedCheckmark ? .green : (isSelected ? .white : .secondary))
+                        .scaleEffect(isHovered ? 1.1 : 1.0)
                 }
+                .buttonStyle(.plain)
+                .accessibilityLabel("Copy")
+
+                Button(action: { 
+                    onTogglePin?()
+                    triggerHapticFeedback()
+                }) {
+                    Image(systemName: entry.isPinned ? "pin.fill" : "pin")
+                        .font(.system(size: 10))
+                        .scaleEffect(isHovered ? 1.1 : 1.0)
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(isSelected ? .white : .secondary)
+                .accessibilityLabel(entry.isPinned ? "Unpin" : "Pin")
+                
+                Button(action: { 
+                    onDelete?()
+                    triggerHapticFeedback()
+                }) {
+                    Image(systemName: "trash")
+                        .font(.system(size: 10))
+                        .scaleEffect(isHovered ? 1.1 : 1.0)
+                }
+                .buttonStyle(.plain)
+                .foregroundColor(isSelected ? .white : .secondary)
+                .accessibilityLabel("Delete")
             }
+            .opacity((isSelected || isHovered || entry.isPinned) ? 1.0 : 0.0)
+            .disabled(!(isSelected || isHovered || entry.isPinned))
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)

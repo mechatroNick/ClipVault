@@ -168,6 +168,9 @@ final class MenuBarController: NSObject, NSWindowDelegate {
                 // Refocus search bar
                 viewModel.isSearchFocused = true
                 return nil
+            case ",":
+                openSettings()
+                return nil
             case "+", "=":
                 settings.zoomLevel = min(settings.zoomLevel + 0.1, 2.0)
                 refreshPanelContent()

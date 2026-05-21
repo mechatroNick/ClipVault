@@ -37,20 +37,8 @@ struct ContentPreviewRouter: View {
             TextPreview(text: currentEntry.plainTextSearchContent ?? "", isCode: true)
         case .markdown:
             TextPreview(text: currentEntry.plainTextSearchContent ?? "", isMarkdown: true)
-        case .rtf:
-            if let data = currentEntry.richTextContent,
-               let attrString = RichTextRenderer.renderRTF(data) {
-                RichTextPreview(attributedString: attrString)
-            } else {
-                TextPreview(text: currentEntry.plainTextSearchContent ?? "")
-            }
-        case .html:
-            if let data = currentEntry.richTextContent,
-               let attrString = RichTextRenderer.renderHTML(data) {
-                RichTextPreview(attributedString: attrString)
-            } else {
-                TextPreview(text: currentEntry.plainTextSearchContent ?? "")
-            }
+        case .rtf, .html:
+            TextPreview(text: currentEntry.plainTextSearchContent ?? "")
         default:
             TextPreview(text: currentEntry.plainTextSearchContent ?? "")
         }
