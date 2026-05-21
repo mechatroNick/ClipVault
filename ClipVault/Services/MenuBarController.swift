@@ -187,7 +187,7 @@ final class MenuBarController: NSObject, NSWindowDelegate {
             case "w":
                 // If we have a child window (Detailed View or Settings) that is currently frontmost, close it
                 if let keyWindow = NSApp.keyWindow, keyWindow != panel {
-                    if panel?.childWindows?.contains(keyWindow) == true {
+                    if panel.childWindows?.contains(keyWindow) == true {
                         keyWindow.close()
                         return nil
                     }
