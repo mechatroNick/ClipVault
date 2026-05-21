@@ -118,6 +118,10 @@ final class ClipboardRepository {
     /// Decrypts all sensitive fields of an entry.
     /// Used for on-demand decryption when an item is selected or pasted.
     func decryptContent(for entry: ClipboardEntry) throws -> ClipboardEntry {
+        if let id = entry.id, let cached = ContentCache.shared.get(for: id) {
+            return cached
+        }
+        
         let key = try getEncryptionKey()
         var decryptedEntry = entry
         
@@ -141,6 +145,10 @@ final class ClipboardRepository {
         }
         
         decryptedEntry.metadata = try decryptData(entry.metadata)
+        
+        if let id = entry.id {
+            ContentCache.shared.set(decryptedEntry, for: id)
+        }
         
         return decryptedEntry
     }

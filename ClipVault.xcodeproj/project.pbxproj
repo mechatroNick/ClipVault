@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CB96FF49FE6DE70C50BBECC6 /* ContentCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = CC96FF49FE6DE70C50BBECC6 /* ContentCache.swift */; };
 		BVEE5E544E7F49E0F07976F4 /* PDFPreview.swift in Sources */ = {isa = PBXBuildFile; fileRef = PPEE5E544E7F49E0F07976F4 /* PDFPreview.swift */; };
 		BV9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = HP9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift */; };
 		BV92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = IP92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift */; };
@@ -79,6 +80,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CC96FF49FE6DE70C50BBECC6 /* ContentCache.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentCache.swift; sourceTree = "<group>"; };
 		PPEE5E544E7F49E0F07976F4 /* PDFPreview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClipVault/Views/Previews/PDFPreview.swift; sourceTree = "<group>"; };
 
 		HP9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HistoryPanelViewTests.swift; sourceTree = "<group>"; };
@@ -244,6 +246,7 @@
 			children = (
 				PM_MARKDOWNRENDERER_SWIFT_REF /* MarkdownRenderer.swift */,
 							TCC2607578B331DAF7EAAE16 /* ThumbnailCache.swift */,
+				CC96FF49FE6DE70C50BBECC6 /* ContentCache.swift */,
 );
 			path = Utilities;
 			sourceTree = "<group>";
@@ -425,6 +428,7 @@
 							BFC2607578B331DAF7EAAE16 /* ThumbnailCache.swift in Sources */,
 				BVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift in Sources */,
 				BVEE5E544E7F49E0F07976F4 /* PDFPreview.swift in Sources */,
+				CB96FF49FE6DE70C50BBECC6 /* ContentCache.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};

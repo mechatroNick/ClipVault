@@ -205,8 +205,14 @@ final class MenuBarControllerTests: XCTestCase {
         var entry = ClipboardEntry(timestamp: Date(), contentType: .text, plainTextContent: Data("Test".utf8))
         try repository.save(&entry)
         
+        // Wait for observation to complete
+        try await Task.sleep(nanoseconds: 300_000_000)
+        
         controller.togglePanel()
-        try await Task.sleep(nanoseconds: 100_000_000)
+        try await Task.sleep(nanoseconds: 300_000_000)
+        
+        // Verify entry exists in VM
+        XCTAssertEqual(viewModel.entries.count, 1)
         
         // Act: Command 1 (keycode 18 is '1')
         let digitEvent = NSEvent.keyEvent(with: .keyDown, location: .zero, modifierFlags: .command, timestamp: 0, windowNumber: 0, context: nil, characters: "1", charactersIgnoringModifiers: "1", isARepeat: false, keyCode: 18)!

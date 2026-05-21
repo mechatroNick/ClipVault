@@ -109,13 +109,10 @@ actor ClipboardCaptureService {
                     fileURL = paths.joined(separator: "\n")
                 }
             case .pdf:
-                print("DEBUG (Service): Processing PDF content")
                 if let data = pasteboard.data(forType: .pdf) {
-                    print("DEBUG (Service): Captured raw PDF data")
                     richText = data
                 } else if let urls = pasteboard.readObjects(forClasses: [NSURL.self], options: nil) as? [URL],
                           let first = urls.first {
-                    print("DEBUG (Service): Captured PDF from file: \(first.path)")
                     richText = try? Data(contentsOf: first)
                     fileURL = first.path
                 }

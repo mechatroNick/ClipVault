@@ -102,6 +102,11 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.4.0 (Performance & Reliability)
+- **Decrypted Content Cache**: Implemented a thread-safe `ContentCache` to prevent redundant decryptions of large text and markdown strings, significantly improving scroll performance in the history list.
+- **Improved Test Coverage**: Added heuristic tests for Markdown/Code detection and verified pagination logic, bringing the project closer to 100% coverage for core services.
+- **Production Hardening**: Removed debug logging and performed a comprehensive security audit of the recent feature additions.
+
 ### v1.3.6 (PDF UI Polish)
 - **Resolved Double Scroll Bars**: Fixed a UI issue where PDFs in the detailed view displayed redundant scroll bars by correctly managing nested scroll views.
 - **Improved PDF Layout**: PDFs now correctly utilize the full available window space in the detailed entry view.
