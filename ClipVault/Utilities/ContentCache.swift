@@ -28,7 +28,9 @@ final class ContentCache {
     }
     
     func set(_ entry: ClipboardEntry, for id: Int64) {
-        cache.setObject(EntryWrapper(entry), forKey: "\(id)" as NSString)
+        // Fixed heuristic cost of 500KB per entry to keep cache logic fast
+        let cost = 500 * 1024
+        cache.setObject(EntryWrapper(entry), forKey: "\(id)" as NSString, cost: cost)
     }
     
     func clear() {
