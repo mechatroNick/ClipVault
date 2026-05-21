@@ -58,8 +58,8 @@ Every function in the app must be reachable and usable without a mouse.
 ### Requirements
 - **Full Keyboard Navigation**: Tab, arrow keys, Enter, Escape, and Space cover all interactions
 - **Global Hotkey**: Single configurable shortcut to show/hide the app (default: ⌘⇧V)
-- **Panel Navigation**: Arrow keys browse history; Enter pastes selected entry; Escape dismisses; ⌘F focuses search
-- **Quick Actions**: ⌘1-9 to paste the nth entry; ⌘P to pin; ⌘⌫ to delete; ⌘C to copy entry to clipboard
+- **Panel Navigation**: Arrow keys browse history; Enter pastes selected entry; Escape dismisses; ⌘F focuses or refocuses search
+- **Quick Actions**: ⌘1-9 to paste the nth entry; ⌘P to pin; ⌘⌫ to delete; ⌘C to copy entry to clipboard; ⌘W to close current window or dismiss panel
 - **Settings Navigation**: Standard macOS preferences window with tab-based navigation reachable via ⌘,
 - **Focus Rings**: Visible focus indicators on all interactive elements for keyboard users
 
@@ -75,13 +75,14 @@ Every function in the app must be reachable and usable without a mouse.
 - **Auto-Dismiss**: Closes on Escape, click-outside, or after pasting an entry
 - **Position**: Anchored below the menu bar status item; remembers last position
 - **Size**: Default width of **420pt**; panel height adjusts to show configurable number of entries
-- **Interaction**: Single-click to select; Enter or double-click to copy; Double-click to open Detailed View for full inspection.
+- **Interaction**: Single-click to select; Enter or double-click to copy; Double-click selects the item and opens Detailed View for full inspection.
 - **Window Management**: Settings and Detailed View are managed as standard macOS windows (child windows of the panel) to ensure reliable foreground behavior and Z-order enforcement.
 
 ### Search
 - **Real-Time Filter**: Type to filter history entries immediately — no "press Enter to search"
 - **Fuzzy Matching**: Matches against content preview, source app, and date
 - **Clear on Escape**: Pressing Escape clears the search query; second Escape dismisses the panel
+- **Refocusing**: Pressing ⌘F while the panel is visible returns focus to the search bar.
 
 ### Content Preview
 - **Text / Code / Markdown / HTML**: Show first 3 lines with ellipsis overflow.
