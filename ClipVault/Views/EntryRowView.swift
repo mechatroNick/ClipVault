@@ -24,7 +24,7 @@ struct EntryRowView: View {
     var body: some View {
         HStack(alignment: .top, spacing: 12) {
             // Icon / Type indicator
-            Image(systemName: iconName)
+            Image(systemName: entry.contentType.iconName)
                 .font(.system(size: 14))
                 .foregroundColor(isSelected ? .white : .accentColor)
                 .frame(width: 24, height: 24)
@@ -178,21 +178,7 @@ struct EntryRowView: View {
         }
     }
     
-    private var iconName: String {
-        switch entry.contentType {
-        case .text: return "text.alignleft"
-        case .image, .croppedImage: return "photo"
-        case .file: return "doc"
-        case .pdf: return "doc.text.fill"
-        case .url: return "link"
-        case .html: return "chevron.left.forwardslash.chevron.right"
-        case .rtf: return "doc.richtext"
-        case .markdown: return "text.badge.checkmark"
-        case .code: return "chevron.left.forwardslash.chevron.right"
-        default: return "doc.on.clipboard"
-        }
-    }
-    
+
     private func validateFile() {
         guard entry.contentType == .file, let path = entry.fileURL else { return }
         let paths = path.components(separatedBy: "\n")

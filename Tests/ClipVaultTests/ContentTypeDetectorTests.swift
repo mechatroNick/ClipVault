@@ -114,4 +114,13 @@ final class ContentTypeDetectorTests: XCTestCase {
         mock.simulateCopy(string: longString, type: .string)
         XCTAssertEqual(detector.detectType(from: mock), .text)
     }
+    
+    func testIconNames() {
+        XCTAssertEqual(ClipboardContentType.text.iconName, "t.square")
+        XCTAssertEqual(ClipboardContentType.code.iconName, "chevron.left.forwardslash.chevron.right")
+        XCTAssertEqual(ClipboardContentType.image.iconName, "photo")
+        XCTAssertEqual(ClipboardContentType.croppedImage.iconName, "photo")
+        XCTAssertEqual(ClipboardContentType.file.iconName, "doc")
+        XCTAssertEqual(ClipboardContentType.pdf.iconName, "doc.text.fill")
+    }
 }
