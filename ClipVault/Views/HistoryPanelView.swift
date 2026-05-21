@@ -95,7 +95,10 @@ struct HistoryPanelView: View {
                                 viewModel.loadMoreEntries()
                             }
                         }
-                        .transition(.asymmetric(insertion: .move(edge: .top).combined(with: .opacity), removal: .move(edge: .leading).combined(with: .opacity)))
+                        .transition(.asymmetric(
+                            insertion: .move(edge: .top).combined(with: .opacity).combined(with: .scale(scale: 0.95, anchor: .top)),
+                            removal: .scale(scale: 0.9).combined(with: .opacity)
+                        ))
                     }
 
                     if viewModel.isLoading {
@@ -109,7 +112,7 @@ struct HistoryPanelView: View {
                     }
                 }
                 .listStyle(.plain)
-                .animation(.spring(), value: viewModel.entries)
+                .animation(.spring(response: 0.4, dampingFraction: 0.75, blendDuration: 0), value: viewModel.entries)
             }
         }
         .onAppear {
