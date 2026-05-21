@@ -58,6 +58,18 @@ final class SettingsManager: ObservableObject {
     @Published var simulatePasteEnabled: Bool {
         didSet { UserDefaults.standard.set(simulatePasteEnabled, forKey: Keys.simulatePasteEnabled) }
     }
+
+    @Published var globalHotkey: HotkeyDescriptor {
+        didSet {
+            if let data = try? JSONEncoder().encode(globalHotkey) {
+                UserDefaults.standard.set(data, forKey: Keys.globalHotkey)
+            }
+        }
+    }
+
+    @Published var ignoredBundleIDs: [String] {
+        didSet { UserDefaults.standard.set(ignoredBundleIDs, forKey: Keys.ignoredBundleIDs) }
+    }
     
     @Published var launchAtLogin: Bool = false {
         didSet {
@@ -94,6 +106,8 @@ final class SettingsManager: ObservableObject {
         static let isAutoTrimEnabled = "cv_isAutoTrimEnabled"
         static let launchAtLogin = "cv_launchAtLogin"
         static let simulatePasteEnabled = "cv_simulatePasteEnabled"
+        static let globalHotkey = "cv_globalHotkey"
+        static let ignoredBundleIDs = "cv_ignoredBundleIDs"
     }
     
     private init() {
@@ -101,6 +115,17 @@ final class SettingsManager: ObservableObject {
         self.largeFileThresholdMB = UserDefaults.standard.integer(forKey: Keys.largeFileThresholdMB) == 0 ? 5 : UserDefaults.standard.integer(forKey: Keys.largeFileThresholdMB)
         self.maxEntries = UserDefaults.standard.integer(forKey: Keys.maxEntries) == 0 ? 50 : UserDefaults.standard.integer(forKey: Keys.maxEntries)
         self.simulatePasteEnabled = UserDefaults.standard.bool(forKey: Keys.simulatePasteEnabled)
+
+        // Global hotkey
+        if let data = UserDefaults.standard.data(forKey: Keys.globalHotkey),
+           let hotkey = try? JSONDecoder().decode(HotkeyDescriptor.self, from: data) {
+            self.globalHotkey = hotkey
+        } else {
+            self.globalHotkey = .default
+        }
+
+        // Privacy ignore list
+        self.ignoredBundleIDs = UserDefaults.standard.stringArray(forKey: Keys.ignoredBundleIDs) ?? PrivacyIgnoreList.defaultIgnoredBundleIDs
         
         if let path = UserDefaults.standard.string(forKey: Keys.vaultRootPath) {
             self.vaultRootPath = path
