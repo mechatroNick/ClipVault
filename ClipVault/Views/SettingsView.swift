@@ -18,6 +18,14 @@ struct SettingsView: View {
                 .tabItem {
                     Label("General", systemImage: "gearshape")
                 }
+
+                ScrollView {
+                    AppearanceSettingsView(settings: settings)
+                        .padding()
+                }
+                .tabItem {
+                    Label("Appearance", systemImage: "paintpalette")
+                }
                 
                 ScrollView {
                     SecuritySettingsView(settings: settings)
@@ -70,14 +78,8 @@ struct GeneralSettingsView: View {
                 }
                 
                 Stepper("Max Entries: \(settings.maxEntries)", value: $settings.maxEntries, in: 10...1000, step: 10)
-
-                HStack {
-                    Text("UI Zoom Level")
-                    Slider(value: $settings.zoomLevel, in: 0.5...2.0, step: 0.1)
-                    Text(String(format: "%.1fx", settings.zoomLevel))
-                        .frame(width: 40)
-                }
             }
+
             
             Divider()
             
@@ -138,6 +140,49 @@ struct GeneralSettingsView: View {
         if panel.runModal() == .OK {
             if let url = panel.url {
                 settings.vaultRootPath = url.path
+            }
+        }
+    }
+}
+
+// MARK: - Appearance Settings
+
+struct AppearanceSettingsView: View {
+    @ObservedObject var settings: SettingsManager
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 24) {
+
+            // Global Hotkey
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Global Shortcut")
+                    .font(.headline)
+
+                HStack {
+                    Text("Open ClipVault")
+                    Spacer()
+                    HotkeyRecorderView(hotkey: $settings.globalHotkey)
+                }
+
+                Text("Click the shortcut display to record a new one. Press Escape to cancel.")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+
+            Divider()
+
+            // UI Zoom
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Display")
+                    .font(.headline)
+
+                HStack {
+                    Text("UI Zoom Level")
+                    Slider(value: $settings.zoomLevel, in: 0.5...2.0, step: 0.1)
+                    Text(String(format: "%.1fx", settings.zoomLevel))
+                        .frame(width: 40)
+                }
             }
         }
     }
@@ -230,6 +275,10 @@ struct SecuritySettingsView: View {
                     .disabled(newLabel.isEmpty || newPattern.isEmpty)
                 }
             }
+            Divider()
+            
+            // Privacy Ignore List
+            PrivacyIgnoreListView(settings: settings)
         }
     }
     
@@ -264,7 +313,7 @@ struct AboutSettingsView: View {
             Text("ClipVault")
                 .font(.title)
             
-            Text("Version 1.4.3")
+            Text("Version 1.5.0")
 
 
                 .font(.subheadline)

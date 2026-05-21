@@ -67,6 +67,13 @@
 		SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_BUILD /* SensitiveContentFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = SENSITIVE_SENSITIVECONTENTFILTER_SWIFT_REF /* SensitiveContentFilter.swift */; };
 		ST_STRESSTESTS_SWIFT_BUILD /* StressTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = ST_STRESSTESTS_SWIFT_REF /* StressTests.swift */; };
 		T3_LAUNCHATLOGINTESTS_SWIFT_BUILD /* LaunchAtLoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = T3_LAUNCHATLOGINTESTS_SWIFT_REF /* LaunchAtLoginTests.swift */; };
+		P3_HOTKEYRECORDERVIEW_SWIFT_BUILD /* HotkeyRecorderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_HOTKEYRECORDERVIEW_SWIFT_REF /* HotkeyRecorderView.swift */; };
+		P3_PRIVACYIGNORELISTVIEW_SWIFT_BUILD /* PrivacyIgnoreListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_PRIVACYIGNORELISTVIEW_SWIFT_REF /* PrivacyIgnoreListView.swift */; };
+		P3_HOTKEYDESCRIPTOR_SWIFT_BUILD /* HotkeyDescriptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_HOTKEYDESCRIPTOR_SWIFT_REF /* HotkeyDescriptor.swift */; };
+		P3_PRIVACYIGNORELIST_SWIFT_BUILD /* PrivacyIgnoreList.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_PRIVACYIGNORELIST_SWIFT_REF /* PrivacyIgnoreList.swift */; };
+		P3_SETTINGSTABVIEWTESTS_SWIFT_BUILD /* SettingsTabViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_SETTINGSTABVIEWTESTS_SWIFT_REF /* SettingsTabViewTests.swift */; };
+		P3_GLOBALHOTKEYTESTS_SWIFT_BUILD /* GlobalHotkeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_GLOBALHOTKEYTESTS_SWIFT_REF /* GlobalHotkeyTests.swift */; };
+		P3_PRIVACYIGNORELISTTESTS_SWIFT_BUILD /* PrivacyIgnoreListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = P3_PRIVACYIGNORELISTTESTS_SWIFT_REF /* PrivacyIgnoreListTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +95,13 @@
 		SV95E082710BCF588E2B9FFF /* SettingsViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewTests.swift; sourceTree = "<group>"; };
 		UP2E10082A52F3F3075E4F84 /* URLPreviewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLPreviewTests.swift; sourceTree = "<group>"; };
 		MR71F9B07C9D08C545F95394 /* MarkdownRendererTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownRendererTests.swift; sourceTree = "<group>"; };
+		P3_HOTKEYRECORDERVIEW_SWIFT_REF /* HotkeyRecorderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HotkeyRecorderView.swift; path = ClipVault/Views/HotkeyRecorderView.swift; sourceTree = SOURCE_ROOT; };
+		P3_PRIVACYIGNORELISTVIEW_SWIFT_REF /* PrivacyIgnoreListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyIgnoreListView.swift; path = ClipVault/Views/PrivacyIgnoreListView.swift; sourceTree = SOURCE_ROOT; };
+		P3_HOTKEYDESCRIPTOR_SWIFT_REF /* HotkeyDescriptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HotkeyDescriptor.swift; path = ClipVault/Models/HotkeyDescriptor.swift; sourceTree = SOURCE_ROOT; };
+		P3_PRIVACYIGNORELIST_SWIFT_REF /* PrivacyIgnoreList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PrivacyIgnoreList.swift; path = ClipVault/Models/PrivacyIgnoreList.swift; sourceTree = SOURCE_ROOT; };
+		P3_SETTINGSTABVIEWTESTS_SWIFT_REF /* SettingsTabViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTabViewTests.swift; sourceTree = "<group>"; };
+		P3_GLOBALHOTKEYTESTS_SWIFT_REF /* GlobalHotkeyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GlobalHotkeyTests.swift; sourceTree = "<group>"; };
+		P3_PRIVACYIGNORELISTTESTS_SWIFT_REF /* PrivacyIgnoreListTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrivacyIgnoreListTests.swift; sourceTree = "<group>"; };
 		DED096657BA5C06A5541D724 /* DetailedEntryViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEntryViewTests.swift; sourceTree = "<group>"; };
 		DVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailedEntryView.swift; sourceTree = "<group>"; };
 		VM9F2FAA687AA44CF212207B /* VaultManagerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VaultManagerTests.swift; sourceTree = "<group>"; };
@@ -204,6 +218,8 @@
 			children = (
 				B1C2D3E4F5A6B7C8D9E0F301 /* ClipboardEntry.swift */,
 				P4_CLIPBOARDVIEWMODEL_SWIFT_REF /* ClipboardViewModel.swift */,
+				P3_HOTKEYDESCRIPTOR_SWIFT_REF /* HotkeyDescriptor.swift */,
+				P3_PRIVACYIGNORELIST_SWIFT_REF /* PrivacyIgnoreList.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -237,6 +253,8 @@
 				P4_PREVIEW_CONTENTPREVIEWROUTER_SWIFT_REF /* ContentPreviewRouter.swift */,
 				P5F_SETTINGSVIEW_SWIFT_REF /* SettingsView.swift */,
 							DVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift */,
+				P3_HOTKEYRECORDERVIEW_SWIFT_REF /* HotkeyRecorderView.swift */,
+				P3_PRIVACYIGNORELISTVIEW_SWIFT_REF /* PrivacyIgnoreListView.swift */,
 );
 			path = Views;
 			sourceTree = "<group>";
@@ -294,6 +312,9 @@
 				SV95E082710BCF588E2B9FFF /* SettingsViewTests.swift */,
 				IP92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift */,
 				HP9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift */,
+				P3_SETTINGSTABVIEWTESTS_SWIFT_REF /* SettingsTabViewTests.swift */,
+				P3_GLOBALHOTKEYTESTS_SWIFT_REF /* GlobalHotkeyTests.swift */,
+				P3_PRIVACYIGNORELISTTESTS_SWIFT_REF /* PrivacyIgnoreListTests.swift */,
 );
 			path = ClipVaultTests;
 			sourceTree = "<group>";
@@ -429,6 +450,10 @@
 				BVBAA77C8D9CB605BE54CF83 /* DetailedEntryView.swift in Sources */,
 				BVEE5E544E7F49E0F07976F4 /* PDFPreview.swift in Sources */,
 				CB96FF49FE6DE70C50BBECC6 /* ContentCache.swift in Sources */,
+				P3_HOTKEYDESCRIPTOR_SWIFT_BUILD /* HotkeyDescriptor.swift in Sources */,
+				P3_PRIVACYIGNORELIST_SWIFT_BUILD /* PrivacyIgnoreList.swift in Sources */,
+				P3_HOTKEYRECORDERVIEW_SWIFT_BUILD /* HotkeyRecorderView.swift in Sources */,
+				P3_PRIVACYIGNORELISTVIEW_SWIFT_BUILD /* PrivacyIgnoreListView.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -462,6 +487,9 @@
 				BV95E082710BCF588E2B9FFF /* SettingsViewTests.swift in Sources */,
 				BV92400F8FEDEFAB89035FF2 /* ImagePreviewTests.swift in Sources */,
 				BV9FE98E3BE58D0E83391CDA /* HistoryPanelViewTests.swift in Sources */,
+				P3_SETTINGSTABVIEWTESTS_SWIFT_BUILD /* SettingsTabViewTests.swift in Sources */,
+				P3_GLOBALHOTKEYTESTS_SWIFT_BUILD /* GlobalHotkeyTests.swift in Sources */,
+				P3_PRIVACYIGNORELISTTESTS_SWIFT_BUILD /* PrivacyIgnoreListTests.swift in Sources */,
 );
 			runOnlyForDeploymentPostprocessing = 0;
 		};
