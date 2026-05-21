@@ -83,6 +83,13 @@ actor ClipboardCaptureService {
             return
         }
         
+        // Privacy Ignore List: Reject clipboard changes from user-configured ignored apps.
+        let frontmostApp = workspaceAppIdentifier()
+        if PrivacyIgnoreList.isIgnored(bundleID: frontmostApp, in: settings.ignoredBundleIDs) {
+            print("DEBUG (Service): Ignoring clipboard change from ignored app: \(frontmostApp ?? "unknown")")
+            return
+        }
+
         let type = detector.detectType(from: pasteboard)
         print("DEBUG (Service): detected type: \(type)")
         guard type != .unknown else { return }
@@ -122,7 +129,7 @@ actor ClipboardCaptureService {
                 break
             }
             
-            let sourceApp = workspaceAppIdentifier() ?? "unknown"
+            let sourceApp = frontmostApp ?? "unknown"
             let windowTitle = getActiveWindowTitle()
             let deviceName = Host.current().localizedName ?? "This Mac"
             
