@@ -9,9 +9,11 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Search Index Bug Fix' (Protocol in workflow.md)
 
 ## Phase 2: Cache Cost Limit Fix
-- [ ] Task: Fix ineffective cache memory limit
-    - [ ] Write regression test reproducing the unbounded cache memory usage (missing cost metric)
-    - [ ] Implement fix by calculating heuristic cost and using `cache.setObject(_:forKey:cost:)` in `ContentCache.swift`
-    - [ ] Verify regression test passes
-    - [ ] Verify no existing tests break
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Cache Cost Limit Fix' (Protocol in workflow.md)
+- [x] Task: Fix ineffective cache memory limit
+    - [x] Write regression test reproducing the unbounded cache memory usage (missing cost metric)
+    - [x] Implement fix by calculating heuristic cost and using `cache.setObject(_:forKey:cost:)` in `ContentCache.swift`
+    - [x] Verify regression test passes
+    - [x] Verify no existing tests break
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Cache Cost Limit Fix' (Protocol in workflow.md)
+## Phase: Review Fixes
+- [x] Task: Apply review suggestions
