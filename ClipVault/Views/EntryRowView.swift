@@ -75,10 +75,6 @@ struct EntryRowView: View {
                     }
                     
                     Spacer()
-                    
-                    Text(entry.timestamp, style: .time)
-                        .font(.system(size: 10))
-                        .foregroundColor(isSelected ? .white.opacity(0.6) : .secondary.opacity(0.6))
                 }
                 
                 ContentPreviewRouter(entry: entry, decryptedEntry: decryptedEntry)
@@ -141,6 +137,10 @@ struct EntryRowView: View {
             }
             .opacity((isSelected || isHovered || entry.isPinned) ? 1.0 : 0.0)
             .disabled(!(isSelected || isHovered || entry.isPinned))
+            
+            Text(entry.timestamp, style: .time)
+                .font(.system(size: 10))
+                .foregroundColor(isSelected ? .white.opacity(0.6) : .secondary.opacity(0.6))
         }
         .padding(.vertical, 8)
         .padding(.horizontal, 12)

@@ -102,6 +102,9 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.4.3 (UI Refinements)
+- **Rounded UI Corners**: Enhanced the visual polish by applying fully rounded corners to the main history panel, resolving an edge case where macOS rendered sharp top corners near the menu bar.
+- **Timestamp Realignment**: Improved readability by moving the creation timestamp to the far right of the row, anchoring it next to the action buttons.
 ### v1.4.2 (UI Polish & Shortcuts)
 - **Settings Shortcut Fix**: Resolved an issue where the `Cmd+,` keyboard shortcut was intercepted by the default App menu, allowing it to correctly open the custom Settings sub-window when the history panel is focused.
 - **Layout Stability**: Fixed a visual bug where hovering over a history item caused the text preview to unexpectedly wrap and change size due to dynamically inserted action buttons.

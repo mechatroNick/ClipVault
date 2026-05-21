@@ -124,6 +124,7 @@ struct HistoryPanelView: View {
         }
         .frame(minWidth: 300, minHeight: 400)
         .background(VisualEffectView(material: .menu, blendingMode: .behindWindow))
+        .clipShape(RoundedRectangle(cornerRadius: 12))
     }
 }
 
