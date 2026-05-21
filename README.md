@@ -86,6 +86,9 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.3.3 (Shortcut Improvements)
+- **Cmd+W Support**: Added the `⌘W` keyboard shortcut to close child windows (Settings, Detailed View) or dismiss the history panel without quitting the application.
+
 ### v1.3.2 (Selection & PDF Polish)
 - **Selection on Double-Click**: Double-clicking an entry now automatically selects it in the history list before opening the detailed view.
 - **Robust PDF Detection**: Improved PDF detection logic to use both file extensions and Uniform Type Identifiers (UTIs) for more reliable previews.
