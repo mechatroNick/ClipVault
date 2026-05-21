@@ -71,16 +71,32 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Features
 - **Zero-Trust Architecture**: Operates entirely offline within the macOS App Sandbox.
-- **Data at Rest Protection**: All clipboard content (text, images, files, rich text) is encrypted on disk.
-- **On-Demand Decryption**: Content is decrypted only when viewed, never cached in plaintext.
-- **Rich Previews**: Beautiful inline previews for Markdown, code, images, and files.
-- **Smart Search**: Fast, paginated prefix-matching search powered by SQLite FTS5.
-- **Sensitive Auto-Purge**: Automatically detects and deletes sensitive strings (like credit cards).
-- **Keyboard Driven**: Fully navigable via keyboard shortcuts.
-- **Optional Accessibility**: Auto-paste is strictly opt-in, preserving least-privilege defaults.
+- **Data at Rest Protection**: All clipboard content is encrypted using AES-256-GCM.
+- **On-Demand Decryption**: Content is decrypted only when viewed or copied.
+- **Native PDF Previews**: Interactive PDF viewing (scroll/zoom/select) via PDFKit.
+- **Cropped Image Detection**: Specific detection and labeling for raw bitmap screenshots and crops.
+- **Rich Visuals**: Automatic inline previews for Markdown, code, and images in a beautiful frosted glass UI.
+- **Smart Search**: lightning-fast as-you-type search powered by SQLite FTS5.
+- **Sensitive Auto-Purge**: Detects and purges credit cards and secrets after a timeout.
+
+## Keyboard Shortcuts
+
+| Shortcut | Action |
+| :--- | :--- |
+| `⌘⇧V` | Show / Hide History Panel (Configurable) |
+| `↑` / `↓` | Navigate History |
+| `Enter` | Paste Selected Entry |
+| `⌥ + Enter` | Paste as Plain Text |
+| `⌘ + 1-9` | Quick Paste nth Entry |
+| `⌘ + C` | Copy Selected Entry back to System Clipboard |
+| `⌘ + F` | Focus Search Bar |
+| `⌘ + W` | Close Active Child Window (Settings/Details) or Dismiss Panel |
+| `⌘ + ⌫` | Delete Selected Entry |
+| `⌘ + ,` | Open Settings |
+| `Esc` | Clear Search or Dismiss Panel |
 
 ## Installation
-1. Download the latest release from the [Releases page].
+1. Download the latest release from the [Releases page](https://github.com/mechatroNick/ClipVault/releases).
 2. Drag `ClipVault.app` to your `/Applications` folder.
 3. Open the app. The clipboard icon will appear in your menu bar.
 
@@ -127,17 +143,16 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 - Custom SwiftUI `NSPanel` implementation with a beautiful frosted glass aesthetic.
 
 ## Building from Source
-**Requirements**: Xcode 15+, macOS 14.0+
+**Requirements**: Xcode 15.3+, macOS 14.0+
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/clipboard-mac-app.git
+   git clone git@github.com:mechatroNick/ClipVault.git
    ```
 2. Open `ClipVault.xcodeproj` in Xcode.
 3. Select the `ClipVault` scheme and run (⌘R).
 
 ## Documentation
-For more detailed information, please refer to the documentation in the `conductor/archive/maintenance-release-prep_20260520/` directory:
 - [Technical Architecture](conductor/archive/maintenance-release-prep_20260520/TECHNICAL_ARCHITECTURE.md)
 - [Developer API Reference](conductor/archive/maintenance-release-prep_20260520/API_REFERENCE.md)
 - [User Guide](conductor/archive/maintenance-release-prep_20260520/USER_GUIDE.md)
