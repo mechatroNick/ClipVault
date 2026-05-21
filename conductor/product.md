@@ -79,7 +79,7 @@ A native macOS clipboard manager that prioritizes security, performance, and dev
 1. **Menu Bar Native** — Status item in the macOS menu bar; one click to open, Escape to close. Never occupies dock space.
 2. **Keyboard-First** — Global hotkey to show/hide (default: ⌘⇧V). Full keyboard navigation within the history panel. Arrow keys to browse, Enter to paste, ⌘+number for quick select.
 3. **Rich Previews** — Inline previews for images (thumbnails), code (syntax highlighted), markdown (rendered), files (metadata card). No separate "preview pane" — content is visible immediately.
-4. **Visual Delight & Eye Candy** — Stable UI layouts that prevent content shifting on hover, subtle animations for panel transitions, hover-responsive icons, haptic feedback on success/failure, and a polished, semi-transparent frosted glass aesthetic (Vibrancy).
+4. **Visual Delight & Eye Candy** — Fully rounded application corners (avoiding sharp edges near the menu bar), stable UI layouts that prevent content shifting on hover, subtle animations for panel transitions, hover-responsive icons, haptic feedback on success/failure, and a polished, semi-transparent frosted glass aesthetic (Vibrancy).
 5. **Detailed Inspection** — Double-click any entry to open a detailed inspection view, providing an immersive experience for long documents, code, or complex file listings.
 6. **Robust Keyboard Shortcuts** — Deep integration with macOS keyboard event handling ensures that custom shortcuts (e.g., `Cmd+,` for Settings, `Cmd+W` for closing windows) work reliably even when bypassing standard App menu interception.
 
