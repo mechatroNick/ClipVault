@@ -102,6 +102,10 @@ ClipVault is built on the Principle of Least Privilege. It requires zero network
 
 ## Release Notes
 
+### v1.4.1 (Search & Memory Stability)
+- **FTS Index Stability**: Fixed an issue where very long text snippets could be truncated in the search index, ensuring full-text search works for clips of any size.
+- **Cache Memory Limits**: Enforced a strict maximum memory threshold for the decrypted content cache, preventing unbounded memory growth during heavy usage.
+
 ### v1.4.0 (Performance & Reliability)
 - **Decrypted Content Cache**: Implemented a thread-safe `ContentCache` to prevent redundant decryptions of large text and markdown strings, significantly improving scroll performance in the history list.
 - **Improved Test Coverage**: Added heuristic tests for Markdown/Code detection and verified pagination logic, bringing the project closer to 100% coverage for core services.
